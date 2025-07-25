@@ -165,6 +165,25 @@ export const ARTISTIC_PRESETS: VideoPreset[] = [
   }
 ];
 
+export const cameraMoves = [
+  { value: "static", label: "Static (Tripod/Locked Down)" },
+  { value: "handheld", label: "Handheld (Documentary/Action)" },
+  { value: "steadicam", label: "Steadicam/Gimbal (Smooth Follow)" },
+  { value: "tracking", label: "Tracking Shot (Follows subject)" },
+  { value: "dolly", label: "Dolly In/Out (Towards/Away)" },
+  { value: "crane", label: "Crane/Jib (Elevator Up/Down)" },
+  { value: "pan", label: "Pan (Horizontal Pivot)" },
+  { value: "tilt", label: "Tilt (Vertical Pivot)" },
+  { value: "arc", label: "Arc (Orbit/360° Around subject)" },
+  { value: "fpv", label: "FPV Drone" },
+  { value: "whip_pan", label: "Whip Pan (Fast Pan)" },
+  { value: "dutch", label: "Dutch Angle (Canted Horizon)" },
+  { value: "over_the_shoulder", label: "Over-the-Shoulder" },
+  { value: "pov", label: "POV (Point of View)" }
+];
+// Include other categories: genres, lighting, shots, etc, as before.
+
+
 // Consolidated preset collection
 export const ALL_PRESETS: VideoPreset[] = [
   ...CINEMATIC_PRESETS,
