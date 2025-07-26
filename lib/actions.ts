@@ -105,13 +105,13 @@ export async function generatePromptAction(
         generatedContent = JSON.stringify(builderState, null, 2)
         break
       case 'yaml':
-        generatedContent = `# Generated YAML\nmodel: ${builderState.model}\ntemplate: "${builderState.promptTemplate}"\nparameters:\n${Object.entries(builderState.parameters).map(([k, v]) => `  ${k}: ${v}`).join('\n')}`
+        generatedContent = `# Generated YAML\nmodel: ${builderState.model}\ntemplate: "${builderState.prompt}"\nparameters:\n${Object.entries(builderState.parameters).map(([k, v]) => `  ${k}: ${v}`).join('\n')}`
         break
       case 'markdown':
-        generatedContent = `# Video Prompt\n\nModel: ${builderState.model}\n\nTemplate: ${builderState.promptTemplate}\n\n## Parameters\n${Object.entries(builderState.parameters).map(([k, v]) => `- **${k}**: ${v}`).join('\n')}`
+        generatedContent = `# Video Prompt\n\nModel: ${builderState.model}\n\nTemplate: ${builderState.prompt}\n\n## Parameters\n${Object.entries(builderState.parameters).map(([k, v]) => `- **${k}**: ${v}`).join('\n')}`
         break
       default:
-        generatedContent = `Video prompt for ${builderState.model}: ${builderState.promptTemplate}`
+        generatedContent = `Video prompt for ${builderState.model}: ${builderState.prompt}`
     }
 
     return {
@@ -136,7 +136,7 @@ export async function generatePromptAction(
 /**
  * Delete prompt server action
  */
-export async function deletePromptAction(_promptId: string): Promise<PromptSubmissionResult> {
+export async function deletePromptAction(): Promise<PromptSubmissionResult> {
   try {
     // Simulate deletion
     await new Promise(resolve => setTimeout(resolve, 300))

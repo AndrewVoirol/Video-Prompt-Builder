@@ -60,8 +60,7 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 // Console error suppression for expected warnings
 const originalError = console.error
 beforeAll(() => {
-  // TODO: Fix any type - should define specific console.error parameter types
-  console.error = (...args: any[]) => {
+  console.error = (...args: unknown[]) => {
     if (
       typeof args[0] === 'string' &&
       args[0].includes('Warning: ReactDOM.render is no longer supported')

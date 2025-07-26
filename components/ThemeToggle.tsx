@@ -7,13 +7,13 @@ import { cn } from '@/lib/utils';
 
 interface ThemeToggleProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  size?: 'sm' | 'default' | 'lg';
+  variant?: 'default' | 'secondary' | 'outline' | 'ghost';
 }
 
 const ThemeToggle: React.FC<ThemeToggleProps> = ({ 
   className, 
-  size = 'md',
+  size = 'default',
   variant = 'ghost'
 }) => {
   const { theme, setTheme } = useTheme();

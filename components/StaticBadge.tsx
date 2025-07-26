@@ -4,7 +4,7 @@ interface StaticBadgeProps {
   variant?: 'default' | 'secondary' | 'outline' | 'success' | 'warning' | 'error'
   size?: 'sm' | 'md' | 'lg'
   children: React.ReactNode
-  className?: string
+  className?: string | undefined
 }
 
 /**
@@ -68,7 +68,7 @@ export function ProvenanceBadge({ source, origin, modified, className }: Provena
 
   return (
     <StaticBadge 
-      variant={getVariant(source)} 
+      variant={getVariant(source) || 'default'} 
       size="sm"
       className={className}
     >
