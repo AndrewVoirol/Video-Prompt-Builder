@@ -130,6 +130,27 @@ export function EnhancedPromptForm({
     generateFormAction(formData)
   }
 
+  // Generated output component
+  const GeneratedOutput = () => {
+    if (!generateState?.success || !generateState.data) {
+      return null
+    }
+
+    const data = generateState.data as { content: string; format: string; tokens: number }
+    
+    return (
+      <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
+        <h4 className="font-medium mb-2">Generated Output:</h4>
+        <pre className="text-sm whitespace-pre-wrap">
+          {data.content}
+        </pre>
+        <div className="mt-2 text-xs text-gray-600 dark:text-gray-400">
+          Format: {data.format} | Tokens: {data.tokens}
+        </div>
+      </div>
+    )
+  }
+
   // Status indicator component
   const StatusIndicator = () => {
     if (isPending || optimisticState.type === 'saving' || optimisticState.type === 'generating') {
@@ -305,16 +326,7 @@ export function EnhancedPromptForm({
           {isPending && optimisticState.type === 'generating' ? 'Generating...' : 'Generate Output'}
         </Button>
 
-        {/* Display generated content */}
-        {generateState?.success && generateState.data && (
-          <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-md">
-            <h4 className="font-medium mb-2">Generated Output:</h4>
-            <pre className="text-sm whitespace-pre-wrap">{(generateState.data as { content: string }).content}</pre>
-            <div className="mt-2 text-xs text-gray-600 dark:text-gray-400">
-              Format: {(generateState.data as { format: string }).format} | Tokens: {(generateState.data as { tokens: number }).tokens}
-            </div>
-          </div>
-        )}
+        <GeneratedOutput />
       </form>
     </div>
   )
