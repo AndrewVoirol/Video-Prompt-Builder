@@ -4,11 +4,11 @@
  */
 
 // Builder state interface for type safety
-interface BuilderState {
+export interface BuilderState {
   prompt: string;
   model: string;
-  presetId?: string;
-  intentId?: string;
+  presetId: string | undefined;
+  intentId: string | undefined;
   parameters: {
     style?: string;
     quality?: string;
@@ -108,7 +108,7 @@ export function toMarkdown(state: BuilderState): string {
   }
   
   // Add provenance section if there are tracked changes
-  const provenanceEntries = Object.entries(state.provenance).filter(([_, prov]) => prov.source !== 'user');
+  const provenanceEntries = Object.entries(state.provenance).filter(([, prov]) => prov.source !== 'user');
   if (provenanceEntries.length > 0) {
     lines.push('## Field Provenance');
     lines.push('');
@@ -156,12 +156,21 @@ export function toNatural(state: BuilderState): string {
   if (naturalParams.length > 0) {
     parts.push('\n\n**Technical specifications include:**\n');
     if (naturalParams.length === 1) {
-      parts.push(naturalParams[0]);
+      const firstParam = naturalParams[0];
+      if (firstParam) {
+        parts.push(firstParam);
+      }
     } else if (naturalParams.length === 2) {
-      parts.push(`${naturalParams[0]} and ${naturalParams[1]}`);
+      const firstParam = naturalParams[0];
+      const secondParam = naturalParams[1];
+      if (firstParam && secondParam) {
+        parts.push(`${firstParam} and ${secondParam}`);
+      }
     } else {
       const lastParam = naturalParams.pop();
-      parts.push(`${naturalParams.join(', ')}, and ${lastParam}`);
+      if (lastParam) {
+        parts.push(`${naturalParams.join(', ')}, and ${lastParam}`);
+      }
     }
     parts.push('.');
   }
@@ -194,7 +203,8 @@ export function createBuilderState(
   parameters: BuilderState['parameters'] = {},
   presetId?: string,
   intentId?: string,
-  provenance: BuilderState['provenance'] = {}
+  provenance: BuilderState['provenance'] = {},
+  timestamp?: string
 ): BuilderState {
   return {
     prompt,
@@ -203,7 +213,7 @@ export function createBuilderState(
     intentId,
     parameters,
     metadata: {
-      timestamp: new Date().toISOString(),
+      timestamp: timestamp || new Date().toISOString(),
       version: '1.0.0'
     },
     provenance

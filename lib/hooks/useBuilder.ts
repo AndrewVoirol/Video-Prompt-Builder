@@ -19,7 +19,7 @@ export interface BuilderField {
     min?: number;
     max?: number;
     pattern?: RegExp;
-    custom?: (value: any) => boolean;
+    custom?: (value: string | number | boolean) => boolean;
   };
   /** Options for select type fields */
   options?: { label: string; value: string | number }[];
@@ -46,7 +46,7 @@ export interface BuilderOutput {
   /** Output validation status */
   isValid: boolean;
   /** Associated metadata */
-  metadata?: Record<string, any>;
+  metadata?: Record<string, string | number | boolean>;
 }
 
 /**

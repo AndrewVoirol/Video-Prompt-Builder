@@ -9,6 +9,27 @@
  * @version 1.0.0
  */
 
+import { type ClassValue } from "clsx"
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+/**
+ * Combines class names using clsx and merges Tailwind CSS classes using tailwind-merge.
+ * This is the standard utility function used in shadcn/ui components.
+ * 
+ * @param {...ClassValue[]} inputs - Class values to combine and merge
+ * @returns {string} The merged class string
+ * 
+ * @example
+ * ```typescript
+ * cn("px-2 py-1", "px-3") // "py-1 px-3"
+ * cn("text-red-500", condition && "text-blue-500") // Conditional classes
+ * ```
+ */
+export function cn(...inputs: ClassValue[]): string {
+  return twMerge(clsx(inputs))
+}
+
 /**
  * Creates a deep clone of the provided value, recursively copying all nested objects and arrays.
  * 
@@ -40,7 +61,7 @@ export function deepClone<T>(value: T): T {
   if (typeof value === 'object') {
     const clonedObj = {} as T;
     Object.keys(value).forEach(key => {
-      (clonedObj as any)[key] = deepClone((value as any)[key]);
+      (clonedObj as Record<string, unknown>)[key] = deepClone((value as Record<string, unknown>)[key]);
     });
     return clonedObj;
   }
@@ -68,7 +89,7 @@ export function deepClone<T>(value: T): T {
  * debouncedSearch('abc');   // Cancels previous, executes after 300ms
  * ```
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number
 ): (...args: Parameters<T>) => void {
@@ -167,8 +188,8 @@ export function isNotNullish<T>(value: T | null | undefined): value is T {
  * const invalid = safeGet(data, 'user.invalid.path');       // undefined
  * ```
  */
-export function safeGet<T = any>(
-  obj: Record<string, any>,
+export function safeGet<T = unknown>(
+  obj: Record<string, unknown>,
   path: string
 ): T | undefined {
   if (!obj || typeof obj !== 'object') {
@@ -176,13 +197,13 @@ export function safeGet<T = any>(
   }
 
   const keys = path.split('.');
-  let current: any = obj;
+  let current: unknown = obj;
 
   for (const key of keys) {
     if (current == null || typeof current !== 'object' || !(key in current)) {
       return undefined;
     }
-    current = current[key];
+    current = (current as Record<string, unknown>)[key];
   }
 
   return current as T;

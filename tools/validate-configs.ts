@@ -8,8 +8,8 @@
 import { z } from 'zod';
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
-import { VIDEO_PRESETS, type VideoPreset } from '../lib/presets.js';
-import { VIDEO_INTENTS, type VideoIntent } from '../lib/intents.js';
+import { VIDEO_PRESETS } from '../lib/presets.js';
+import { VIDEO_INTENTS } from '../lib/intents.js';
 
 // Define schemas for validation
 const VideoPresetSchema = z.object({
@@ -148,7 +148,7 @@ class ConfigValidator {
       }
 
       // Check for template variable consistency
-      VIDEO_INTENTS.forEach((intent, index) => {
+      VIDEO_INTENTS.forEach((intent) => {
         const templateVars = intent.promptTemplate.match(/{([^}]+)}/g) || [];
         if (templateVars.length === 0) {
           result.warnings.push(`Intent ${intent.id}: No template variables found in promptTemplate`);
