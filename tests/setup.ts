@@ -60,6 +60,7 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 // Console error suppression for expected warnings
 const originalError = console.error
 beforeAll(() => {
+  // TODO: Fix any type - should define specific console.error parameter types
   console.error = (...args: any[]) => {
     if (
       typeof args[0] === 'string' &&

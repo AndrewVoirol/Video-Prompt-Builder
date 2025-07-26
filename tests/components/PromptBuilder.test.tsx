@@ -9,6 +9,7 @@ import { jest } from '@jest/globals'
 
 // Mock the PromptBuilder component since it may not exist yet
 // In a real scenario, you would import the actual component
+// TODO: Fix any type - should define proper props interface
 const MockPromptBuilder = ({ onPromptChange, onSubmit }: any) => {
   const [prompt, setPrompt] = React.useState('')
   

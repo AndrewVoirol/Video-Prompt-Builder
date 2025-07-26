@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ALL_PRESETS, getPresetById } from '@/lib/presets';
 import { toJson, toYaml, toMarkdown, toNatural, BuilderState, createBuilderState } from '@/lib/formatters';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Tab';
@@ -9,8 +9,11 @@ import { OutputCard } from '@/components/OutputCard';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 // Utility: derive initial builder state from the first preset (change as needed)
-function stateFromPreset(presetId: string): BuilderState {
-  const preset = getPresetById(presetId) ?? ALL_PRESETS[0];
+function stateFromPreset(presetId: string, timestamp?: string): BuilderState {
+  const preset = getPresetById(presetId) || ALL_PRESETS[0];
+  if (!preset) {
+    throw new Error('No presets available');
+  }
   return createBuilderState(
     preset.promptTemplate,
     preset.model,
@@ -20,20 +23,41 @@ function stateFromPreset(presetId: string): BuilderState {
     Object.entries(preset.parameters).reduce(
       (acc, [key]) => ({ ...acc, [key]: { source: 'preset', origin: preset.id } }),
       {}
-    )
+    ),
+    timestamp
   );
 }
 
 export default function HomePage() {
-  const [builder, setBuilder] = useState<BuilderState>(stateFromPreset(ALL_PRESETS[0].id));
+  const firstPreset = ALL_PRESETS[0];
+  if (!firstPreset) {
+    throw new Error('No presets available');
+  }
+  
+  // Use a static timestamp to prevent hydration mismatches
+  // This will be the same for both server and client renders
+  const [builder, setBuilder] = useState<BuilderState>(() => 
+    stateFromPreset(firstPreset.id, '2025-01-01T00:00:00.000Z')
+  );
   const [tab, setTab] = useState<'json' | 'yaml' | 'markdown' | 'natural'>('json');
+  
+  // Update timestamp after component mounts (client-side only)
+  useEffect(() => {
+    setBuilder(prev => ({
+      ...prev,
+      metadata: {
+        ...prev.metadata,
+        timestamp: new Date().toISOString()
+      }
+    }));
+  }, []);
 
   function handlePresetChange(evt: React.ChangeEvent<HTMLSelectElement>) {
     setBuilder(stateFromPreset(evt.target.value));
   }
 
   function handleParamChange(field: keyof BuilderState['parameters'], value: string) {
-    setBuilder((old) => ({
+    setBuilder((old: BuilderState) => ({
       ...old,
       parameters: { ...old.parameters, [field]: value },
       provenance: {
@@ -88,7 +112,7 @@ export default function HomePage() {
               <label className="font-semibold">{field}:</label>
               <input
                 type="text"
-                value={value ?? ''}
+                value={typeof value === 'string' ? value : (typeof value === 'number' ? value.toString() : '')}
                 className="ml-2 px-2 py-1 border rounded"
                 onChange={e => handleParamChange(field as keyof BuilderState['parameters'], e.target.value)}
               />
@@ -107,7 +131,7 @@ export default function HomePage() {
         <Button onClick={handleCopyAll}>Copy All Outputs</Button>
       </section>
 
-      <Tabs value={tab} onValueChange={(t) => setTab(t as any)}>
+      <Tabs value={tab} onValueChange={(t) => setTab(t as 'json' | 'yaml' | 'markdown' | 'natural')}>
         <TabsList>
           {(['json', 'yaml', 'markdown', 'natural'] as const).map(f =>
             <TabsTrigger key={f} value={f}>{f.toUpperCase()}</TabsTrigger>

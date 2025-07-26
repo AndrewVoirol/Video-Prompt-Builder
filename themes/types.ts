@@ -123,6 +123,7 @@ export interface AtomicTheme {
   semantic: ThemeColors;
   radius: Record<string, string>;
   spacing: Record<string, string>;
+  // TODO: Fix any type - should define specific typography structure
   typography: Record<string, any>;
   shadows: ThemeShadows;
 }
