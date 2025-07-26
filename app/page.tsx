@@ -1,17 +1,15 @@
 'use client'
 
 import React, { useState } from 'react';
+import { ALL_PRESETS, getPresetById } from '@/lib/presets';
+import { toJson, toYaml, toMarkdown, toNatural, BuilderState, createBuilderState } from '@/lib/formatters';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Tab';
 import { Button } from '@/components/Button';
 import { OutputCard } from '@/components/OutputCard';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { ALL_PRESETS, getPresetById } from '@/lib/presets';
-import { toJson, toYaml, toMarkdown, toNatural, BuilderState, createBuilderState } from '@/lib/formatters';
 
-/** Helper to derive a builder state from a preset model. */
 function stateFromPreset(presetId: string): BuilderState {
   const preset = getPresetById(presetId) ?? ALL_PRESETS[0];
-  // Loads preset parameters as the builder state, and tracks provenance for each.
   return createBuilderState(
     preset.promptTemplate,
     preset.model,
@@ -29,12 +27,10 @@ export default function HomePage() {
   const [builder, setBuilder] = useState<BuilderState>(stateFromPreset(ALL_PRESETS[0].id));
   const [tab, setTab] = useState<'json' | 'yaml' | 'markdown' | 'natural'>('json');
 
-  // Set state when preset dropdown changes.
   function handlePresetChange(id: string) {
     setBuilder(stateFromPreset(id));
   }
 
-  // Change a builder parameter, record field-level provenance.
   function handleParamChange(field: keyof BuilderState['parameters'], value: string) {
     setBuilder((old) => ({
       ...old,
