@@ -1,48 +1,41 @@
 'use client'
+
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Tab';
 import { Button } from '@/components/Button';
 import { OutputCard } from '@/components/OutputCard';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { ALL_PRESETS, getPresetById, VideoPreset } from '@/lib/presets';
+import { ALL_PRESETS, getPresetById } from '@/lib/presets';
 import { toJson, toYaml, toMarkdown, toNatural, BuilderState, createBuilderState } from '@/lib/formatters';
 
-const initialBuilderState: BuilderState = createBuilderState(
-  '',                   // prompt (user input)
-  ALL_PRESETS[0].model, // default model
-  ALL_PRESETS[0].parameters,
-  ALL_PRESETS[0].id,    // default presetId
-  undefined,            // intentId (not used here yet)
-  {}                    // provenance
-);
+/** Helper to derive a builder state from a preset model. */
+function stateFromPreset(presetId: string): BuilderState {
+  const preset = getPresetById(presetId) ?? ALL_PRESETS[0];
+  // Loads preset parameters as the builder state, and tracks provenance for each.
+  return createBuilderState(
+    preset.promptTemplate,
+    preset.model,
+    preset.parameters,
+    preset.id,
+    undefined,
+    Object.entries(preset.parameters).reduce(
+      (acc, [key]) => ({ ...acc, [key]: { source: 'preset', origin: preset.id } }),
+      {}
+    )
+  );
+}
 
 export default function HomePage() {
-  const [builder, setBuilder] = useState<BuilderState>(initialBuilderState);
+  const [builder, setBuilder] = useState<BuilderState>(stateFromPreset(ALL_PRESETS[0].id));
+  const [tab, setTab] = useState<'json' | 'yaml' | 'markdown' | 'natural'>('json');
 
-  // Dropdown handling: When preset changes, fill state and update provenance
+  // Set state when preset dropdown changes.
   function handlePresetChange(id: string) {
-    const preset = getPresetById(id);
-    if (preset) {
-      setBuilder(
-        createBuilderState(
-          preset.promptTemplate, // templated prompt as starting point
-          preset.model,
-          preset.parameters,
-          preset.id,
-          undefined,
-          Object.assign(
-            {},
-            ...Object.keys(preset.parameters).map((k) => ({
-              [k]: { source: 'preset', origin: preset.id },
-            }))
-          )
-        )
-      );
-    }
+    setBuilder(stateFromPreset(id));
   }
 
-  // Manual builder change marks provenance as 'user'
-  function handleBuilderField(field: keyof BuilderState['parameters'], value: string | number) {
+  // Change a builder parameter, record field-level provenance.
+  function handleParamChange(field: keyof BuilderState['parameters'], value: string) {
     setBuilder((old) => ({
       ...old,
       parameters: { ...old.parameters, [field]: value },
@@ -69,48 +62,48 @@ export default function HomePage() {
   }
 
   return (
-    <div>
-      <h1 className="mb-8">Video Prompt Builder</h1>
-      <div className="mb-6">
-        <label>Preset:&nbsp;
-          <select
-            value={builder.presetId}
-            onChange={e => handlePresetChange(e.target.value)}
-          >
-            {ALL_PRESETS.map(preset =>
-              <option value={preset.id} key={preset.id}>{preset.name}</option>
-            )}
-          </select>
-        </label>
-        &nbsp;&nbsp;
-        <div>
-          {/* Example mapping all possible builder fields */}
-          {Object.entries(builder.parameters).map(([field, value]) =>
+    <main className="max-w-3xl mx-auto p-6">
+      <header className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold">🎬 Video Prompt Builder</h1>
+        <ThemeToggle />
+      </header>
+      <section className="mb-8 p-4 bg-muted rounded-lg">
+        <label className="block mb-2 font-medium text-lg">Preset:</label>
+        <select
+          className="py-2 px-3 border rounded-md bg-background"
+          value={builder.presetId}
+          onChange={e => handlePresetChange(e.target.value)}
+        >
+          {ALL_PRESETS.map((preset) =>
+            <option key={preset.id} value={preset.id}>{preset.name}</option>
+          )}
+        </select>
+        <div className="grid md:grid-cols-2 gap-4 mt-6">
+          {Object.entries(builder.parameters).map(([field, value]) => (
             <div key={field}>
-              <label>{field}&nbsp;
-                <input
-                  value={value || ''}
-                  onChange={e => handleBuilderField(field as any, e.target.value)}
-                />
-              </label>
+              <label className="font-semibold">{field}:</label>
+              <input
+                type="text"
+                value={value ?? ''}
+                className="ml-2 px-2 py-1 border rounded"
+                onChange={e => handleParamChange(field as keyof BuilderState['parameters'], e.target.value)}
+              />
               {/* Provenance badge */}
-              <span className="badge badge-sm badge-info ml-2">
-                {builder.provenance[field]?.source || '—'}
+              <span className="ml-3 px-2 py-1 rounded text-xs bg-accent text-accent-foreground">
+                {builder.provenance[field]?.source ?? '—'}
                 {builder.provenance[field]?.origin ? ` (${builder.provenance[field]?.origin})` : ''}
-                {builder.provenance[field]?.modified ? ' (customized)' : ''}
+                {builder.provenance[field]?.modified ? ' (modified)' : ''}
               </span>
             </div>
-          )}
+          ))}
         </div>
-        <div className="mt-4 flex gap-2">
-          <Button onClick={handleCopyAll}>Copy All Outputs</Button>
-          <ThemeToggle />
-        </div>
-      </div>
-
-      <Tabs defaultValue="json">
+      </section>
+      <section className="mb-8">
+        <Button onClick={handleCopyAll}>Copy All Outputs</Button>
+      </section>
+      <Tabs value={tab} onValueChange={(t) => setTab(t as any)}>
         <TabsList>
-          {['json', 'yaml', 'markdown', 'natural'].map(f =>
+          {(['json', 'yaml', 'markdown', 'natural'] as const).map(f =>
             <TabsTrigger key={f} value={f}>{f.toUpperCase()}</TabsTrigger>
           )}
         </TabsList>
@@ -124,6 +117,6 @@ export default function HomePage() {
           </TabsContent>
         )}
       </Tabs>
-    </div>
+    </main>
   );
 }
