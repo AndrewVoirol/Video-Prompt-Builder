@@ -8,6 +8,7 @@ import { Button } from '@/components/Button';
 import { OutputCard } from '@/components/OutputCard';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
+// Utility: derive initial builder state from the first preset (change as needed)
 function stateFromPreset(presetId: string): BuilderState {
   const preset = getPresetById(presetId) ?? ALL_PRESETS[0];
   return createBuilderState(
@@ -27,8 +28,8 @@ export default function HomePage() {
   const [builder, setBuilder] = useState<BuilderState>(stateFromPreset(ALL_PRESETS[0].id));
   const [tab, setTab] = useState<'json' | 'yaml' | 'markdown' | 'natural'>('json');
 
-  function handlePresetChange(id: string) {
-    setBuilder(stateFromPreset(id));
+  function handlePresetChange(evt: React.ChangeEvent<HTMLSelectElement>) {
+    setBuilder(stateFromPreset(evt.target.value));
   }
 
   function handleParamChange(field: keyof BuilderState['parameters'], value: string) {
@@ -57,23 +58,30 @@ export default function HomePage() {
     );
   }
 
+  // Compute tokens as simple character count for example
+  function getTokenCount(content: string) {
+    return content.length;
+  }
+
   return (
     <main className="max-w-3xl mx-auto p-6">
       <header className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">🎬 Video Prompt Builder</h1>
         <ThemeToggle />
       </header>
-      <section className="mb-8 p-4 bg-muted rounded-lg">
+
+      <form className="mb-8 p-4 bg-muted rounded-lg">
         <label className="block mb-2 font-medium text-lg">Preset:</label>
         <select
           className="py-2 px-3 border rounded-md bg-background"
           value={builder.presetId}
-          onChange={e => handlePresetChange(e.target.value)}
+          onChange={handlePresetChange}
         >
           {ALL_PRESETS.map((preset) =>
             <option key={preset.id} value={preset.id}>{preset.name}</option>
           )}
         </select>
+
         <div className="grid md:grid-cols-2 gap-4 mt-6">
           {Object.entries(builder.parameters).map(([field, value]) => (
             <div key={field}>
@@ -93,10 +101,12 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-      </section>
+      </form>
+
       <section className="mb-8">
         <Button onClick={handleCopyAll}>Copy All Outputs</Button>
       </section>
+
       <Tabs value={tab} onValueChange={(t) => setTab(t as any)}>
         <TabsList>
           {(['json', 'yaml', 'markdown', 'natural'] as const).map(f =>
@@ -108,8 +118,21 @@ export default function HomePage() {
             <OutputCard
               title={f.toUpperCase()}
               content={outputs[f]}
-              actions={{ onCopy: () => navigator.clipboard.writeText(outputs[f]) }}
-            />
+              metadata={{
+                timestamp: builder.metadata.timestamp,
+                model: builder.model,
+                tokens: getTokenCount(outputs[f]),
+                // Optionally: duration: builder.parameters.duration?.toString(),
+              }}
+              actions={{
+                onCopy: () => navigator.clipboard.writeText(outputs[f]),
+                // Add onDownload or onShare if desired
+              }}
+            >
+              <div className="mt-2 text-xs text-muted-foreground">
+                Format: {f}, Source preset: {builder.presetId}
+              </div>
+            </OutputCard>
           </TabsContent>
         )}
       </Tabs>
