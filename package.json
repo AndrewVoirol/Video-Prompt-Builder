@@ -27,9 +27,6 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
-    "build:static": "cp next.config.js next.config.backup.js && cp next.config.static.js next.config.js && next build && mv next.config.backup.js next.config.js",
-    "export": "next export",
-    "build:export": "pnpm run build:static",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "next lint --fix",
