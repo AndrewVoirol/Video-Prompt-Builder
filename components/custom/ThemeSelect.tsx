@@ -14,7 +14,7 @@ const availableThemes = [
 ]
 
 export function ThemeSelect() {
-  const { theme, setTheme } = useTheme()
+  const { setTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
   const [isDarkMode, setIsDarkMode] = React.useState(false)
   const [currentColorTheme, setCurrentColorTheme] = React.useState('cyberpunk')

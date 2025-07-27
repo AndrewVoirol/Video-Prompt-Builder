@@ -16,7 +16,6 @@ import { ComboBox, ComboBoxOption } from '@/components/ui/combobox';
 import { ALL_PRESETS, VideoPreset } from '@/lib/presets';
 import { 
   FileTextIcon, 
-  TagIcon, 
   PlayIcon, 
   ClockIcon, 
   SparklesIcon, 
@@ -24,9 +23,7 @@ import {
   ChevronRightIcon,
   SearchIcon,
   CopyIcon,
-  StarIcon,
-  HeartIcon,
-  MoreHorizontalIcon
+  HeartIcon
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -86,8 +83,6 @@ export function PresetSidebar({
   // Favorite presets
   const favoritePresets = ALL_PRESETS.filter(preset => favorites.has(preset.id));
 
-  // Recent presets (first 3 for demo)
-  const recentPresets = ALL_PRESETS.slice(0, 3);
 
   // Toggle category collapse
   const toggleCategory = useCallback((category: string) => {

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Moon, Sun } from "lucide-react"
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ThemeToggleProps extends React.ComponentProps<typeof Button> {}
 
 export function ThemeToggle({ className, ...props }: ThemeToggleProps) {

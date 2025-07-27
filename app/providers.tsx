@@ -3,7 +3,6 @@
 import { ThemeProvider } from "next-themes"
 import { ThemeConfigProvider } from "@/components/active-theme"
 import { Toaster } from "@/components/ui/sonner"
-import { themes } from "@/lib/themes"
 
 interface ProvidersProps {
   children: React.ReactNode

@@ -19,7 +19,6 @@ import {
   MenubarItem,
 } from "@/components/ui/menubar"
 import { ThemeSelect } from '@/components/custom/ThemeSelect'
-import { Separator } from '@/components/ui/separator'
 
 interface DashboardLayoutProps {
   children?: React.ReactNode

@@ -24,7 +24,6 @@ export { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 export { Textarea } from './ui/textarea'
 export { ThemeProvider } from './ui/theme-provider'
 export { ThemeSelect } from './ui/ThemeSelect'
-export { ThemeToggle } from './ui/theme-toggle'
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
 
 // Custom Components

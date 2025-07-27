@@ -100,8 +100,11 @@ export function ThemeProvider({
       document.documentElement.style.setProperty("--x", `${x}px`);
       document.documentElement.style.setProperty("--y", `${y}px`);
       
-      // @ts-ignore - startViewTransition is experimental
-      document.startViewTransition(() => {
+      // Handle experimental startViewTransition API with proper type checking
+      const docWithTransition = document as Document & {
+        startViewTransition?: (callback: () => void) => void;
+      };
+      docWithTransition.startViewTransition?.(() => {
         setTheme(newTheme);
       });
     } else {
