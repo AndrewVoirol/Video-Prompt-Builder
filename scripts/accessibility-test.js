@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const { chromium } = require('playwright');
-const { AxePuppeteer } = require('@axe-core/puppeteer');
 
 async function runAccessibilityTests() {
   console.log('🚀 Starting accessibility tests...');
