@@ -12,6 +12,26 @@ A fully responsive, accessible Next.js and TypeScript video prompt builder for A
 ## Overview
 Video-Prompt-Builder is a modern web application that provides an intuitive interface for creating and managing prompts for AI video generation models. Built with Next.js 15, React 19, and TailwindCSS 4, it offers a seamless user experience with customizable themes and accessibility features.
 
+## Screenshots
+
+### Light Theme
+![Light Theme](public/screenshots/light-theme.png)
+*The application in light mode with clean, modern styling*
+
+### Dark Theme
+![Dark Theme](public/screenshots/dark-theme.png)
+*Dark mode provides comfortable viewing in low-light environments*
+
+### Cyberpunk Theme
+![Cyberpunk Theme](public/screenshots/cyberpunk-theme.png)
+*Vibrant neon colors for a futuristic aesthetic*
+
+### Kodama Grove Theme
+![Kodama Grove Theme](public/screenshots/kodama-grove-theme.png)
+*Nature-inspired green theme for a calming experience*
+
+*Note: Screenshots should be placed in the `public/screenshots/` directory. To take screenshots, run `pnpm dev` and navigate to `http://localhost:3000`, then switch between themes and capture the interface.*
+
 ## Features
 - 🎥 **Prompt Builder**: Interactive interface for crafting video prompts
 - 🎨 **Theme System**: Multiple built-in themes with customization options, including light, dark, system, cyberpunk, and kodama grove themes.
