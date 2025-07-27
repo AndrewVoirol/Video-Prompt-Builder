@@ -1,73 +1,44 @@
 export interface Theme {
+  name: string;
   label: string;
   value: string;
   preview: {
-    background: string;
-    foreground: string;
     primary: string;
     secondary: string;
     accent: string;
   };
 }
 
+// Available theme options based on tweakcn and our CSS definitions
 export const themes: Theme[] = [
   {
-    label: "System",
-    value: "system",
+    name: "MonoGeist",
+    label: "MonoGeist",
+    value: "monogeist",
     preview: {
-      background: "hsl(0 0% 100%)",
-      foreground: "hsl(222.2 84% 4.9%)",
-      primary: "hsl(222.2 47.4% 11.2%)",
-      secondary: "hsl(210 40% 96%)",
-      accent: "hsl(210 40% 96%)",
+      primary: "oklch(0.2050 0 0)",
+      secondary: "oklch(0.9700 0 0)",
+      accent: "oklch(0.9700 0 0)",
     },
   },
   {
-    label: "Primary (tweakcn)",
-    value: "tweakcn",
+    name: "Kodama Grove",
+    label: "Kodama Grove", 
+    value: "kodama-grove",
     preview: {
-      background: "hsl(0 0% 100%)",
-      foreground: "hsl(222.2 84% 4.9%)",
-      primary: "hsl(222.2 47.4% 11.2%)",
-      secondary: "hsl(210 40% 96%)",
-      accent: "hsl(210 40% 96%)",
+      primary: "oklch(0.6657 0.1050 118.9078)",
+      secondary: "oklch(0.8532 0.0631 91.1493)",
+      accent: "oklch(0.8361 0.0713 90.3269)",
     },
   },
   {
+    name: "Cyberpunk",
     label: "Cyberpunk",
     value: "cyberpunk",
     preview: {
-      background: "hsl(230 15% 9%)",
-      foreground: "hsl(315 100% 85%)",
-      primary: "hsl(315 100% 70%)",
-      secondary: "hsl(195 100% 50%)",
-      accent: "hsl(195 100% 50%)",
-    },
-  },
-  {
-    label: "Kodama Grove",
-    value: "kodama-grove",
-    preview: {
-      background: "hsl(120 20% 97%)",
-      foreground: "hsl(120 15% 15%)",
-      primary: "hsl(120 60% 35%)",
-      secondary: "hsl(90 25% 85%)",
-      accent: "hsl(160 50% 65%)",
+      primary: "oklch(0.6726 0.2904 341.4084)",
+      secondary: "oklch(0.9595 0.0200 286.0164)",
+      accent: "oklch(0.8903 0.1739 171.2690)",
     },
   },
 ];
-
-// Helper function to get all theme variants (light and dark)
-export const getAllThemeVariants = () => {
-  const allVariants: string[] = []
-  
-  themes.forEach(theme => {
-    if (theme.value === "system") {
-      allVariants.push("system", "light", "dark")
-    } else {
-      allVariants.push(theme.value, `${theme.value}-dark`)
-    }
-  })
-  
-  return allVariants
-}

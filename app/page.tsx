@@ -122,13 +122,17 @@ export default function HomePage() {
         {/* Main Content Area */}
         <SidebarInset>
           {/* Header with hamburger menu for mobile */}
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-            <SidebarTrigger className="md:hidden" />
-            <div className="flex flex-1 items-center justify-between">
-              <div>
-                <h1 className="text-lg font-semibold">🎬 Video Prompt Builder</h1>
+          <header className="glass-header sticky top-0 z-50 flex h-16 shrink-0 items-center">
+            <div className="flex w-full items-center px-4">
+              <SidebarTrigger className="mr-3 md:hidden" />
+              <div className="flex flex-1 items-center justify-between">
+                <div className="flex items-center">
+                  <h1 className="text-lg font-semibold tracking-tight md:text-xl">🎬 Video Prompt Builder</h1>
+                </div>
+                <div className="flex items-center">
+                  <ThemeSelect />
+                </div>
               </div>
-              <ThemeSelect />
             </div>
           </header>
 

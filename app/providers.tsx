@@ -1,8 +1,9 @@
 "use client"
 
-import { ThemeProvider as NextThemesProvider } from "next-themes"
+import { ThemeProvider } from "next-themes"
+import { ThemeConfigProvider } from "@/components/active-theme"
 import { Toaster } from "@/components/ui/sonner"
-import { getAllThemeVariants } from "@/lib/themes"
+import { themes } from "@/lib/themes"
 
 interface ProvidersProps {
   children: React.ReactNode
@@ -10,15 +11,17 @@ interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-    <NextThemesProvider
+    <ThemeProvider
       attribute="data-theme"
-      defaultTheme="system"
-      themes={getAllThemeVariants()}
-      enableSystem
-      disableTransitionOnChange
+      defaultTheme="cyberpunk"
+      themes={['monogeist', 'kodama-grove', 'cyberpunk']}
+      enableSystem={false}
+      disableTransitionOnChange={false}
     >
-      {children}
-      <Toaster />
-    </NextThemesProvider>
+      <ThemeConfigProvider>
+        {children}
+        <Toaster />
+      </ThemeConfigProvider>
+    </ThemeProvider>
   )
 }

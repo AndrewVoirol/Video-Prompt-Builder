@@ -18,7 +18,8 @@ import {
   MenubarContent,
   MenubarItem,
 } from "@/components/ui/menubar"
-import { ThemeSelect } from "@/components/custom/ThemeSelect"
+import { ThemeSelect } from '@/components/custom/ThemeSelect'
+import { Separator } from '@/components/ui/separator'
 
 interface DashboardLayoutProps {
   children?: React.ReactNode
@@ -139,7 +140,7 @@ function DashboardHeader({
             </div>
 
             {/* Right side - Theme controls */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <ThemeSelect />
             </div>
           </>
