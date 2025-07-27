@@ -78,3 +78,5 @@ export function ProvenanceBadge({ source, origin, modified, className }: Provena
     </StaticBadge>
   )
 }
+
+export default StaticBadge;

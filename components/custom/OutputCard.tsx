@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from './Button';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardHeader,
@@ -159,4 +159,5 @@ const OutputCard: React.FC<OutputCardProps> = ({
 };
 
 export { OutputCard };
+export default OutputCard;
 export type { OutputCardProps };

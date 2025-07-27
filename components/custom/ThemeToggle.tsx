@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useTheme } from 'next-themes';
-import { Button } from './Button';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface ThemeToggleProps {
@@ -64,4 +64,5 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
 };
 
 export { ThemeToggle };
+export default ThemeToggle;
 export type { ThemeToggleProps };

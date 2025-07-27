@@ -1,6 +1,4 @@
 @tailwind base;
-
-@custom-variant dark (&:is(.dark *));
 @tailwind components;
 @tailwind utilities;
 
@@ -49,16 +47,171 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
+
+  /* Primary Theme (tweakcn) - Uses :root and .dark as base */
+
+  /* Cyberpunk Theme */
+  [data-theme="cyberpunk"] {
+    --background: 230 15% 9%;
+    --foreground: 315 100% 85%;
+    --card: 240 15% 11% ;
+    --card-foreground: 315 100% 85%;
+    --popover: 240 15% 11%;
+    --popover-foreground: 315 100% 85%;
+    --primary: 315 100% 70%;
+    --primary-foreground: 230 15% 9%;
+    --secondary: 195 100% 50%;
+    --secondary-foreground: 230 15% 9%;
+    --muted: 240 15% 15%;
+    --muted-foreground: 315 50% 65%;
+    --accent: 195 100% 50%;
+    --accent-foreground: 230 15% 9%;
+    --destructive: 0 100% 67%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 15% 20%;
+    --input: 240 15% 15%;
+    --ring: 315 100% 70%;
+    --radius: 0.75rem;
+  }
+
+  [data-theme="cyberpunk"].dark {
+    --background: 230 15% 6%;
+    --foreground: 315 100% 90%;
+    --card: 240 15% 8%;
+    --card-foreground: 315 100% 90%;
+    --popover: 240 15% 8%;
+    --popover-foreground: 315 100% 90%;
+    --primary: 315 100% 75%;
+    --primary-foreground: 230 15% 6%;
+    --secondary: 195 100% 55%;
+    --secondary-foreground: 230 15% 6%;
+    --muted: 240 15% 12%;
+    --muted-foreground: 315 50% 70%;
+    --accent: 195 100% 55%;
+    --accent-foreground: 230 15% 6%;
+    --destructive: 0 100% 72%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 15% 18%;
+    --input: 240 15% 12%;
+    --ring: 315 100% 75%;
+  }
+
+  /* Kodama Grove Theme */
+  [data-theme="kodama-grove"] {
+    --background: 120 20% 97%;
+    --foreground: 120 15% 15%;
+    --card: 120 25% 95%;
+    --card-foreground: 120 15% 15%;
+    --popover: 120 25% 95%;
+    --popover-foreground: 120 15% 15%;
+    --primary: 120 60% 35%;
+    --primary-foreground: 120 20% 97%;
+    --secondary: 90 25% 85%;
+    --secondary-foreground: 120 15% 15%;
+    --muted: 90 25% 85%;
+    --muted-foreground: 120 10% 45%;
+    --accent: 160 50% 65%;
+    --accent-foreground: 120 15% 15%;
+    --destructive: 15 80% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 120 15% 80%;
+    --input: 120 15% 85%;
+    --ring: 120 60% 35%;
+    --radius: 0.375rem;
+  }
+
+  [data-theme="kodama-grove"].dark {
+    --background: 120 15% 8%;
+    --foreground: 120 20% 90%;
+    --card: 120 15% 10%;
+    --card-foreground: 120 20% 90%;
+    --popover: 120 15% 10%;
+    --popover-foreground: 120 20% 90%;
+    --primary: 120 50% 55%;
+    --primary-foreground: 120 15% 8%;
+    --secondary: 90 15% 20%;
+    --secondary-foreground: 120 20% 90%;
+    --muted: 90 15% 18%;
+    --muted-foreground: 120 15% 65%;
+    --accent: 160 40% 45%;
+    --accent-foreground: 120 20% 90%;
+    --destructive: 15 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 120 15% 25%;
+    --input: 120 15% 18%;
+    --ring: 120 50% 55%;
+  }
+
 }
 
-@layer base {
-  * {
-    border-color: hsl(var(--border));
-  }
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-  }
+/* Dark theme aliases for theme switching compatibility */
+[data-theme="tweakcn-dark"] {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 84% 4.9%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+  --radius: 0.5rem;
+}
+
+[data-theme="cyberpunk-dark"] {
+  --background: 230 15% 6%;
+  --foreground: 315 100% 90%;
+  --card: 240 15% 8%;
+  --card-foreground: 315 100% 90%;
+  --popover: 240 15% 8%;
+  --popover-foreground: 315 100% 90%;
+  --primary: 315 100% 75%;
+  --primary-foreground: 230 15% 6%;
+  --secondary: 195 100% 55%;
+  --secondary-foreground: 230 15% 6%;
+  --muted: 240 15% 12%;
+  --muted-foreground: 315 50% 70%;
+  --accent: 195 100% 55%;
+  --accent-foreground: 230 15% 6%;
+  --destructive: 0 100% 72%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 15% 18%;
+  --input: 240 15% 12%;
+  --ring: 315 100% 75%;
+  --radius: 0.75rem;
+}
+
+[data-theme="kodama-grove-dark"] {
+  --background: 120 15% 8%;
+  --foreground: 120 20% 90%;
+  --card: 120 15% 10%;
+  --card-foreground: 120 20% 90%;
+  --popover: 120 15% 10%;
+  --popover-foreground: 120 20% 90%;
+  --primary: 120 50% 55%;
+  --primary-foreground: 120 15% 8%;
+  --secondary: 90 15% 20%;
+  --secondary-foreground: 120 20% 90%;
+  --muted: 90 15% 18%;
+  --muted-foreground: 120 15% 65%;
+  --accent: 160 40% 45%;
+  --accent-foreground: 120 20% 90%;
+  --destructive: 15 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 120 15% 25%;
+  --input: 120 15% 18%;
+  --ring: 120 50% 55%;
+  --radius: 0.375rem;
 }
 
 :root {
@@ -72,7 +225,10 @@
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
-.dark {
+.dark,
+[data-theme="tweakcn-dark"],
+[data-theme="cyberpunk-dark"],
+[data-theme="kodama-grove-dark"] {
   --sidebar: hsl(240 5.9% 10%);
   --sidebar-foreground: hsl(240 4.8% 95.9%);
   --sidebar-primary: hsl(224.3 76.3% 48%);
@@ -83,7 +239,26 @@
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
-@theme inline {
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -96,9 +271,15 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: hsl(var(--border));
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .outline-hidden {
+    outline: none;
   }
 }

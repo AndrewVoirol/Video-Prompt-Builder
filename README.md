@@ -14,12 +14,25 @@ Video-Prompt-Builder is a modern web application that provides an intuitive inte
 
 ## Features
 - 🎥 **Prompt Builder**: Interactive interface for crafting video prompts
-- 🎨 **Theme System**: Multiple built-in themes with customization options
+- 🎨 **Theme System**: Multiple built-in themes with customization options, including light, dark, system, cyberpunk, and kodama grove themes.
 - 📱 **Responsive Design**: Works seamlessly across all device sizes
 - ♿ **Accessibility**: WCAG 2.1 AA compliant with full keyboard navigation
 - 🛠️ **Developer Tools**: Comprehensive utilities and helpers
 - 📚 **Prompt Library**: Curated collection of effective prompts
 - 🔧 **Extensible**: Plugin-based architecture for easy customization
+
+## Theme Instructions
+
+The application supports multiple themes using a sophisticated theme system that applies consistent styles across components. The following themes are available:
+
+- **System**: Automatically adjusts to match the system setting.
+- **Primary (tweakcn)**: A clean, modern light theme.
+- **Cyberpunk**: A vibrant, neon-inspired theme.
+- **Kodama Grove**: A calming, nature-inspired green theme.
+
+To switch themes, use the theme selector component provided in the application, or adjust the default theme in the `lib/constants.ts` file.
+
+Ensure that your custom components utilize the CSS variables defined within the `globals.css` to maintain consistency across themes.
 
 ## Tech Stack
 - **Framework**: Next.js 15 with enhanced App Router

@@ -5,3 +5,6 @@ export {
   TabsTrigger,
   TabsContent
 } from '@/components/ui/tabs'
+
+// Default export for consistency
+export { Tabs as default } from '@/components/ui/tabs'

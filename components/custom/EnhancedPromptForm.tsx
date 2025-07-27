@@ -3,7 +3,7 @@
 import React, { useOptimistic, useTransition } from 'react'
 import { useActionState } from 'react'
 import { cn } from '@/lib/utils'
-import { Button } from './Button'
+import { Button } from '@/components/ui/button'
 import { savePromptAction, generatePromptAction } from '@/lib/actions'
 import { BuilderState } from '@/lib/formatters'
 import { ALL_PRESETS } from '@/lib/presets'
@@ -26,7 +26,7 @@ interface OptimisticUpdate {
  * - useActionState for server action state management
  * - Server Actions for form submissions
  */
-export function EnhancedPromptForm({ 
+function EnhancedPromptForm({ 
   initialBuilder, 
   onBuilderChange, 
   className 
@@ -331,3 +331,6 @@ export function EnhancedPromptForm({
     </div>
   )
 }
+
+export { EnhancedPromptForm };
+export default EnhancedPromptForm;
