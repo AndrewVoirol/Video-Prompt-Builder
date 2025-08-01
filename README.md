@@ -10,29 +10,35 @@
 A fully responsive, accessible Next.js and TypeScript video prompt builder for AI video models.
 
 ## Overview
+
 Video-Prompt-Builder is a modern web application that provides an intuitive interface for creating and managing prompts for AI video generation models. Built with Next.js 15, React 19, and TailwindCSS 4, it offers a seamless user experience with customizable themes and accessibility features.
 
 ## Screenshots
 
 ### Light Theme
+
 ![Light Theme](public/screenshots/light-theme.png)
-*The application in light mode with clean, modern styling*
+_The application in light mode with clean, modern styling_
 
 ### Dark Theme
+
 ![Dark Theme](public/screenshots/dark-theme.png)
-*Dark mode provides comfortable viewing in low-light environments*
+_Dark mode provides comfortable viewing in low-light environments_
 
 ### Cyberpunk Theme
+
 ![Cyberpunk Theme](public/screenshots/cyberpunk-theme.png)
-*Vibrant neon colors for a futuristic aesthetic*
+_Vibrant neon colors for a futuristic aesthetic_
 
 ### Kodama Grove Theme
-![Kodama Grove Theme](public/screenshots/kodama-grove-theme.png)
-*Nature-inspired green theme for a calming experience*
 
-*Note: Screenshots should be placed in the `public/screenshots/` directory. To take screenshots, run `pnpm dev` and navigate to `http://localhost:3000`, then switch between themes and capture the interface.*
+![Kodama Grove Theme](public/screenshots/kodama-grove-theme.png)
+_Nature-inspired green theme for a calming experience_
+
+_Note: Screenshots should be placed in the `public/screenshots/` directory. To take screenshots, run `pnpm dev` and navigate to `http://localhost:3000`, then switch between themes and capture the interface._
 
 ## Features
+
 - 🎥 **Prompt Builder**: Interactive interface for crafting video prompts
 - 🎨 **Theme System**: Multiple built-in themes with customization options, including light, dark, system, cyberpunk, and kodama grove themes.
 - 📱 **Responsive Design**: Works seamlessly across all device sizes
@@ -41,20 +47,220 @@ Video-Prompt-Builder is a modern web application that provides an intuitive inte
 - 📚 **Prompt Library**: Curated collection of effective prompts
 - 🔧 **Extensible**: Plugin-based architecture for easy customization
 
-## Theme Instructions
+## Theme System Documentation
 
-The application supports multiple themes using a sophisticated theme system that applies consistent styles across components. The following themes are available:
+### Overview
 
-- **System**: Automatically adjusts to match the system setting.
-- **Primary (tweakcn)**: A clean, modern light theme.
-- **Cyberpunk**: A vibrant, neon-inspired theme.
-- **Kodama Grove**: A calming, nature-inspired green theme.
+The application features a sophisticated dual-axis theme system that supports both theme selection (color schemes) and dark/light mode toggling. This system is built on CSS custom properties (variables) and provides seamless theme switching with smooth transitions.
 
-To switch themes, use the theme selector component provided in the application, or adjust the default theme in the `lib/constants.ts` file.
+### Architecture
 
-Ensure that your custom components utilize the CSS variables defined within the `globals.css` to maintain consistency across themes.
+#### 1. **Theme Provider (`app/providers.tsx`)**
+- Manages theme state using React Context
+- Handles both color scheme selection and dark mode toggling
+- Persists user preferences to localStorage
+- Applies theme attributes to the document root:
+  - `data-theme`: Sets the color scheme (e.g., "monogeist", "cyberpunk")
+  - `class`: Adds "dark" class for dark mode
+
+#### 2. **CSS Variables (`app/globals.css`)**
+- Defines theme tokens using CSS custom properties
+- Each theme has light and dark mode variants
+- Variables are scoped under `:root[data-theme="theme-name"]` and `.dark` selectors
+- Includes comprehensive design tokens:
+  - **Colors**: Background, foreground, card, popover, muted, accent colors
+  - **Typography**: Font families, sizes, weights, line heights
+  - **Shadows**: Multiple elevation levels (xs to 2xl)
+  - **Borders**: Border colors, radius scales
+  - **Surfaces**: Specialized surface colors for different UI contexts
+
+#### 3. **Theme Configuration (`lib/constants.ts`)**
+```typescript
+export const THEMES = [
+  { id: "tweakcn", name: "Primary", icon: "🎨" },
+  { id: "monogeist", name: "MonoGeist", icon: "⚡" },
+  { id: "cyberpunk", name: "Cyberpunk", icon: "🌆" },
+  { id: "kodama-grove", name: "Kodama Grove", icon: "🌿" }
+];
+```
+
+### Available Themes
+
+1. **Primary (tweakcn)** 🎨
+   - Clean, modern design system
+   - Optimized for readability
+   - Professional color palette
+
+2. **MonoGeist** ⚡
+   - Monospace typography throughout
+   - High contrast design
+   - Developer-focused aesthetic
+   - Sharp corners (0 border radius)
+
+3. **Cyberpunk** 🌆
+   - Neon color palette
+   - Vibrant pink and cyan accents
+   - Futuristic visual style
+   - High visual impact
+
+4. **Kodama Grove** 🌿
+   - Nature-inspired green palette
+   - Calming, organic feel
+   - Soft, earthy tones
+   - Rounded corners
+
+### How to Use Themes in Components
+
+#### Basic Usage
+```tsx
+// Components automatically inherit theme variables
+<div className="bg-background text-foreground">
+  <Card className="bg-card border-border shadow-md">
+    Content
+  </Card>
+</div>
+```
+
+#### Using CSS Variables Directly
+```tsx
+// For custom surface colors
+<div className="bg-[var(--surface-elevated)] shadow-lg">
+  Elevated content
+</div>
+
+// For theme-specific styling
+<button className="bg-primary text-primary-foreground hover:bg-primary/90">
+  Action
+</button>
+```
+
+#### Overlay Components
+Use the shared overlay helper for consistent styling:
+```tsx
+import { overlayStyles } from '@/lib/overlay';
+
+// In your component
+<PopoverContent className={overlayStyles.popover()}>
+  Content
+</PopoverContent>
+```
+
+### Adding a New Theme
+
+1. **Define the theme in CSS** (`app/globals.css`):
+```css
+:root[data-theme="your-theme"] {
+  /* Light mode colors */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  /* ... all other variables */
+}
+
+:root[data-theme="your-theme"].dark {
+  /* Dark mode colors */
+  --background: 0 0% 9%;
+  --foreground: 0 0% 95%;
+  /* ... all other variables */
+}
+```
+
+2. **Add theme configuration** (`lib/constants.ts`):
+```typescript
+export const THEMES = [
+  // ... existing themes
+  { id: "your-theme", name: "Your Theme", icon: "🎯" }
+];
+```
+
+3. **Test your theme** at `/theme-test`:
+- Navigate to the theme test page
+- Select your new theme
+- Toggle dark/light modes
+- Verify all components render correctly
+
+### Theme Variables Reference
+
+#### Core Colors
+- `--background`: Main background color
+- `--foreground`: Main text color
+- `--card`: Card background color
+- `--card-foreground`: Card text color
+- `--popover`: Popover background
+- `--popover-foreground`: Popover text
+- `--primary`: Primary brand color
+- `--primary-foreground`: Text on primary
+- `--secondary`: Secondary brand color
+- `--muted`: Muted backgrounds
+- `--accent`: Accent color for highlights
+- `--destructive`: Error/danger color
+
+#### Surface Colors
+- `--surface-base`: Base surface
+- `--surface-card`: Card surfaces
+- `--surface-panel`: Panel backgrounds
+- `--surface-overlay`: Modal overlays
+- `--surface-popover`: Popover backgrounds
+- `--surface-elevated`: Elevated surfaces
+- `--surface-tooltip`: Tooltip backgrounds
+
+#### Typography
+- `--font-family-sans`: Sans-serif font stack
+- `--font-family-mono`: Monospace font stack
+- `--font-size-*`: Font size scale (xs to 2xl)
+- `--font-weight-*`: Font weight scale
+- `--line-height-*`: Line height scale
+
+#### Effects
+- `--shadow-*`: Shadow elevation scale (xs to 2xl)
+- `--radius-*`: Border radius scale (sm to 2xl)
+- `--ring`: Focus ring color
+- `--ring-offset`: Ring offset for focus states
+
+### Dark Mode Implementation
+
+1. **Automatic OS Detection**: Respects system preferences
+2. **Manual Toggle**: Users can override with theme selector
+3. **Smooth Transitions**: CSS transitions for theme changes
+4. **Persistent State**: Preferences saved to localStorage
+
+### Best Practices
+
+1. **Always use theme variables** instead of hard-coded colors
+2. **Test in all themes** before committing changes
+3. **Use semantic color names** (e.g., `bg-card` not `bg-white`)
+4. **Leverage the overlay helper** for consistent elevated surfaces
+5. **Respect dark mode** by testing both light and dark variants
+6. **Use proper contrast ratios** for accessibility
+
+### Theme Testing
+
+A comprehensive theme testing page is available at `/theme-test` that showcases:
+- All UI components in different states
+- Theme switching functionality
+- Dark/light mode toggling
+- Color palette display
+- Typography samples
+- Interactive component demos
+
+### Troubleshooting
+
+**Theme not applying?**
+- Check that ThemeProvider wraps your app
+- Verify CSS variables are loaded
+- Clear localStorage and refresh
+
+**Colors look wrong?**
+- Ensure you're using HSL format in CSS variables
+- Check for typos in variable names
+- Verify dark mode class is applied correctly
+
+**Component styling issues?**
+- Use theme variables instead of Tailwind colors
+- Check for hard-coded color values
+- Test in all themes to identify issues
 
 ## Tech Stack
+
 - **Framework**: Next.js 15 with enhanced App Router
 - **Language**: TypeScript 5.8.3
 - **UI Library**: React 19 with Server Components
@@ -66,6 +272,7 @@ Ensure that your custom components utilize the CSS variables defined within the 
 - **Deployment**: Vercel (recommended)
 
 ## Project Structure
+
 ```
 video-prompt-builder/
 ├── app/                    # Next.js app directory
@@ -82,6 +289,7 @@ video-prompt-builder/
 ## Getting Started
 
 ### Prerequisites
+
 - **Node.js 20.11.0+** (required for React 19 and Next.js 15)
 - **pnpm** (recommended package manager)
 - **Git** (for version control)
@@ -107,6 +315,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 All scripts are optimized for pnpm:
 
 ### Development
+
 - `pnpm dev` - Start development server with Turbopack and hot reload
 - `pnpm build` - Build application for production with Next.js 15
 - `pnpm build:static` - Build static export version
@@ -114,6 +323,7 @@ All scripts are optimized for pnpm:
 - `pnpm start` - Start production server
 
 ### Code Quality
+
 - `pnpm lint` - Run ESLint 9 with flat config for code quality
 - `pnpm lint:fix` - Run ESLint and auto-fix issues
 - `pnpm type-check` - Run TypeScript type checking
@@ -121,11 +331,13 @@ All scripts are optimized for pnpm:
 - `pnpm format:check` - Check code formatting
 
 ### Testing
+
 - `pnpm test` - Run Jest 30 test suite
 - `pnpm test:watch` - Run tests in watch mode
 - `pnpm test:coverage` - Run tests with coverage report
 
 ### Utilities
+
 - `pnpm clean` - Clean build artifacts and dependencies
 - `pnpm export` - Export static Next.js build
 
@@ -178,6 +390,7 @@ Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
 10. Open a Pull Request
 
 ### Migration Notes
+
 - See [UPGRADE-2025.md](UPGRADE-2025.md) for breaking changes and migration guide
 - Project uses React 19 and Next.js 15 - review documentation for new patterns
 - ESLint 9 uses flat config format - legacy configs not supported
