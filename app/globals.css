@@ -3,6 +3,74 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* === Smooth Theme Transition Animation === */
+:root {
+  --theme-transition-duration: 400ms;
+  --theme-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* View Transition API for smooth theme changes */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 999;
+}
+
+/* Dark mode transition with circular reveal from cursor */
+.dark::view-transition-new(root) {
+  animation: theme-transition-reveal var(--theme-transition-duration) var(--theme-transition-ease);
+}
+
+.dark::view-transition-old(root) {
+  animation: theme-transition-fade-out var(--theme-transition-duration) var(--theme-transition-ease);
+}
+
+html:not(.dark)::view-transition-new(root) {
+  animation: theme-transition-reveal var(--theme-transition-duration) var(--theme-transition-ease);
+}
+
+html:not(.dark)::view-transition-old(root) {
+  animation: theme-transition-fade-out var(--theme-transition-duration) var(--theme-transition-ease);
+}
+
+/* Circular reveal animation from cursor position */
+@keyframes theme-transition-reveal {
+  from {
+    clip-path: circle(0% at var(--x) var(--y));
+  }
+  to {
+    clip-path: circle(150% at var(--x) var(--y));
+  }
+}
+
+@keyframes theme-transition-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Smooth color transitions for elements that don't use view transitions */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    transition: background-color var(--theme-transition-duration) var(--theme-transition-ease),
+                border-color var(--theme-transition-duration) var(--theme-transition-ease),
+                color var(--theme-transition-duration) var(--theme-transition-ease),
+                fill var(--theme-transition-duration) var(--theme-transition-ease),
+                stroke var(--theme-transition-duration) var(--theme-transition-ease);
+  }
+}
+
 /* === MonoGeist Theme === */
 [data-theme="monogeist"] {
   --background: oklch(1 0 0);
@@ -531,61 +599,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* === View Transition Wave Effect (tweakcn style) === */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-old(root) {
-  /* Ensure the outgoing view (old theme) is beneath */
-  z-index: 0;
-}
-
-::view-transition-new(root) {
-  /* Ensure the incoming view (new theme) is always on top */
-  z-index: 1;
-}
-
-@keyframes reveal {
-  from {
-    /* Use CSS variables for the origin, defaulting to center if not set */
-    clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
-    opacity: 0.7;
-  }
-  to {
-    /* Use CSS variables for the origin, defaulting to center if not set */
-    clip-path: circle(150% at var(--x, 50%) var(--y, 50%));
-    opacity: 1;
-  }
-}
-
-::view-transition-new(root) {
-  /* Apply the reveal animation */
-  animation: reveal 0.4s ease-in-out forwards;
-}
-
-/* === Smooth Transitions === */
-* {
-  transition-property:
-    color, background-color, border-color, text-decoration-color, fill, stroke,
-    opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 0.2s;
-}
-
-/* Enhanced transitions for theme changes */
-body,
-[data-theme] {
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* Prevent flash during theme changes */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    view-transition-name: root;
-  }
+/* === Disable transitions during theme changes to prevent conflicts === */
+.transitioning,
+.transitioning * {
+  transition: none !important;
 }
 
 /* Enhanced backdrop blur support */
