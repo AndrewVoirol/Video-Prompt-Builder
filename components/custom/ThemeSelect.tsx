@@ -62,6 +62,7 @@ export function ThemeSelect() {
 
   const handleThemeChange = (value: string) => {
     setCurrentColorTheme(value);
+document.documentElement.setAttribute('data-theme', value);
     setTheme(value);
   };
 

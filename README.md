@@ -436,3 +436,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 For support, please open an issue or contact the maintainers.
+
+## Theme and Mode Updates
+
+### Features
+- Updated theme toggle to affect full site.
+- Extended `ThemeSelect` to ensure `data-theme` and dark mode are toggled consistently.
+
+### Tests
+- Automated tests verify theme toggling and dark mode.
+
+### Cleanup
+- Process cleanup script provided to terminate lingering threads.
+
+For any questions, refer to the theme setup guide.

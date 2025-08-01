@@ -58,6 +58,7 @@ export function useDualTheme(): DualThemeReturn {
 
   const setMode = (newMode: Mode) => {
     setModeState(newMode);
+document.documentElement.classList.toggle('dark', newMode === 'dark');
     setTheme(newMode);
     localStorage.setItem("mode", newMode);
   };
