@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTheme as useNextTheme } from "next-themes";
 
-export type ColorScheme = "monogeist" | "kodama-grove" | "cyberpunk";
+export type ColorScheme = "monogeist" | "kodama-grove" | "cyber-punk";
 export type Mode = "light" | "dark";
 
 interface DualThemeReturn {
@@ -17,7 +17,7 @@ interface DualThemeReturn {
 
 export function useDualTheme(): DualThemeReturn {
   const { theme, setTheme } = useNextTheme();
-  const [colorScheme, setColorSchemeState] = useState<ColorScheme>("cyberpunk");
+  const [colorScheme, setColorSchemeState] = useState<ColorScheme>("cyber-punk");
   const [mode, setModeState] = useState<Mode>("light");
   const [mounted, setMounted] = useState(false);
 

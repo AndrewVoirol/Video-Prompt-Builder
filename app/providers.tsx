@@ -15,7 +15,7 @@ function DualThemeProvider({ children }: { children: React.ReactNode }) {
     // Ensure data-theme attribute is set on mount
     const root = document.documentElement;
     if (!root.getAttribute("data-theme")) {
-      root.setAttribute("data-theme", "cyberpunk");
+      root.setAttribute("data-theme", "cyber-punk");
     }
   }, []);
 

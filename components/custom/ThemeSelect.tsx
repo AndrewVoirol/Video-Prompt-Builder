@@ -16,14 +16,14 @@ import { cn } from "@/lib/utils";
 const availableThemes = [
   { name: "MonoGeist", value: "monogeist" },
   { name: "Kodama Grove", value: "kodama-grove" },
-  { name: "Cyberpunk", value: "cyberpunk" },
+  { name: "Cyberpunk", value: "cyber-punk" },
 ];
 
 export function ThemeSelect() {
   const { setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [currentColorTheme, setCurrentColorTheme] = React.useState("cyberpunk");
+  const [currentColorTheme, setCurrentColorTheme] = React.useState("cyber-punk");
 
   // Monitor for DOM readiness and theme status
   React.useEffect(() => {
@@ -31,7 +31,7 @@ export function ThemeSelect() {
 
     // Extract current theme and dark mode state
     const htmlElement = document.documentElement;
-    const dataTheme = htmlElement.getAttribute("data-theme") || "cyberpunk";
+    const dataTheme = htmlElement.getAttribute("data-theme") || "cyber-punk";
     const isDark = htmlElement.classList.contains("dark");
 
     setCurrentColorTheme(dataTheme);
@@ -45,7 +45,7 @@ export function ThemeSelect() {
           }
           if (mutation.attributeName === "data-theme") {
             const newTheme =
-              htmlElement.getAttribute("data-theme") || "cyberpunk";
+              htmlElement.getAttribute("data-theme") || "cyber-punk";
             setCurrentColorTheme(newTheme);
           }
         }
