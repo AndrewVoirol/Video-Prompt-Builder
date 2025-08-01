@@ -11,7 +11,7 @@ interface DualThemeReturn {
   mode: Mode;
   setColorScheme: (scheme: ColorScheme) => void;
   setMode: (mode: Mode) => void;
-  toggleMode: () => void;
+  toggleMode: (coords?: { x: number; y: number }) => void;
   mounted: boolean;
 }
 
@@ -63,9 +63,34 @@ document.documentElement.classList.toggle('dark', newMode === 'dark');
     localStorage.setItem("mode", newMode);
   };
 
-  const toggleMode = () => {
+  const toggleMode = (coords?: { x: number; y: number }) => {
     const newMode = mode === "dark" ? "light" : "dark";
-    setMode(newMode);
+    
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    // Use view transitions if supported and motion is allowed
+    if (!prefersReducedMotion && "startViewTransition" in document) {
+      const root = document.documentElement;
+      
+      // Set coordinates for transition origin if provided
+      if (coords) {
+        root.style.setProperty("--x", `${coords.x}px`);
+        root.style.setProperty("--y", `${coords.y}px`);
+      }
+
+      // Handle experimental startViewTransition API with proper type checking
+      const docWithTransition = document as Document & {
+        startViewTransition?: (callback: () => void) => void;
+      };
+      docWithTransition.startViewTransition?.(() => {
+        setMode(newMode);
+      });
+    } else {
+      setMode(newMode);
+    }
   };
 
   return {

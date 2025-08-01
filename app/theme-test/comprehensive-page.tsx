@@ -79,21 +79,9 @@ export default function ComprehensiveThemeTest() {
   };
 
   const toggleDarkMode = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const root = document.documentElement;
-
-    // Apply view transition if supported
-    if ("startViewTransition" in document && e) {
-      const { clientX: x, clientY: y } = e;
-      root.style.setProperty("--x", `${x}px`);
-      root.style.setProperty("--y", `${y}px`);
-
-      // @ts-expect-error startViewTransition is not yet in TypeScript DOM types
-      document.startViewTransition(() => {
-        toggleMode();
-      });
-    } else {
-      toggleMode();
-    }
+    // Extract click coordinates and pass them to toggleMode
+    const { clientX: x, clientY: y } = e;
+    toggleMode({ x, y });
   };
 
   const copyThemeInfo = () => {
@@ -223,7 +211,7 @@ export default function ComprehensiveThemeTest() {
                   <div>
                     <p className="text-sm font-medium">Current Configuration</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      {currentThemeInfo.name} •{" "}
+                      {currentThemeInfo?.name || "Unknown"} •{" "}
                       {mode === "dark" ? "Dark" : "Light"} Mode
                     </p>
                   </div>

@@ -18,8 +18,31 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
 }) => {
   const { theme, setTheme } = useTheme();
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+  const toggleTheme = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { clientX: x, clientY: y } = event;
+    const newTheme = theme === "dark" ? "light" : "dark";
+    
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    // Use view transitions if supported and motion is allowed
+    if (!prefersReducedMotion && "startViewTransition" in document) {
+      const root = document.documentElement;
+      root.style.setProperty("--x", `${x}px`);
+      root.style.setProperty("--y", `${y}px`);
+
+      // Handle experimental startViewTransition API with proper type checking
+      const docWithTransition = document as Document & {
+        startViewTransition?: (callback: () => void) => void;
+      };
+      docWithTransition.startViewTransition?.(() => {
+        setTheme(newTheme);
+      });
+    } else {
+      setTheme(newTheme);
+    }
   };
 
   return (
