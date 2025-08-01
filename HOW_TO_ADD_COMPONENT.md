@@ -5,6 +5,7 @@ This guide explains how to add a new component to the Video-Prompt-Builder using
 ## Prerequisites
 
 Before adding components, ensure you have:
+
 - Node.js 20.11.0+ installed
 - pnpm package manager
 - Basic understanding of React, TypeScript, and TailwindCSS
@@ -14,11 +15,13 @@ Before adding components, ensure you have:
 ### Using the CLI (Recommended)
 
 1. **Install a shadcn/ui component:**
+
    ```bash
    npx shadcn@latest add [component-name]
    ```
 
 2. **Install multiple components at once:**
+
    ```bash
    npx shadcn@latest add button card input label
    ```
@@ -35,6 +38,7 @@ If you need to create a custom component or modify an existing one:
 #### 1. Component Structure
 
 Components are organized in the following structure:
+
 ```
 components/
 ├── ui/           # shadcn/ui base components
@@ -47,6 +51,7 @@ components/
 Create your component in the appropriate directory:
 
 **For UI components** (`components/ui/`):
+
 ```typescript
 // components/ui/my-component.tsx
 import * as React from "react"
@@ -97,6 +102,7 @@ export { MyComponent, myComponentVariants }
 ```
 
 **For custom components** (`components/custom/`):
+
 ```typescript
 // components/custom/my-custom-component.tsx
 import { Button } from "@/components/ui/button"
@@ -127,10 +133,10 @@ Ensure your component uses the theme system:
 
 ```typescript
 // Use CSS variables defined in globals.css
-const themedStyles = "bg-background text-foreground border border-border"
+const themedStyles = "bg-background text-foreground border border-border";
 
 // Or use theme-aware Tailwind classes
-const adaptiveStyles = "bg-card text-card-foreground dark:bg-card-dark"
+const adaptiveStyles = "bg-card text-card-foreground dark:bg-card-dark";
 ```
 
 #### 4. Export from Index
@@ -139,15 +145,15 @@ Add your component to the appropriate index file:
 
 ```typescript
 // components/ui/index.ts
-export { MyComponent } from "./my-component"
+export { MyComponent } from "./my-component";
 
 // components/custom/index.ts
-export { MyCustomComponent } from "./my-custom-component"
+export { MyCustomComponent } from "./my-custom-component";
 
 // components/index.ts
-export * from "./ui"
-export * from "./custom"
-export * from "./layout"
+export * from "./ui";
+export * from "./custom";
+export * from "./layout";
 ```
 
 ## Configuration Files
@@ -259,8 +265,8 @@ Ensure proper TypeScript integration:
 ```typescript
 // lib/types.ts - Add component-specific types
 export interface ComponentConfig {
-  variant: 'default' | 'secondary'
-  size: 'sm' | 'default' | 'lg'
+  variant: "default" | "secondary";
+  size: "sm" | "default" | "lg";
 }
 ```
 
@@ -270,54 +276,58 @@ If using Storybook, create stories:
 
 ```typescript
 // stories/MyComponent.stories.tsx
-import type { Meta, StoryObj } from '@storybook/react'
-import { MyComponent } from '@/components/ui/my-component'
+import type { Meta, StoryObj } from "@storybook/react";
+import { MyComponent } from "@/components/ui/my-component";
 
 const meta: Meta<typeof MyComponent> = {
-  title: 'UI/MyComponent',
+  title: "UI/MyComponent",
   component: MyComponent,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: 'Default MyComponent',
+    children: "Default MyComponent",
   },
-}
+};
 
 export const Secondary: Story = {
   args: {
-    variant: 'secondary',
-    children: 'Secondary MyComponent',
+    variant: "secondary",
+    children: "Secondary MyComponent",
   },
-}
+};
 ```
 
 ## Best Practices
 
 ### 1. Follow shadcn/ui Patterns
+
 - Use `forwardRef` for UI components
 - Implement `asChild` prop when appropriate
 - Use `class-variance-authority` for variant management
 - Follow the compound component pattern for complex components
 
 ### 2. Theme Consistency
+
 - Always use CSS variables for theming
 - Ensure components work in all available themes
 - Test both light and dark modes
 
 ### 3. Accessibility
+
 - Include proper ARIA attributes
 - Ensure keyboard navigation works
 - Test with screen readers
 - Follow WCAG 2.1 AA guidelines
 
 ### 4. Performance
+
 - Use React.memo for expensive components
 - Implement proper prop types and defaults
 - Avoid unnecessary re-renders
@@ -355,4 +365,3 @@ pnpm lint
 - [Class Variance Authority](https://cva.style/docs)
 
 By following this guide, you'll be able to seamlessly add and integrate components into the Video-Prompt-Builder ecosystem while maintaining consistency, accessibility, and performance standards.
-

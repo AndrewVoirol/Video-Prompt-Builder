@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "puppeteer-automation": {
+      "command": "node",
+      "args": ["./dist/scripts/puppeteer-mcp-server.js"],
+      "working_directory": "/Users/andrewvoirol/Dev/DevProjects/Video-Prompt-Builder",
+      "env": {}
+    }
+  }
+}

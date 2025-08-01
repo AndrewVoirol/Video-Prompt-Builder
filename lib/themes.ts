@@ -23,7 +23,7 @@ export const themes: Theme[] = [
   },
   {
     name: "Kodama Grove",
-    label: "Kodama Grove", 
+    label: "Kodama Grove",
     value: "kodama-grove",
     preview: {
       primary: "oklch(0.6657 0.1050 118.9078)",
@@ -34,7 +34,7 @@ export const themes: Theme[] = [
   {
     name: "Cyberpunk",
     label: "Cyberpunk",
-    value: "cyberpunk",
+    value: "cyber-punk",
     preview: {
       primary: "oklch(0.6726 0.2904 341.4084)",
       secondary: "oklch(0.9595 0.0200 286.0164)",

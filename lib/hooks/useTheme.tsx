@@ -1,10 +1,16 @@
-import { useContext, createContext, useState, useEffect, ReactNode } from 'react';
+import {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 /**
  * Theme mode options for the application.
  * Supports 'light', 'dark', and 'system' modes for comprehensive theming.
  */
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = "light" | "dark" | "system";
 
 /**
  * Theme configuration interface.
@@ -36,11 +42,11 @@ export interface ThemeProviderProps {
 /**
  * Theme provider component that wraps the application to provide theme context.
  * This should be placed at the root of your component tree.
- * 
+ *
  * @example
  * ```tsx
  * import { ThemeProvider } from './lib/hooks/useTheme';
- * 
+ *
  * function App() {
  *   return (
  *     <ThemeProvider defaultMode="system">
@@ -50,20 +56,24 @@ export interface ThemeProviderProps {
  * }
  * ```
  */
-export function ThemeProvider({ children, defaultMode = 'system' }: ThemeProviderProps) {
+export function ThemeProvider({
+  children,
+  defaultMode = "system",
+}: ThemeProviderProps) {
   const [mode, setMode] = useState<ThemeMode>(defaultMode);
 
   // Apply theme to document root for ShadCN/tweakcn compatibility
   useEffect(() => {
     const root = window.document.documentElement;
-    
+
     // Remove existing theme classes
-    root.classList.remove('light', 'dark');
-    
-    if (mode === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
+    root.classList.remove("light", "dark");
+
+    if (mode === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
       root.classList.add(systemTheme);
     } else {
       root.classList.add(mode);
@@ -72,17 +82,17 @@ export function ThemeProvider({ children, defaultMode = 'system' }: ThemeProvide
 
   // Listen for system theme changes when in system mode
   useEffect(() => {
-    if (mode !== 'system') return;
+    if (mode !== "system") return;
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = () => {
       const root = window.document.documentElement;
-      root.classList.remove('light', 'dark');
-      root.classList.add(mediaQuery.matches ? 'dark' : 'light');
+      root.classList.remove("light", "dark");
+      root.classList.add(mediaQuery.matches ? "dark" : "light");
     };
 
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, [mode]);
 
   const value: ThemeConfig = {
@@ -91,34 +101,32 @@ export function ThemeProvider({ children, defaultMode = 'system' }: ThemeProvide
   };
 
   return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 }
 
 /**
  * Custom React hook for managing and accessing theme state.
- * 
+ *
  * Provides access to the current theme mode and a function to update it.
  * Works seamlessly with ShadCN/tweakcn components by applying theme classes
  * to the document root element.
- * 
+ *
  * @returns {ThemeConfig} Object containing current theme mode and setter function
- * 
+ *
  * @throws {Error} Throws an error if used outside of a ThemeProvider
- * 
+ *
  * @example
  * ```tsx
  * import { useTheme } from './lib/hooks/useTheme';
- * 
+ *
  * function ThemeToggle() {
  *   const { mode, setMode } = useTheme();
- * 
+ *
  *   const toggleTheme = () => {
  *     setMode(mode === 'light' ? 'dark' : 'light');
  *   };
- * 
+ *
  *   return (
  *     <button onClick={toggleTheme}>
  *       Switch to {mode === 'light' ? 'dark' : 'light'} mode
@@ -126,13 +134,13 @@ export function ThemeProvider({ children, defaultMode = 'system' }: ThemeProvide
  *   );
  * }
  * ```
- * 
+ *
  * @example
  * ```tsx
  * // System mode support
  * function ThemeSelector() {
  *   const { mode, setMode } = useTheme();
- * 
+ *
  *   return (
  *     <select value={mode} onChange={(e) => setMode(e.target.value as ThemeMode)}>
  *       <option value="light">Light</option>
@@ -145,14 +153,14 @@ export function ThemeProvider({ children, defaultMode = 'system' }: ThemeProvide
  */
 export function useTheme(): ThemeConfig {
   const context = useContext(ThemeContext);
-  
+
   if (context === undefined) {
     throw new Error(
-      'useTheme must be used within a ThemeProvider. ' +
-      'Wrap your app or component tree with <ThemeProvider> to use this hook.'
+      "useTheme must be used within a ThemeProvider. " +
+        "Wrap your app or component tree with <ThemeProvider> to use this hook.",
     );
   }
-  
+
   return context;
 }
 

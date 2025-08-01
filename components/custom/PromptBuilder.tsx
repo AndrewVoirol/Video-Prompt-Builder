@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 /**
  * PromptBuilder - Main builder UI container component
- * 
+ *
  * This component serves as the primary interface for building video prompts.
  * It contains the main form logic and UI elements that allow users to construct
  * and configure their video generation prompts through an intuitive interface.
- * 
+ *
  * @returns {JSX.Element} The main prompt builder interface
  */
 const PromptBuilder: React.FC = () => {
@@ -16,20 +16,20 @@ const PromptBuilder: React.FC = () => {
         <h2>Video Prompt Builder</h2>
         <p>Create and customize your video generation prompts</p>
       </div>
-      
+
       <div className="prompt-builder__form">
         {/* Main builder form/logic section - placeholder */}
         <form className="builder-form">
           <div className="form-section">
             <label htmlFor="prompt-input">Prompt Description:</label>
-            <textarea 
+            <textarea
               id="prompt-input"
               className="prompt-input"
               placeholder="Enter your video prompt description here..."
               rows={4}
             />
           </div>
-          
+
           <div className="form-section">
             <label htmlFor="style-select">Style:</label>
             <select id="style-select" className="style-select">
@@ -39,7 +39,7 @@ const PromptBuilder: React.FC = () => {
               <option value="artistic">Artistic</option>
             </select>
           </div>
-          
+
           <div className="form-actions">
             <button type="button" className="btn btn-secondary">
               Preview

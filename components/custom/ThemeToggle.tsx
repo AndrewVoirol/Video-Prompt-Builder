@@ -1,34 +1,34 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useTheme } from 'next-themes';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface ThemeToggleProps {
   className?: string;
-  size?: 'sm' | 'default' | 'lg';
-  variant?: 'default' | 'secondary' | 'outline' | 'ghost';
+  size?: "sm" | "default" | "lg";
+  variant?: "default" | "secondary" | "outline" | "ghost";
 }
 
-const ThemeToggle: React.FC<ThemeToggleProps> = ({ 
-  className, 
-  size = 'default',
-  variant = 'ghost'
+const ThemeToggle: React.FC<ThemeToggleProps> = ({
+  className,
+  size = "default",
+  variant = "ghost",
 }) => {
   const { theme, setTheme } = useTheme();
-  
+
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(theme === "dark" ? "light" : "dark");
   };
-  
+
   return (
     <Button
       variant={variant}
       size={size}
       onClick={toggleTheme}
-      className={cn('relative', className)}
-      aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+      className={cn("relative", className)}
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
     >
       <svg
         className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
@@ -56,9 +56,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
           d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
         />
       </svg>
-      <span className="sr-only">
-        Toggle theme
-      </span>
+      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 };

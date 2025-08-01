@@ -30,33 +30,33 @@ import { PromptBuilder } from '@/components/PromptBuilder'
 
 #### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `onPromptChange` | `(prompt: string) => void` | - | Callback fired when prompt text changes |
-| `onSubmit` | `(prompt: string) => void` | - | Callback fired when form is submitted |
-| `initialPrompt` | `string` | `''` | Initial prompt text |
-| `placeholder` | `string` | `'Enter your video prompt...'` | Input placeholder text |
-| `disabled` | `boolean` | `false` | Whether the input is disabled |
+| Prop             | Type                       | Default                        | Description                             |
+| ---------------- | -------------------------- | ------------------------------ | --------------------------------------- |
+| `onPromptChange` | `(prompt: string) => void` | -                              | Callback fired when prompt text changes |
+| `onSubmit`       | `(prompt: string) => void` | -                              | Callback fired when form is submitted   |
+| `initialPrompt`  | `string`                   | `''`                           | Initial prompt text                     |
+| `placeholder`    | `string`                   | `'Enter your video prompt...'` | Input placeholder text                  |
+| `disabled`       | `boolean`                  | `false`                        | Whether the input is disabled           |
 
 #### Example
 
 ```tsx
 const MyComponent = () => {
-  const [prompt, setPrompt] = useState('')
-  
+  const [prompt, setPrompt] = useState("");
+
   const handleSubmit = (prompt: string) => {
-    console.log('Submitting prompt:', prompt)
+    console.log("Submitting prompt:", prompt);
     // Handle video generation
-  }
-  
+  };
+
   return (
     <PromptBuilder
       onPromptChange={setPrompt}
       onSubmit={handleSubmit}
       placeholder="Describe your video scene..."
     />
-  )
-}
+  );
+};
 ```
 
 ### ThemeProvider
@@ -64,42 +64,40 @@ const MyComponent = () => {
 Provides theme context throughout the application.
 
 ```tsx
-import { ThemeProvider } from '@/components/ThemeProvider'
+import { ThemeProvider } from "@/components/ThemeProvider";
 
-<ThemeProvider theme="dark">
-  {children}
-</ThemeProvider>
+<ThemeProvider theme="dark">{children}</ThemeProvider>;
 ```
 
 #### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `theme` | `'light' \| 'dark' \| 'auto'` | `'auto'` | Theme variant |
-| `children` | `ReactNode` | - | Child components |
+| Prop       | Type                          | Default  | Description      |
+| ---------- | ----------------------------- | -------- | ---------------- |
+| `theme`    | `'light' \| 'dark' \| 'auto'` | `'auto'` | Theme variant    |
+| `children` | `ReactNode`                   | -        | Child components |
 
 ### Toast
 
 Notification component for user feedback.
 
 ```tsx
-import { Toast } from '@/components/Toast'
+import { Toast } from "@/components/Toast";
 
 <Toast
   message="Prompt saved successfully!"
   type="success"
   onClose={() => setShowToast(false)}
-/>
+/>;
 ```
 
 #### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `message` | `string` | - | Toast message content |
-| `type` | `'success' \| 'error' \| 'warning' \| 'info'` | `'info'` | Toast variant |
-| `duration` | `number` | `3000` | Auto-dismiss duration in ms |
-| `onClose` | `() => void` | - | Callback when toast is closed |
+| Prop       | Type                                          | Default  | Description                   |
+| ---------- | --------------------------------------------- | -------- | ----------------------------- |
+| `message`  | `string`                                      | -        | Toast message content         |
+| `type`     | `'success' \| 'error' \| 'warning' \| 'info'` | `'info'` | Toast variant                 |
+| `duration` | `number`                                      | `3000`   | Auto-dismiss duration in ms   |
+| `onClose`  | `() => void`                                  | -        | Callback when toast is closed |
 
 ## Hooks
 
@@ -108,66 +106,61 @@ import { Toast } from '@/components/Toast'
 Hook for accessing and managing theme state.
 
 ```tsx
-import { useTheme } from '@/lib/useTheme'
+import { useTheme } from "@/lib/useTheme";
 
-const { theme, setTheme, toggleTheme } = useTheme()
+const { theme, setTheme, toggleTheme } = useTheme();
 ```
 
 #### Returns
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `theme` | `'light' \| 'dark'` | Current theme |
-| `setTheme` | `(theme: 'light' \| 'dark') => void` | Set theme explicitly |
-| `toggleTheme` | `() => void` | Toggle between light and dark |
+| Property      | Type                                 | Description                   |
+| ------------- | ------------------------------------ | ----------------------------- |
+| `theme`       | `'light' \| 'dark'`                  | Current theme                 |
+| `setTheme`    | `(theme: 'light' \| 'dark') => void` | Set theme explicitly          |
+| `toggleTheme` | `() => void`                         | Toggle between light and dark |
 
 ### usePromptHistory
 
 Hook for managing prompt history and persistence.
 
 ```tsx
-import { usePromptHistory } from '@/lib/usePromptHistory'
+import { usePromptHistory } from "@/lib/usePromptHistory";
 
-const {
-  history,
-  addPrompt,
-  clearHistory,
-  removePrompt
-} = usePromptHistory()
+const { history, addPrompt, clearHistory, removePrompt } = usePromptHistory();
 ```
 
 #### Returns
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `history` | `PromptHistoryItem[]` | Array of saved prompts |
-| `addPrompt` | `(prompt: string) => void` | Add prompt to history |
-| `clearHistory` | `() => void` | Clear all history |
-| `removePrompt` | `(id: string) => void` | Remove specific prompt |
+| Property       | Type                       | Description            |
+| -------------- | -------------------------- | ---------------------- |
+| `history`      | `PromptHistoryItem[]`      | Array of saved prompts |
+| `addPrompt`    | `(prompt: string) => void` | Add prompt to history  |
+| `clearHistory` | `() => void`               | Clear all history      |
+| `removePrompt` | `(id: string) => void`     | Remove specific prompt |
 
 ### useLocalStorage
 
 Hook for persistent local storage with TypeScript support.
 
 ```tsx
-import { useLocalStorage } from '@/lib/useLocalStorage'
+import { useLocalStorage } from "@/lib/useLocalStorage";
 
-const [value, setValue] = useLocalStorage<string>('key', 'defaultValue')
+const [value, setValue] = useLocalStorage<string>("key", "defaultValue");
 ```
 
 #### Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `key` | `string` | Storage key |
-| `initialValue` | `T` | Default value |
+| Parameter      | Type     | Description   |
+| -------------- | -------- | ------------- |
+| `key`          | `string` | Storage key   |
+| `initialValue` | `T`      | Default value |
 
 #### Returns
 
-| Return | Type | Description |
-|--------|------|-------------|
-| `value` | `T` | Current stored value |
-| `setValue` | `(value: T) => void` | Update stored value |
+| Return     | Type                 | Description          |
+| ---------- | -------------------- | -------------------- |
+| `value`    | `T`                  | Current stored value |
+| `setValue` | `(value: T) => void` | Update stored value  |
 
 ## Utilities
 
@@ -176,25 +169,25 @@ const [value, setValue] = useLocalStorage<string>('key', 'defaultValue')
 Validates prompt content and structure.
 
 ```tsx
-import { validatePrompt } from '@/lib/validation'
+import { validatePrompt } from "@/lib/validation";
 
-const result = validatePrompt(promptText)
+const result = validatePrompt(promptText);
 ```
 
 #### Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `prompt` | `string` | Prompt text to validate |
+| Parameter | Type     | Description             |
+| --------- | -------- | ----------------------- |
+| `prompt`  | `string` | Prompt text to validate |
 
 #### Returns
 
 ```tsx
 type ValidationResult = {
-  isValid: boolean
-  errors: string[]
-  warnings: string[]
-}
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
+};
 ```
 
 ### formatPrompt
@@ -202,9 +195,9 @@ type ValidationResult = {
 Formats and sanitizes prompt text.
 
 ```tsx
-import { formatPrompt } from '@/lib/utils'
+import { formatPrompt } from "@/lib/utils";
 
-const formatted = formatPrompt(rawPrompt)
+const formatted = formatPrompt(rawPrompt);
 ```
 
 ### generatePromptId
@@ -212,9 +205,9 @@ const formatted = formatPrompt(rawPrompt)
 Generates unique identifiers for prompts.
 
 ```tsx
-import { generatePromptId } from '@/lib/utils'
+import { generatePromptId } from "@/lib/utils";
 
-const id = generatePromptId() // Returns string like 'prompt_1234567890'
+const id = generatePromptId(); // Returns string like 'prompt_1234567890'
 ```
 
 ## Types
@@ -224,60 +217,60 @@ const id = generatePromptId() // Returns string like 'prompt_1234567890'
 ```tsx
 // Prompt-related types
 type PromptIntent = {
-  id: string
-  title: string
-  description: string
-  category: string
-  tags: string[]
-  prompt: string
-  domain?: string
-}
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  tags: string[];
+  prompt: string;
+  domain?: string;
+};
 
 type PromptHistoryItem = {
-  id: string
-  prompt: string
-  timestamp: number
-  title?: string
-}
+  id: string;
+  prompt: string;
+  timestamp: number;
+  title?: string;
+};
 
 // Theme types
-type Theme = 'light' | 'dark'
-type ThemeMode = Theme | 'auto'
+type Theme = "light" | "dark";
+type ThemeMode = Theme | "auto";
 
 // Component prop types
 type PromptBuilderProps = {
-  onPromptChange: (prompt: string) => void
-  onSubmit: (prompt: string) => void
-  initialPrompt?: string
-  placeholder?: string
-  disabled?: boolean
-}
+  onPromptChange: (prompt: string) => void;
+  onSubmit: (prompt: string) => void;
+  initialPrompt?: string;
+  placeholder?: string;
+  disabled?: boolean;
+};
 
 type ToastProps = {
-  message: string
-  type?: 'success' | 'error' | 'warning' | 'info'
-  duration?: number
-  onClose: () => void
-}
+  message: string;
+  type?: "success" | "error" | "warning" | "info";
+  duration?: number;
+  onClose: () => void;
+};
 ```
 
 ### Event Types
 
 ```tsx
 type PromptChangeEvent = {
-  prompt: string
-  timestamp: number
-  source: 'user' | 'system'
-}
+  prompt: string;
+  timestamp: number;
+  source: "user" | "system";
+};
 
 type PromptSubmitEvent = {
-  prompt: string
+  prompt: string;
   metadata: {
-    length: number
-    wordCount: number
-    timestamp: number
-  }
-}
+    length: number;
+    wordCount: number;
+    timestamp: number;
+  };
+};
 ```
 
 ## Configuration
@@ -303,15 +296,15 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9ff',
-          500: '#3b82f6',
-          900: '#1e3a8a',
+          50: "#f0f9ff",
+          500: "#3b82f6",
+          900: "#1e3a8a",
         },
         // Additional theme colors
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};
 ```
 
 ### Default Settings
@@ -319,12 +312,12 @@ module.exports = {
 ```tsx
 // lib/constants.ts
 export const DEFAULT_SETTINGS = {
-  theme: 'auto' as ThemeMode,
+  theme: "auto" as ThemeMode,
   maxPromptLength: 1000,
   autoSave: true,
   historyLimit: 50,
   toastDuration: 3000,
-} as const
+} as const;
 ```
 
 ## Error Handling
@@ -334,21 +327,21 @@ export const DEFAULT_SETTINGS = {
 The application includes error boundaries for graceful error handling:
 
 ```tsx
-import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 <ErrorBoundary fallback={<ErrorFallback />}>
   <PromptBuilder />
-</ErrorBoundary>
+</ErrorBoundary>;
 ```
 
 ### Common Error Types
 
 ```tsx
 type PromptError = {
-  code: 'VALIDATION_ERROR' | 'STORAGE_ERROR' | 'NETWORK_ERROR'
-  message: string
-  details?: Record<string, any>
-}
+  code: "VALIDATION_ERROR" | "STORAGE_ERROR" | "NETWORK_ERROR";
+  message: string;
+  details?: Record<string, any>;
+};
 ```
 
 ## Testing
@@ -356,36 +349,31 @@ type PromptError = {
 ### Component Testing
 
 ```tsx
-import { render, screen } from '@testing-library/react'
-import { PromptBuilder } from '@/components/PromptBuilder'
+import { render, screen } from "@testing-library/react";
+import { PromptBuilder } from "@/components/PromptBuilder";
 
-test('renders prompt builder', () => {
-  render(
-    <PromptBuilder
-      onPromptChange={jest.fn()}
-      onSubmit={jest.fn()}
-    />
-  )
-  
-  expect(screen.getByRole('textbox')).toBeInTheDocument()
-})
+test("renders prompt builder", () => {
+  render(<PromptBuilder onPromptChange={jest.fn()} onSubmit={jest.fn()} />);
+
+  expect(screen.getByRole("textbox")).toBeInTheDocument();
+});
 ```
 
 ### Hook Testing
 
 ```tsx
-import { renderHook, act } from '@testing-library/react'
-import { useTheme } from '@/lib/useTheme'
+import { renderHook, act } from "@testing-library/react";
+import { useTheme } from "@/lib/useTheme";
 
-test('useTheme toggles theme', () => {
-  const { result } = renderHook(() => useTheme())
-  
+test("useTheme toggles theme", () => {
+  const { result } = renderHook(() => useTheme());
+
   act(() => {
-    result.current.toggleTheme()
-  })
-  
-  expect(result.current.theme).toBe('dark')
-})
+    result.current.toggleTheme();
+  });
+
+  expect(result.current.theme).toBe("dark");
+});
 ```
 
 ## Migration Guide

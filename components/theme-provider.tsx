@@ -2,9 +2,26 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { themes } from "@/lib/themes";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+export function CustomThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      value={{ light: "light", dark: "dark" }}
+    >
+      {children}
+    </NextThemesProvider>
+  );
+}
 
 type Theme = "light" | "dark" | "system";
-type ColorScheme = typeof themes[number]["value"];
+type ColorScheme = (typeof themes)[number]["value"];
 
 interface ThemeContextValue {
   theme: Theme;
@@ -36,23 +53,29 @@ export function ThemeProvider({
   defaultColorScheme = "monogeist",
 }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(defaultTheme);
-  const [colorScheme, setColorSchemeState] = useState<ColorScheme>(defaultColorScheme);
+  const [colorScheme, setColorSchemeState] =
+    useState<ColorScheme>(defaultColorScheme);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Load theme from localStorage or system preference
     const savedTheme = localStorage.getItem("theme") as Theme;
-    const savedColorScheme = localStorage.getItem("color-scheme") as ColorScheme;
-    
+    const savedColorScheme = localStorage.getItem(
+      "color-scheme",
+    ) as ColorScheme;
+
     if (savedTheme) {
       setThemeState(savedTheme);
     } else {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
       setThemeState(systemTheme);
     }
-    
+
     if (savedColorScheme) {
       setColorSchemeState(savedColorScheme);
     }
@@ -62,22 +85,25 @@ export function ThemeProvider({
     if (!mounted) return;
 
     const root = document.documentElement;
-    
+
     // Remove previous theme classes
     root.classList.remove("light", "dark");
     root.removeAttribute("data-theme");
-    
+
     // Apply color scheme
     root.setAttribute("data-theme", colorScheme);
-    
+
     // Apply light/dark theme
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
       root.classList.add(systemTheme);
     } else {
       root.classList.add(theme);
     }
-    
+
     // Store in localStorage
     localStorage.setItem("theme", theme);
     localStorage.setItem("color-scheme", colorScheme);
@@ -93,13 +119,13 @@ export function ThemeProvider({
 
   const toggleTheme = (event?: { x: number; y: number }) => {
     const newTheme = theme === "dark" ? "light" : "dark";
-    
+
     // Apply view transition if supported and coordinates provided
     if (event && "startViewTransition" in document) {
       const { x, y } = event;
       document.documentElement.style.setProperty("--x", `${x}px`);
       document.documentElement.style.setProperty("--y", `${y}px`);
-      
+
       // Handle experimental startViewTransition API with proper type checking
       const docWithTransition = document as Document & {
         startViewTransition?: (callback: () => void) => void;

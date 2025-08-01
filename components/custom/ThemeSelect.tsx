@@ -1,96 +1,103 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useTheme } from "next-themes"
-import { Sun, Moon, Palette } from "lucide-react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { useTheme } from "next-themes";
+import { Sun, Moon, Palette } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 // Available themes for selection
 const availableThemes = [
   { name: "MonoGeist", value: "monogeist" },
   { name: "Kodama Grove", value: "kodama-grove" },
   { name: "Cyberpunk", value: "cyberpunk" },
-]
+];
 
 export function ThemeSelect() {
-  const { setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
-  const [isDarkMode, setIsDarkMode] = React.useState(false)
-  const [currentColorTheme, setCurrentColorTheme] = React.useState('cyberpunk')
+  const { setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [currentColorTheme, setCurrentColorTheme] = React.useState("cyberpunk");
 
   // Monitor for DOM readiness and theme status
   React.useEffect(() => {
-    setMounted(true)
-    
+    setMounted(true);
+
     // Extract current theme and dark mode state
-    const htmlElement = document.documentElement
-    const dataTheme = htmlElement.getAttribute('data-theme') || 'cyberpunk'
-    const isDark = htmlElement.classList.contains('dark')
-    
-    setCurrentColorTheme(dataTheme)
-    setIsDarkMode(isDark)
+    const htmlElement = document.documentElement;
+    const dataTheme = htmlElement.getAttribute("data-theme") || "cyberpunk";
+    const isDark = htmlElement.classList.contains("dark");
+
+    setCurrentColorTheme(dataTheme);
+    setIsDarkMode(isDark);
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes') {
-          if (mutation.attributeName === 'class') {
-            setIsDarkMode(htmlElement.classList.contains('dark'))
+        if (mutation.type === "attributes") {
+          if (mutation.attributeName === "class") {
+            setIsDarkMode(htmlElement.classList.contains("dark"));
           }
-          if (mutation.attributeName === 'data-theme') {
-            const newTheme = htmlElement.getAttribute('data-theme') || 'cyberpunk'
-            setCurrentColorTheme(newTheme)
+          if (mutation.attributeName === "data-theme") {
+            const newTheme =
+              htmlElement.getAttribute("data-theme") || "cyberpunk";
+            setCurrentColorTheme(newTheme);
           }
         }
-      })
-    })
+      });
+    });
 
-    observer.observe(htmlElement, { 
-      attributes: true, 
-      attributeFilter: ['class', 'data-theme'] 
-    })
+    observer.observe(htmlElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme"],
+    });
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   const handleThemeChange = (value: string) => {
-    setCurrentColorTheme(value)
-    setTheme(value)
-  }
+    setCurrentColorTheme(value);
+    setTheme(value);
+  };
 
   const toggleDarkMode = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const { clientX: x, clientY: y } = event
-    const root = document.documentElement
-    const newDarkMode = !isDarkMode
+    const { clientX: x, clientY: y } = event;
+    const root = document.documentElement;
+    const newDarkMode = !isDarkMode;
 
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     const applyThemeChange = () => {
-      root.classList.toggle('dark')
-      setIsDarkMode(newDarkMode)
-    }
+      root.classList.toggle("dark");
+      setIsDarkMode(newDarkMode);
+    };
 
     // If no view transitions support or reduced motion, apply immediately
     if (!document.startViewTransition || prefersReducedMotion) {
-      applyThemeChange()
-      return
+      applyThemeChange();
+      return;
     }
 
     // Set coordinates as pixel values for the animation
-    root.style.setProperty('--x', `${x}px`)
-    root.style.setProperty('--y', `${y}px`)
+    root.style.setProperty("--x", `${x}px`);
+    root.style.setProperty("--y", `${y}px`);
 
     // Apply the view transition
     document.startViewTransition(() => {
-      applyThemeChange()
-    })
-  }
+      applyThemeChange();
+    });
+  };
 
   if (!mounted) {
-    return null
+    return null;
   }
 
   return (
@@ -115,38 +122,38 @@ export function ThemeSelect() {
         onClick={toggleDarkMode}
         className={cn(
           "relative inline-flex h-8 w-16 cursor-pointer items-center justify-center rounded-full border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-          isDarkMode 
-            ? "bg-primary border-primary/20" 
-            : "bg-muted border-border"
+          isDarkMode
+            ? "bg-primary border-primary/20"
+            : "bg-muted border-border",
         )}
         aria-label="Toggle dark mode"
       >
         <div
           className={cn(
             "absolute flex h-6 w-6 items-center justify-center rounded-full bg-background shadow-lg transition-all duration-300 ease-out",
-            isDarkMode ? "translate-x-4" : "-translate-x-4"
+            isDarkMode ? "translate-x-4" : "-translate-x-4",
           )}
         >
           <div className="relative h-3 w-3">
-            <Sun 
+            <Sun
               className={cn(
                 "absolute h-3 w-3 transition-all duration-300",
-                isDarkMode 
-                  ? "rotate-90 scale-0 opacity-0" 
-                  : "rotate-0 scale-100 opacity-100"
-              )} 
+                isDarkMode
+                  ? "rotate-90 scale-0 opacity-0"
+                  : "rotate-0 scale-100 opacity-100",
+              )}
             />
-            <Moon 
+            <Moon
               className={cn(
                 "absolute h-3 w-3 transition-all duration-300",
-                isDarkMode 
-                  ? "rotate-0 scale-100 opacity-100" 
-                  : "-rotate-90 scale-0 opacity-0"
-              )} 
+                isDarkMode
+                  ? "rotate-0 scale-100 opacity-100"
+                  : "-rotate-90 scale-0 opacity-0",
+              )}
             />
           </div>
         </div>
       </button>
     </div>
-  )
+  );
 }

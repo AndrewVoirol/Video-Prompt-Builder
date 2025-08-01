@@ -142,3 +142,6 @@ Thumbs.db
 *.local
 *.tgz
 .cache/
+
+# E2E test screenshots
+tests/e2e/screenshots/*.png

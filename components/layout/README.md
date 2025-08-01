@@ -18,7 +18,7 @@ A flexible dashboard layout component built with shadcn/ui components, using CSS
 The main layout component that provides the grid structure and slots for different areas.
 
 ```tsx
-import { DashboardLayout } from "@/components/layout/dashboard"
+import { DashboardLayout } from "@/components/layout/dashboard";
 
 export default function MyDashboard() {
   return (
@@ -29,19 +29,19 @@ export default function MyDashboard() {
     >
       <div>Main content here</div>
     </DashboardLayout>
-  )
+  );
 }
 ```
 
 ### Props
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `children` | `React.ReactNode` | Main content area |
-| `sidebar` | `React.ReactNode` | Custom sidebar content |
-| `header` | `React.ReactNode` | Custom header content |
-| `footer` | `React.ReactNode` | Custom footer content |
-| `className` | `string` | Additional CSS classes |
+| Prop        | Type              | Description            |
+| ----------- | ----------------- | ---------------------- |
+| `children`  | `React.ReactNode` | Main content area      |
+| `sidebar`   | `React.ReactNode` | Custom sidebar content |
+| `header`    | `React.ReactNode` | Custom header content  |
+| `footer`    | `React.ReactNode` | Custom footer content  |
+| `className` | `string`          | Additional CSS classes |
 
 ## Grid Structure
 
@@ -66,16 +66,19 @@ The layout uses CSS Grid with the following structure:
 If no custom content is provided, the layout includes sensible defaults:
 
 ### Default Sidebar
+
 - Dashboard title
 - Placeholder content
 - Footer with version info
 
 ### Default Header
+
 - Sidebar toggle button
 - Default menubar (File, Edit, View)
 - ThemeSelect component with dark/light toggle
 
 ### Default Footer
+
 - Copyright notice
 
 ## Customization Examples
@@ -83,8 +86,14 @@ If no custom content is provided, the layout includes sensible defaults:
 ### Custom Sidebar with Navigation
 
 ```tsx
-import { SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
-import { Home, Settings, Users } from "lucide-react"
+import {
+  SidebarHeader,
+  SidebarContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
+import { Home, Settings, Users } from "lucide-react";
 
 function CustomSidebar() {
   return (
@@ -113,7 +122,7 @@ function CustomSidebar() {
         </SidebarMenu>
       </SidebarContent>
     </>
-  )
+  );
 }
 ```
 
@@ -132,7 +141,7 @@ function CustomHeader() {
         <ThemeSelect />
       </div>
     </div>
-  )
+  );
 }
 ```
 
@@ -142,15 +151,13 @@ function CustomHeader() {
 function CustomFooter() {
   return (
     <div className="flex items-center justify-between w-full">
-      <p className="text-xs text-muted-foreground">
-        © 2024 My Company
-      </p>
+      <p className="text-xs text-muted-foreground">© 2024 My Company</p>
       <div className="flex gap-4 text-xs">
         <Link href="/privacy">Privacy</Link>
         <Link href="/terms">Terms</Link>
       </div>
     </div>
-  )
+  );
 }
 ```
 
@@ -175,6 +182,7 @@ The layout automatically adapts to mobile screens using the shadcn sidebar's bui
 ## Example Usage
 
 See `dashboard-example.tsx` for a complete working example with:
+
 - Custom sidebar navigation
 - Dashboard metrics cards
 - Activity feed

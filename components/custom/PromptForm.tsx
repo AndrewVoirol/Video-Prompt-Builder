@@ -1,35 +1,49 @@
-'use client'
+"use client";
 
-import React from 'react';
-import { useForm, Controller, FieldErrors } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { toast } from 'sonner';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
-import { BuilderState, createBuilderState } from '@/lib/formatters';
-import { VideoPreset } from '@/lib/presets';
+import React from "react";
+import { useForm, Controller, FieldErrors } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
+import { BuilderState, createBuilderState } from "@/lib/formatters";
+import { VideoPreset } from "@/lib/presets";
 
 // Form validation schema
 const promptFormSchema = z.object({
-  promptTemplate: z.string().min(10, 'Prompt template must be at least 10 characters'),
-  model: z.string().min(1, 'Model is required'),
+  promptTemplate: z
+    .string()
+    .min(10, "Prompt template must be at least 10 characters"),
+  model: z.string().min(1, "Model is required"),
   style: z.string().optional(),
-  quality: z.enum(['draft', 'standard', 'high', 'ultra']),
+  quality: z.enum(["draft", "standard", "high", "ultra"]),
   duration: z.number().min(1).max(60),
-  aspectRatio: z.enum(['16:9', '9:16', '1:1', '4:3', '21:9']),
+  aspectRatio: z.enum(["16:9", "9:16", "1:1", "4:3", "21:9"]),
   fps: z.union([z.literal(24), z.literal(30), z.literal(60)]),
-  resolution: z.enum(['720p', '1080p', '4k']),
-  motionIntensity: z.enum(['subtle', 'moderate', 'dynamic', 'extreme']),
-  cameraMovement: z.enum(['static', 'slow-pan', 'tracking', 'handheld', 'drone']),
-  lighting: z.enum(['natural', 'cinematic', 'dramatic', 'soft', 'harsh']),
-  colorGrading: z.enum(['natural', 'warm', 'cool', 'desaturated', 'vibrant']),
+  resolution: z.enum(["720p", "1080p", "4k"]),
+  motionIntensity: z.enum(["subtle", "moderate", "dynamic", "extreme"]),
+  cameraMovement: z.enum([
+    "static",
+    "slow-pan",
+    "tracking",
+    "handheld",
+    "drone",
+  ]),
+  lighting: z.enum(["natural", "cinematic", "dramatic", "soft", "harsh"]),
+  colorGrading: z.enum(["natural", "warm", "cool", "desaturated", "vibrant"]),
   advancedMode: z.boolean(),
 });
 
@@ -44,7 +58,7 @@ interface PromptFormProps {
 
 /**
  * PromptForm - Enhanced form component using react-hook-form
- * 
+ *
  * Features:
  * - React Hook Form with Zod validation
  * - Sonner toast notifications for validation errors
@@ -52,39 +66,75 @@ interface PromptFormProps {
  * - Advanced mode toggle for additional options
  * - Real-time validation feedback
  */
-export function PromptForm({ 
-  initialBuilder, 
-  onBuilderChange, 
+export function PromptForm({
+  initialBuilder,
+  onBuilderChange,
   selectedPreset,
-  className 
+  className,
 }: PromptFormProps) {
   const {
     control,
     handleSubmit,
     formState: { errors, isValid, isDirty },
     watch,
-    reset
+    reset,
   } = useForm<PromptFormData>({
     resolver: zodResolver(promptFormSchema),
     defaultValues: {
       promptTemplate: initialBuilder.prompt,
       model: initialBuilder.model,
-      style: initialBuilder.parameters.style || '',
-      quality: (initialBuilder.parameters.quality as 'draft' | 'standard' | 'high' | 'ultra') || 'standard', 
+      style: initialBuilder.parameters.style || "",
+      quality:
+        (initialBuilder.parameters.quality as
+          | "draft"
+          | "standard"
+          | "high"
+          | "ultra") || "standard",
       duration: initialBuilder.parameters.duration || 10,
-      aspectRatio: (initialBuilder.parameters.aspectRatio as '16:9' | '9:16' | '1:1' | '4:3' | '21:9') || '16:9',
+      aspectRatio:
+        (initialBuilder.parameters.aspectRatio as
+          | "16:9"
+          | "9:16"
+          | "1:1"
+          | "4:3"
+          | "21:9") || "16:9",
       fps: (initialBuilder.parameters.fps as 24 | 30 | 60) || 30,
-      resolution: (initialBuilder.parameters.resolution as '720p' | '1080p' | '4k') || '1080p',
-      motionIntensity: (initialBuilder.parameters.motionIntensity as 'subtle' | 'moderate' | 'dynamic' | 'extreme') || 'moderate',
-      cameraMovement: (initialBuilder.parameters.cameraMovement as 'static' | 'slow-pan' | 'tracking' | 'handheld' | 'drone') || 'static',
-      lighting: (initialBuilder.parameters.lighting as 'natural' | 'cinematic' | 'dramatic' | 'soft' | 'harsh') || 'natural',
-      colorGrading: (initialBuilder.parameters.colorGrading as 'natural' | 'warm' | 'cool' | 'desaturated' | 'vibrant') || 'natural',
+      resolution:
+        (initialBuilder.parameters.resolution as "720p" | "1080p" | "4k") ||
+        "1080p",
+      motionIntensity:
+        (initialBuilder.parameters.motionIntensity as
+          | "subtle"
+          | "moderate"
+          | "dynamic"
+          | "extreme") || "moderate",
+      cameraMovement:
+        (initialBuilder.parameters.cameraMovement as
+          | "static"
+          | "slow-pan"
+          | "tracking"
+          | "handheld"
+          | "drone") || "static",
+      lighting:
+        (initialBuilder.parameters.lighting as
+          | "natural"
+          | "cinematic"
+          | "dramatic"
+          | "soft"
+          | "harsh") || "natural",
+      colorGrading:
+        (initialBuilder.parameters.colorGrading as
+          | "natural"
+          | "warm"
+          | "cool"
+          | "desaturated"
+          | "vibrant") || "natural",
       advancedMode: false,
     },
-    mode: 'onChange'
+    mode: "onChange",
   });
 
-  const watchAdvancedMode = watch('advancedMode');
+  const watchAdvancedMode = watch("advancedMode");
 
   // Update form when preset changes
   React.useEffect(() => {
@@ -92,55 +142,59 @@ export function PromptForm({
       reset({
         promptTemplate: selectedPreset.promptTemplate,
         model: selectedPreset.model,
-        style: selectedPreset.parameters.style || '',
-        quality: selectedPreset.parameters.quality || 'standard',
+        style: selectedPreset.parameters.style || "",
+        quality: selectedPreset.parameters.quality || "standard",
         duration: selectedPreset.parameters.duration || 10,
-        aspectRatio: selectedPreset.parameters.aspectRatio || '16:9',
+        aspectRatio: selectedPreset.parameters.aspectRatio || "16:9",
         fps: selectedPreset.parameters.fps || 30,
-        resolution: selectedPreset.parameters.resolution || '1080p',
-        motionIntensity: selectedPreset.parameters.motionIntensity || 'moderate',
-        cameraMovement: selectedPreset.parameters.cameraMovement || 'static',
-        lighting: selectedPreset.parameters.lighting || 'natural',
-        colorGrading: selectedPreset.parameters.colorGrading || 'natural',
+        resolution: selectedPreset.parameters.resolution || "1080p",
+        motionIntensity:
+          selectedPreset.parameters.motionIntensity || "moderate",
+        cameraMovement: selectedPreset.parameters.cameraMovement || "static",
+        lighting: selectedPreset.parameters.lighting || "natural",
+        colorGrading: selectedPreset.parameters.colorGrading || "natural",
         advancedMode: watchAdvancedMode,
       });
     }
   }, [selectedPreset, reset, watchAdvancedMode]);
 
-  const onSubmit = React.useCallback((data: PromptFormData) => {
-    try {
-      // Filter out undefined values to satisfy TypeScript strict mode
-      const parameters: Record<string, unknown> = {};
-      if (data.style) parameters.style = data.style;
-      parameters.quality = data.quality;
-      parameters.duration = data.duration;
-      parameters.aspectRatio = data.aspectRatio;
-      parameters.fps = data.fps;
-      parameters.resolution = data.resolution;
-      parameters.motionIntensity = data.motionIntensity;
-      parameters.cameraMovement = data.cameraMovement;
-      parameters.lighting = data.lighting;
-      parameters.colorGrading = data.colorGrading;
+  const onSubmit = React.useCallback(
+    (data: PromptFormData) => {
+      try {
+        // Filter out undefined values to satisfy TypeScript strict mode
+        const parameters: Record<string, unknown> = {};
+        if (data.style) parameters.style = data.style;
+        parameters.quality = data.quality;
+        parameters.duration = data.duration;
+        parameters.aspectRatio = data.aspectRatio;
+        parameters.fps = data.fps;
+        parameters.resolution = data.resolution;
+        parameters.motionIntensity = data.motionIntensity;
+        parameters.cameraMovement = data.cameraMovement;
+        parameters.lighting = data.lighting;
+        parameters.colorGrading = data.colorGrading;
 
-      const updatedBuilder = createBuilderState(
-        data.promptTemplate,
-        data.model,
-        parameters as BuilderState['parameters'],
-        selectedPreset?.id || 'custom'
-      );
+        const updatedBuilder = createBuilderState(
+          data.promptTemplate,
+          data.model,
+          parameters as BuilderState["parameters"],
+          selectedPreset?.id || "custom",
+        );
 
-      onBuilderChange(updatedBuilder);
-      toast.success('Prompt updated successfully!');
-    } catch {
-      toast.error('Failed to update prompt. Please check your inputs.');
-    }
-  }, [onBuilderChange, selectedPreset?.id]);
+        onBuilderChange(updatedBuilder);
+        toast.success("Prompt updated successfully!");
+      } catch {
+        toast.error("Failed to update prompt. Please check your inputs.");
+      }
+    },
+    [onBuilderChange, selectedPreset?.id],
+  );
 
   const onError = React.useCallback((errors: FieldErrors<PromptFormData>) => {
     const errorMessages = Object.values(errors)
-      .map((error) => error?.message || 'Unknown error')
+      .map((error) => error?.message || "Unknown error")
       .filter(Boolean)
-      .join(', ');
+      .join(", ");
     toast.error(`Validation errors: ${errorMessages}`);
   }, []);
 
@@ -156,18 +210,16 @@ export function PromptForm({
   }, [watchedValues, isValid, isDirty, handleSubmit, onSubmit, onError]);
 
   return (
-    <Card className={`h-full overflow-auto ${className || ''}`}>
+    <Card className={`h-full overflow-auto bg-[var(--surface-card)] ${className || ""}`}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Video Prompt Configuration</CardTitle>
           <div className="flex items-center gap-2">
-            <Badge variant={isValid ? 'default' : 'destructive'}>
-              {isValid ? 'Valid' : 'Invalid'}
+            <Badge variant={isValid ? "default" : "destructive"}>
+              {isValid ? "Valid" : "Invalid"}
             </Badge>
             {selectedPreset && (
-              <Badge variant="outline">
-                {selectedPreset.name}
-              </Badge>
+              <Badge variant="outline">{selectedPreset.name}</Badge>
             )}
           </div>
         </div>
@@ -191,7 +243,9 @@ export function PromptForm({
               )}
             />
             {errors.promptTemplate && (
-              <p className="text-sm text-destructive">{errors.promptTemplate.message}</p>
+              <p className="text-sm text-destructive">
+                {errors.promptTemplate.message}
+              </p>
             )}
           </div>
 
@@ -304,9 +358,9 @@ export function PromptForm({
 
           {/* Advanced Parameters */}
           {watchAdvancedMode && (
-            <div className="space-y-4 p-4 border rounded-lg bg-muted/50">
+            <div className="space-y-4 p-4 border border-[var(--border-color)] rounded-lg bg-[var(--surface-muted)]">
               <h3 className="text-sm font-medium">Advanced Parameters</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Motion Intensity */}
                 <div className="space-y-2">
@@ -315,7 +369,10 @@ export function PromptForm({
                     name="motionIntensity"
                     control={control}
                     render={({ field }) => (
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
@@ -337,7 +394,10 @@ export function PromptForm({
                     name="cameraMovement"
                     control={control}
                     render={({ field }) => (
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
@@ -360,7 +420,10 @@ export function PromptForm({
                     name="lighting"
                     control={control}
                     render={({ field }) => (
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
@@ -383,7 +446,10 @@ export function PromptForm({
                     name="colorGrading"
                     control={control}
                     render={({ field }) => (
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
@@ -391,7 +457,9 @@ export function PromptForm({
                           <SelectItem value="natural">Natural</SelectItem>
                           <SelectItem value="warm">Warm</SelectItem>
                           <SelectItem value="cool">Cool</SelectItem>
-                          <SelectItem value="desaturated">Desaturated</SelectItem>
+                          <SelectItem value="desaturated">
+                            Desaturated
+                          </SelectItem>
                           <SelectItem value="vibrant">Vibrant</SelectItem>
                         </SelectContent>
                       </Select>

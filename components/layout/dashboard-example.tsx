@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import { DashboardLayout } from "./dashboard"
-import { SidebarHeader, SidebarContent, SidebarFooter, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
-import { Home, Settings, Users, FileText } from "lucide-react"
+import { DashboardLayout } from "./dashboard";
+import {
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
+import { Home, Settings, Users, FileText } from "lucide-react";
 
 /**
  * Example usage of the Dashboard Layout
@@ -22,7 +29,7 @@ export function DashboardExample() {
             Welcome to your dashboard. Here&apos;s what&apos;s happening today.
           </p>
         </div>
-        
+
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-lg border p-4">
             <h3 className="font-semibold">Total Users</h3>
@@ -41,7 +48,7 @@ export function DashboardExample() {
             <p className="text-2xl font-bold">+12%</p>
           </div>
         </div>
-        
+
         <div className="rounded-lg border p-6">
           <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
           <div className="space-y-2">
@@ -61,7 +68,7 @@ export function DashboardExample() {
         </div>
       </div>
     </DashboardLayout>
-  )
+  );
 }
 
 function CustomSidebar() {
@@ -75,7 +82,7 @@ function CustomSidebar() {
           <h2 className="text-lg font-semibold">Dashboard</h2>
         </div>
       </SidebarHeader>
-      
+
       <SidebarContent className="px-2">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -112,12 +119,12 @@ function CustomSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarContent>
-      
+
       <SidebarFooter className="px-4 py-2">
         <p className="text-xs text-muted-foreground">v1.0.0</p>
       </SidebarFooter>
     </>
-  )
+  );
 }
 
 function CustomHeader() {
@@ -127,10 +134,12 @@ function CustomHeader() {
         <h1 className="text-lg font-medium">Welcome back!</h1>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-sm text-muted-foreground">Last login: 2 hours ago</span>
+        <span className="text-sm text-muted-foreground">
+          Last login: 2 hours ago
+        </span>
       </div>
     </div>
-  )
+  );
 }
 
 function CustomFooter() {
@@ -140,10 +149,16 @@ function CustomFooter() {
         © 2024 Your Company. All rights reserved.
       </p>
       <div className="flex items-center gap-4 text-xs text-muted-foreground">
-        <a href="#" className="hover:text-foreground">Privacy</a>
-        <a href="#" className="hover:text-foreground">Terms</a>
-        <a href="#" className="hover:text-foreground">Support</a>
+        <a href="#" className="hover:text-foreground">
+          Privacy
+        </a>
+        <a href="#" className="hover:text-foreground">
+          Terms
+        </a>
+        <a href="#" className="hover:text-foreground">
+          Support
+        </a>
       </div>
     </div>
-  )
+  );
 }

@@ -7,9 +7,11 @@ This document summarizes the major breaking changes and manual steps completed d
 ## 🚨 Breaking Changes Addressed
 
 ### 1. React 19 Upgrade (18.3.1 → 19.1.0)
+
 **Impact**: Major version upgrade with breaking changes
 
 **Changes Made**:
+
 - ✅ Updated React and React DOM to version 19.1.0
 - ✅ Updated type definitions (`@types/react` 18.3.23 → 19.1.8, `@types/react-dom` 18.3.7 → 19.1.6)
 - ✅ Implemented new React 19 hooks (`useOptimistic`, `useActionState`)
@@ -17,15 +19,18 @@ This document summarizes the major breaking changes and manual steps completed d
 - ✅ Enhanced concurrent features with improved `useTransition`
 
 **Breaking Changes Resolved**:
+
 - Deprecated APIs removal
 - Event handling changes
 - Stricter type definitions
 - New hydration behavior
 
 ### 2. Next.js 15 Upgrade (14.2.30 → 15.4.4)
+
 **Impact**: Major framework upgrade
 
 **Changes Made**:
+
 - ✅ Updated Next.js core to 15.4.4
 - ✅ Enhanced App Router implementation
 - ✅ Integrated improved caching with `revalidatePath()`
@@ -33,38 +38,46 @@ This document summarizes the major breaking changes and manual steps completed d
 - ✅ Updated ESLint config for Next.js 15 compatibility
 
 **Breaking Changes Resolved**:
+
 - App Router behavioral changes
 - Updated caching mechanisms
 - API route modifications
 - Build configuration updates
 
 ### 3. Node.js Requirement Update
+
 **Impact**: Minimum version requirement increase
 
 **Changes Made**:
+
 - ✅ Updated Node.js requirement from 18+ to 20.11.0+
 - ✅ Updated `.nvmrc` to specify Node.js 20.11.0
 - ✅ Updated `package.json` engines field
 - ✅ Updated `@types/node` (20.19.9 → 24.1.0)
 
 ### 4. ESLint Ecosystem Overhaul (v8 → v9)
+
 **Impact**: Complete linting configuration restructure
 
 **Changes Made**:
+
 - ✅ Updated ESLint core (8.57.1 → 9.32.0)
 - ✅ Updated TypeScript ESLint plugin/parser (6.21.0 → 8.38.0)
 - ✅ Updated ESLint configs for flat config format
 - ✅ Updated Prettier integration (9.1.2 → 10.1.8)
 
 **Breaking Changes Resolved**:
+
 - Flat config format requirement
 - Rule definition changes
 - Configuration file structure updates
 
 ### 5. TailwindCSS v4 Preparation
+
 **Impact**: Updated to TailwindCSS 4.1.11 with architectural changes
 
 **Changes Made**:
+
 - ✅ Updated TailwindCSS (3.4.17 → 4.1.11)
 - ✅ Fixed invalid utility classes (`border-border`, `bg-background`)
 - ✅ Updated CSS variables usage in `app/globals.css`
@@ -72,9 +85,11 @@ This document summarizes the major breaking changes and manual steps completed d
 - ✅ Updated Prettier plugin for TailwindCSS
 
 ### 6. Testing Framework Modernization
+
 **Impact**: Updated Jest ecosystem
 
 **Changes Made**:
+
 - ✅ Updated Jest (29.7.0 → 30.0.5)
 - ✅ Updated Jest environment for JSDOM (29.7.0 → 30.0.5)
 - ✅ Updated testing library packages
@@ -83,11 +98,15 @@ This document summarizes the major breaking changes and manual steps completed d
 ## 🔧 Manual Steps for Future Contributors
 
 ### Prerequisites Verification
+
 1. **Node.js Version Check**:
+
    ```bash
    node --version  # Should be 20.11.0 or higher
    ```
+
    If not, install Node.js 20.11.0+ or use nvm:
+
    ```bash
    nvm use 20.11.0
    ```
@@ -97,7 +116,9 @@ This document summarizes the major breaking changes and manual steps completed d
    - Install pnpm globally: `npm install -g pnpm`
 
 ### Development Setup
+
 1. **Fresh Installation**:
+
    ```bash
    # Clean install
    rm -rf node_modules pnpm-lock.yaml
@@ -105,21 +126,23 @@ This document summarizes the major breaking changes and manual steps completed d
    ```
 
 2. **Verify Upgrades**:
+
    ```bash
    # Type checking
    pnpm type-check
-   
+
    # Linting with new ESLint 9
    pnpm lint
-   
+
    # Build verification
    pnpm build
-   
+
    # Test suite
    pnpm test
    ```
 
 ### Configuration Updates
+
 1. **ESLint Configuration**:
    - Uses flat config format (`eslint.config.js`)
    - Legacy `.eslintrc.*` files are no longer supported
@@ -136,69 +159,82 @@ This document summarizes the major breaking changes and manual steps completed d
    - Review any custom Next.js configurations
 
 ### Code Modernization Patterns
+
 1. **Server Actions Implementation**:
+
    ```typescript
    // New pattern: Server Actions
-   'use server'
-   
+   "use server";
+
    export async function savePromptAction(
      prevState: PromptSubmissionResult | null,
-     formData: FormData
+     formData: FormData,
    ): Promise<PromptSubmissionResult> {
      // Server-side processing
    }
    ```
 
 2. **React 19 Hooks Usage**:
+
    ```typescript
    // useOptimistic for instant UI feedback
-   const [optimisticState, addOptimistic] = useOptimistic()
-   
+   const [optimisticState, addOptimistic] = useOptimistic();
+
    // useActionState for server action management
-   const [state, formAction] = useActionState(savePromptAction, null)
+   const [state, formAction] = useActionState(savePromptAction, null);
    ```
 
 3. **Enhanced Concurrent Features**:
+
    ```typescript
    // Improved useTransition usage
-   const [isPending, startTransition] = useTransition()
-   
+   const [isPending, startTransition] = useTransition();
+
    startTransition(() => {
      // Non-blocking updates
-   })
+   });
    ```
 
 ### Common Issues and Solutions
 
 #### 1. Type Errors After Upgrade
+
 **Problem**: Stricter TypeScript types causing errors
-**Solution**: 
+**Solution**:
+
 - Review and update component prop types
 - Check for nullable values with `noUncheckedIndexedAccess`
 - Update React component types for React 19
 
 #### 2. ESLint Configuration Issues
+
 **Problem**: Legacy ESLint configuration not working
 **Solution**:
+
 - Ensure using `eslint.config.js` (flat config)
 - Remove old `.eslintrc.*` files
 - Update IDE ESLint plugins to support flat config
 
 #### 3. Build Failures with TailwindCSS
+
 **Problem**: Invalid utility classes or CSS compilation errors
 **Solution**:
+
 - Replace custom utilities with standard TailwindCSS classes
 - Update CSS variables usage
 - Check `tailwind.config.js` for v4 compatibility
 
 #### 4. Server Actions Not Working
+
 **Problem**: Server actions failing or not executing
 **Solution**:
+
 - Ensure 'use server' directive at top of file
 - Check Next.js App Router setup
 - Verify server/client component boundaries
 
 ### Testing Considerations
+
 1. **React 19 Features Testing**:
    - Test server actions in development and production
    - Verify optimistic updates work correctly
@@ -217,21 +253,23 @@ This document summarizes the major breaking changes and manual steps completed d
 ## 📦 Package Version Matrix
 
 ### Core Dependencies (After Upgrade)
-| Package | Previous | Current | Type |
-|---------|----------|---------|------|
-| `react` | 18.3.1 | 19.1.0 | Major |
-| `react-dom` | 18.3.1 | 19.1.0 | Major |
-| `next` | 14.2.30 | 15.4.4 | Major |
-| `tailwindcss` | 3.4.17 | 4.1.11 | Major |
+
+| Package       | Previous | Current | Type  |
+| ------------- | -------- | ------- | ----- |
+| `react`       | 18.3.1   | 19.1.0  | Major |
+| `react-dom`   | 18.3.1   | 19.1.0  | Major |
+| `next`        | 14.2.30  | 15.4.4  | Major |
+| `tailwindcss` | 3.4.17   | 4.1.11  | Major |
 
 ### Development Dependencies (After Upgrade)
-| Package | Previous | Current | Type |
-|---------|----------|---------|------|
-| `eslint` | 8.57.1 | 9.32.0 | Major |
-| `@typescript-eslint/eslint-plugin` | 6.21.0 | 8.38.0 | Major |
-| `@typescript-eslint/parser` | 6.21.0 | 8.38.0 | Major |
-| `jest` | 29.7.0 | 30.0.5 | Major |
-| `@types/node` | 20.19.9 | 24.1.0 | Major |
+
+| Package                            | Previous | Current | Type  |
+| ---------------------------------- | -------- | ------- | ----- |
+| `eslint`                           | 8.57.1   | 9.32.0  | Major |
+| `@typescript-eslint/eslint-plugin` | 6.21.0   | 8.38.0  | Major |
+| `@typescript-eslint/parser`        | 6.21.0   | 8.38.0  | Major |
+| `jest`                             | 29.7.0   | 30.0.5  | Major |
+| `@types/node`                      | 20.19.9  | 24.1.0  | Major |
 
 ## 🚀 Performance Improvements Achieved
 
@@ -273,4 +311,4 @@ When updating this project in the future:
 
 ---
 
-*This upgrade was completed in January 2025. For questions or issues, please refer to the project documentation or create an issue in the repository.*
+_This upgrade was completed in January 2025. For questions or issues, please refer to the project documentation or create an issue in the repository._

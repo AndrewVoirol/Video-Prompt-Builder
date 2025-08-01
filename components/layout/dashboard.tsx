@@ -1,93 +1,85 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { 
-  Sidebar, 
-  SidebarProvider, 
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import {
+  Sidebar,
+  SidebarProvider,
   SidebarInset,
   SidebarContent,
   SidebarHeader,
   SidebarFooter,
-  SidebarTrigger
-} from "@/components/ui/sidebar"
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import {
   Menubar,
   MenubarMenu,
   MenubarTrigger,
   MenubarContent,
   MenubarItem,
-} from "@/components/ui/menubar"
-import { ThemeSelect } from '@/components/custom/ThemeSelect'
+} from "@/components/ui/menubar";
+import { ThemeSelect } from "@/components/custom/ThemeSelect";
 
 interface DashboardLayoutProps {
-  children?: React.ReactNode
-  sidebar?: React.ReactNode
-  header?: React.ReactNode
-  footer?: React.ReactNode
-  className?: string
+  children?: React.ReactNode;
+  sidebar?: React.ReactNode;
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
+  className?: string;
 }
 
 /**
  * Main Dashboard Layout Component
  * Uses CSS Grid for proper min-height and overflow handling following shadcn patterns
  */
-export function DashboardLayout({ 
-  children, 
-  sidebar, 
-  header, 
-  footer, 
-  className 
+export function DashboardLayout({
+  children,
+  sidebar,
+  header,
+  footer,
+  className,
 }: DashboardLayoutProps) {
   return (
     <SidebarProvider>
-      <div 
+      <div
         className={cn(
           "grid min-h-screen w-full overflow-hidden",
           "grid-cols-[auto_1fr] grid-rows-[auto_1fr_auto]",
           "md:grid-cols-[auto_1fr]",
-          className
+          className,
         )}
       >
         {/* Sidebar - spans full height */}
         <div className="row-span-full">
-          <DashboardSidebar>
-            {sidebar}
-          </DashboardSidebar>
+          <DashboardSidebar>{sidebar}</DashboardSidebar>
         </div>
 
         {/* Main content area with header, main, and footer */}
         <div className="grid grid-rows-[auto_1fr_auto] min-h-screen overflow-hidden">
           {/* Header */}
-          <DashboardHeader>
-            {header}
-          </DashboardHeader>
+          <DashboardHeader>{header}</DashboardHeader>
 
           {/* Main content */}
-          <DashboardMain>
-            {children}
-          </DashboardMain>
+          <DashboardMain>{children}</DashboardMain>
 
           {/* Footer */}
-          <DashboardFooter>
-            {footer}
-          </DashboardFooter>
+          <DashboardFooter>{footer}</DashboardFooter>
         </div>
       </div>
     </SidebarProvider>
-  )
+  );
 }
 
 /**
  * Dashboard Sidebar Component
  * Wraps the shadcn Sidebar with default styling
  */
-function DashboardSidebar({ 
-  children, 
-  className 
-}: { 
-  children?: React.ReactNode
-  className?: string 
+function DashboardSidebar({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
 }) {
   return (
     <Sidebar className={cn("border-r", className)}>
@@ -107,27 +99,27 @@ function DashboardSidebar({
         )}
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }
 
 /**
  * Dashboard Header Component
  * Contains Menubar, ThemeSelect, and Switch
  */
-function DashboardHeader({ 
-  children, 
-  className 
-}: { 
-  children?: React.ReactNode
-  className?: string 
+function DashboardHeader({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
 }) {
   return (
     <SidebarInset>
-      <header 
+      <header
         className={cn(
           "sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
           "flex h-14 items-center justify-between px-4 py-2",
-          className
+          className,
         )}
       >
         {children || (
@@ -146,27 +138,27 @@ function DashboardHeader({
         )}
       </header>
     </SidebarInset>
-  )
+  );
 }
 
 /**
  * Dashboard Main Content Component
  * Scrollable main content area
  */
-function DashboardMain({ 
-  children, 
-  className 
-}: { 
-  children?: React.ReactNode
-  className?: string 
+function DashboardMain({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
 }) {
   return (
     <SidebarInset>
-      <main 
+      <main
         className={cn(
           "flex-1 overflow-y-auto p-4",
           "min-h-0", // Important for grid overflow handling
-          className
+          className,
         )}
       >
         {children || (
@@ -179,26 +171,26 @@ function DashboardMain({
         )}
       </main>
     </SidebarInset>
-  )
+  );
 }
 
 /**
  * Dashboard Footer Component
  */
-function DashboardFooter({ 
-  children, 
-  className 
-}: { 
-  children?: React.ReactNode
-  className?: string 
+function DashboardFooter({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
 }) {
   return (
     <SidebarInset>
-      <footer 
+      <footer
         className={cn(
           "border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
           "flex h-12 items-center justify-center px-4 py-2",
-          className
+          className,
         )}
       >
         {children || (
@@ -208,7 +200,7 @@ function DashboardFooter({
         )}
       </footer>
     </SidebarInset>
-  )
+  );
 }
 
 /**
@@ -242,7 +234,7 @@ function DashboardMenubar() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
-  )
+  );
 }
 
 // Export individual components for flexibility
@@ -252,4 +244,4 @@ export {
   DashboardMain,
   DashboardFooter,
   DashboardMenubar,
-}
+};

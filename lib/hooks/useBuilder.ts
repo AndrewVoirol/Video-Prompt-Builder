@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 /**
  * Builder field configuration interface
@@ -9,7 +9,7 @@ export interface BuilderField {
   /** Display label for the field */
   label: string;
   /** Field input type */
-  type: 'text' | 'number' | 'boolean' | 'select' | 'textarea';
+  type: "text" | "number" | "boolean" | "select" | "textarea";
   /** Current field value */
   value: string | number | boolean;
   /** Whether the field is required */
@@ -40,7 +40,7 @@ export interface BuilderOutput {
   /** Generated output content */
   content: string;
   /** Output format type */
-  format: 'text' | 'json' | 'xml' | 'markdown' | 'html';
+  format: "text" | "json" | "xml" | "markdown" | "html";
   /** Timestamp of last generation */
   lastGenerated?: Date;
   /** Output validation status */
@@ -89,27 +89,27 @@ export interface UseBuilderReturn {
 
 /**
  * Custom React hook for managing modular builder state
- * 
+ *
  * Provides centralized state management for builder components including
  * form fields, outputs, and step progression. This hook is designed to be
  * used within a builder context to maintain consistent state across
  * different builder components.
- * 
+ *
  * @example
  * ```tsx
  * function BuilderComponent() {
  *   const { fields, setFields, outputs, setOutputs, step, setStep } = useBuilder();
- *   
+ *
  *   const handleFieldUpdate = (fieldId: string, value: any) => {
- *     setFields(prev => prev.map(field => 
+ *     setFields(prev => prev.map(field =>
  *       field.id === fieldId ? { ...field, value } : field
  *     ));
  *   };
- *   
+ *
  *   return (
  *     <div>
  *       {fields.map(field => (
- *         <input 
+ *         <input
  *           key={field.id}
  *           value={field.value}
  *           onChange={(e) => handleFieldUpdate(field.id, e.target.value)}
@@ -119,9 +119,9 @@ export interface UseBuilderReturn {
  *   );
  * }
  * ```
- * 
+ *
  * @returns {UseBuilderReturn} Object containing builder state and setters
- * 
+ *
  * @since 1.0.0
  * @author AndrewVoirol
  */
@@ -129,77 +129,77 @@ export function useBuilder(): UseBuilderReturn {
   // Initialize fields with stubbed data
   const [fields, setFields] = useState<BuilderField[]>([
     {
-      id: 'sample-text',
-      label: 'Sample Text Field',
-      type: 'text',
-      value: '',
+      id: "sample-text",
+      label: "Sample Text Field",
+      type: "text",
+      value: "",
       required: true,
-      placeholder: 'Enter text here...',
-      helpText: 'This is a sample text field for demonstration'
+      placeholder: "Enter text here...",
+      helpText: "This is a sample text field for demonstration",
     },
     {
-      id: 'sample-number',
-      label: 'Sample Number Field',
-      type: 'number',
+      id: "sample-number",
+      label: "Sample Number Field",
+      type: "number",
       value: 0,
       required: false,
       validation: {
         min: 0,
-        max: 100
+        max: 100,
       },
-      helpText: 'Enter a number between 0 and 100'
+      helpText: "Enter a number between 0 and 100",
     },
     {
-      id: 'sample-select',
-      label: 'Sample Select Field',
-      type: 'select',
-      value: 'option1',
+      id: "sample-select",
+      label: "Sample Select Field",
+      type: "select",
+      value: "option1",
       required: true,
       options: [
-        { label: 'Option 1', value: 'option1' },
-        { label: 'Option 2', value: 'option2' },
-        { label: 'Option 3', value: 'option3' }
+        { label: "Option 1", value: "option1" },
+        { label: "Option 2", value: "option2" },
+        { label: "Option 3", value: "option3" },
       ],
-      helpText: 'Choose from available options'
-    }
+      helpText: "Choose from available options",
+    },
   ]);
 
   // Initialize outputs with stubbed data
   const [outputs, setOutputs] = useState<BuilderOutput[]>([
     {
-      id: 'sample-output-1',
-      name: 'Generated Text',
-      content: 'This is sample generated content from the builder.',
-      format: 'text',
+      id: "sample-output-1",
+      name: "Generated Text",
+      content: "This is sample generated content from the builder.",
+      format: "text",
       lastGenerated: new Date(),
       isValid: true,
       metadata: {
         wordCount: 10,
-        characterCount: 52
-      }
+        characterCount: 52,
+      },
     },
     {
-      id: 'sample-output-2',
-      name: 'Configuration JSON',
-      content: JSON.stringify({ config: 'sample', enabled: true }, null, 2),
-      format: 'json',
+      id: "sample-output-2",
+      name: "Configuration JSON",
+      content: JSON.stringify({ config: "sample", enabled: true }, null, 2),
+      format: "json",
       lastGenerated: new Date(),
       isValid: true,
       metadata: {
-        size: '45 bytes'
-      }
-    }
+        size: "45 bytes",
+      },
+    },
   ]);
 
   // Initialize step with stubbed data
   const [step, setStep] = useState<BuilderStep | null>({
-    id: 'step-1',
-    title: 'Configuration Setup',
-    description: 'Configure your builder settings and input fields',
+    id: "step-1",
+    title: "Configuration Setup",
+    description: "Configure your builder settings and input fields",
     completed: false,
     active: true,
     isValid: false,
-    fieldIds: ['sample-text', 'sample-number', 'sample-select']
+    fieldIds: ["sample-text", "sample-number", "sample-select"],
   });
 
   return {
@@ -208,7 +208,7 @@ export function useBuilder(): UseBuilderReturn {
     outputs,
     setOutputs,
     step,
-    setStep
+    setStep,
   };
 }
 

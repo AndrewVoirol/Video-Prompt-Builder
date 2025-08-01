@@ -5,11 +5,11 @@
 
 /* === MonoGeist Theme === */
 [data-theme="monogeist"] {
-  --background: oklch(1.0000 0 0);
+  --background: oklch(1 0 0);
   --foreground: oklch(0.1448 0 0);
-  --card: oklch(1.0000 0 0);
+  --card: oklch(1 0 0);
   --card-foreground: oklch(0.1448 0 0);
-  --popover: oklch(1.0000 0 0);
+  --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.1448 0 0);
   --primary: oklch(0.5555 0 0);
   --primary-foreground: oklch(0.9851 0 0);
@@ -19,11 +19,11 @@
   --muted-foreground: oklch(0.5486 0 0);
   --accent: oklch(0.9702 0 0);
   --accent-foreground: oklch(0.2046 0 0);
-  --destructive: oklch(0.5830 0.2387 28.4765);
+  --destructive: oklch(0.583 0.2387 28.4765);
   --destructive-foreground: oklch(0.9702 0 0);
   --border: oklch(0.9219 0 0);
   --input: oklch(0.9219 0 0);
-  --ring: oklch(0.7090 0 0);
+  --ring: oklch(0.709 0 0);
   --chart-1: oklch(0.5555 0 0);
   --chart-2: oklch(0.5555 0 0);
   --chart-3: oklch(0.5555 0 0);
@@ -36,21 +36,129 @@
   --sidebar-accent: oklch(0.9702 0 0);
   --sidebar-accent-foreground: oklch(0.2046 0 0);
   --sidebar-border: oklch(0.9219 0 0);
-  --sidebar-ring: oklch(0.7090 0 0);
+  --sidebar-ring: oklch(0.709 0 0);
+
+  /* Enhanced Surface Colors for MonoGeist */
+  --surface-card: oklch(1 0 0); /* Pure white card backgrounds */
+  --surface-panel: oklch(0.9851 0 0); /* Very light gray panels */
+  --surface-subtle: oklch(0.9702 0 0); /* Subtle background variation */
+  --surface-elevated: oklch(1 0 0); /* Elevated surfaces (modals, dropdowns) */
+  --surface-popover: oklch(1 0 0); /* Popover and dropdown backgrounds */
+  --surface-overlay: oklch(0.9851 0 0); /* Overlay backgrounds */
+  --surface-muted: oklch(0.9595 0 0); /* Muted surface areas */
+
+  /* Text Color Variables */
+  --text-primary: oklch(0.1448 0 0); /* Primary text color */
+  --text-secondary: oklch(0.4386 0 0); /* Secondary text color */
+  --text-muted: oklch(0.5555 0 0); /* Muted text color */
+  --text-muted-foreground: oklch(0.709 0 0); /* Muted foreground color */
+
+  /* Enhanced Typography and Spacing */
   --font-sans: Geist Mono, monospace;
   --font-serif: Geist Mono, monospace;
   --font-mono: Geist Mono, monospace;
-  --radius: 0rem;
-  --shadow-2xs: 0px 1px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-xs: 0px 1px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-sm: 0px 1px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow: 0px 1px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow-md: 0px 1px 0px 0px hsl(0 0% 0% / 0.00), 0px 2px 4px -1px hsl(0 0% 0% / 0.00);
-  --shadow-lg: 0px 1px 0px 0px hsl(0 0% 0% / 0.00), 0px 4px 6px -1px hsl(0 0% 0% / 0.00);
-  --shadow-xl: 0px 1px 0px 0px hsl(0 0% 0% / 0.00), 0px 8px 10px -1px hsl(0 0% 0% / 0.00);
-  --shadow-2xl: 0px 1px 0px 0px hsl(0 0% 0% / 0.00);
+
+  /* MonoGeist-specific Typography Tokens */
+  --font-monoGeist-display:
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-monoGeist-heading:
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-monoGeist-body:
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-monoGeist-code:
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-monoGeist-ui:
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+
+  /* Typography Scale with Line Heights */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+  --font-size-5xl: 3rem; /* 48px */
+  --font-size-6xl: 3.75rem; /* 60px */
+
+  /* Line Heights for MonoGeist */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Letter Spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+
+  /* Enhanced Border Radius Scale */
+  --radius: 0rem; /* Base radius - sharp edges */
+  --radius-xs: 0rem; /* Extra small - no radius */
+  --radius-sm: 0rem; /* Small - no radius */
+  --radius-md: 0rem; /* Medium - no radius */
+  --radius-lg: 0rem; /* Large - no radius */
+  --radius-xl: 0rem; /* Extra large - no radius */
+  --radius-2xl: 0rem; /* 2X large - no radius */
+  --radius-full: 0rem; /* Full - no radius (maintains sharp aesthetic) */
+
+  /* Enhanced Shadow Levels (minimal for MonoGeist) */
+  --shadow-2xs: 0px 0px 0px 1px oklch(0.9219 0 0); /* Subtle border-like shadow */
+  --shadow-xs: 0px 0px 0px 1px oklch(0.8796 0 0); /* Light border shadow */
+  --shadow-sm:
+    0px 0px 0px 1px oklch(0.8796 0 0), 0px 1px 2px 0px oklch(0.1448 0 0 / 0.02); /* Minimal elevation */
+  --shadow:
+    0px 0px 0px 1px oklch(0.8796 0 0), 0px 1px 3px 0px oklch(0.1448 0 0 / 0.03); /* Default elevation */
+  --shadow-md:
+    0px 0px 0px 1px oklch(0.8796 0 0), 0px 2px 6px 0px oklch(0.1448 0 0 / 0.04); /* Medium elevation */
+  --shadow-lg:
+    0px 0px 0px 1px oklch(0.8373 0 0), 0px 4px 12px 0px oklch(0.1448 0 0 / 0.05); /* Large elevation */
+  --shadow-xl:
+    0px 0px 0px 1px oklch(0.8373 0 0), 0px 8px 24px 0px oklch(0.1448 0 0 / 0.06); /* Extra large elevation */
+  --shadow-2xl:
+    0px 0px 0px 1px oklch(0.7955 0 0),
+    0px 16px 48px 0px oklch(0.1448 0 0 / 0.08); /* Maximum elevation */
+
+  /* Enhanced Ring Styles */
+  --ring-width: 1px; /* Sharp, precise ring width */
+  --ring-color: oklch(0.709 0 0); /* Medium gray ring */
+  --ring-offset-width: 0px; /* No offset for sharp aesthetic */
+  --ring-offset-color: oklch(1 0 0); /* White offset when used */
+
+  /* Focus Ring Variants */
+  --ring-focus: oklch(0.5555 0 0); /* Primary focus ring */
+  --ring-error: oklch(0.583 0.2387 28.4765); /* Error state ring */
+  --ring-warning: oklch(0.7022 0.1892 45); /* Warning state ring */
+  --ring-success: oklch(0.65 0.15 140); /* Success state ring */
+
+  /* Enhanced Spacing Scale */
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+  --spacing-xs: 0.125rem; /* 2px */
+  --spacing-sm: 0.25rem; /* 4px */
+  --spacing-md: 0.5rem; /* 8px */
+  --spacing-lg: 1rem; /* 16px */
+  --spacing-xl: 1.5rem; /* 24px */
+  --spacing-2xl: 2rem; /* 32px */
 }
 
 [data-theme="monogeist"].dark {
@@ -65,7 +173,7 @@
   --secondary: oklch(0.2686 0 0);
   --secondary-foreground: oklch(0.9851 0 0);
   --muted: oklch(0.2686 0 0);
-  --muted-foreground: oklch(0.7090 0 0);
+  --muted-foreground: oklch(0.709 0 0);
   --accent: oklch(0.3715 0 0);
   --accent-foreground: oklch(0.9851 0 0);
   --destructive: oklch(0.7022 0.1892 22.2279);
@@ -84,55 +192,100 @@
   --sidebar-primary-foreground: oklch(0.2046 0 0);
   --sidebar-accent: oklch(0.2686 0 0);
   --sidebar-accent-foreground: oklch(0.9851 0 0);
-  --sidebar-border: oklch(1.0000 0 0);
+  --sidebar-border: oklch(1 0 0);
   --sidebar-ring: oklch(0.4386 0 0);
+
+  /* Enhanced Surface Colors for MonoGeist Dark */
+  --surface-card: oklch(0.2134 0 0); /* Dark gray card backgrounds */
+  --surface-panel: oklch(0.2046 0 0); /* Very dark gray panels */
+  --surface-subtle: oklch(0.2686 0 0); /* Subtle dark background variation */
+  --surface-elevated: oklch(
+    0.2686 0 0
+  ); /* Elevated surfaces (modals, dropdowns) */
+  --surface-popover: oklch(0.2686 0 0); /* Popover and dropdown backgrounds */
+  --surface-overlay: oklch(0.2046 0 0); /* Dark overlay backgrounds */
+  --surface-muted: oklch(0.2046 0 0); /* Muted dark surface areas */
+
+  /* Text Color Variables Dark */
+  --text-primary: oklch(0.9851 0 0); /* Primary text color */
+  --text-secondary: oklch(0.709 0 0); /* Secondary text color */
+  --text-muted: oklch(0.5555 0 0); /* Muted text color */
+  --text-muted-foreground: oklch(0.709 0 0); /* Muted foreground color */
 }
 
 /* === Kodama Grove Theme === */
 [data-theme="kodama-grove"] {
   --background: oklch(0.8798 0.0534 91.7893);
-  --foreground: oklch(0.4265 0.0310 59.2153);
+  --foreground: oklch(0.4265 0.031 59.2153);
   --card: oklch(0.8937 0.0395 87.5676);
-  --card-foreground: oklch(0.4265 0.0310 59.2153);
+  --card-foreground: oklch(0.4265 0.031 59.2153);
   --popover: oklch(0.9378 0.0331 89.8515);
-  --popover-foreground: oklch(0.4265 0.0310 59.2153);
-  --primary: oklch(0.6657 0.1050 118.9078);
+  --popover-foreground: oklch(0.4265 0.031 59.2153);
+  --primary: oklch(0.6657 0.105 118.9078);
   --primary-foreground: oklch(0.9882 0.0069 88.6415);
   --secondary: oklch(0.8532 0.0631 91.1493);
-  --secondary-foreground: oklch(0.4265 0.0310 59.2153);
+  --secondary-foreground: oklch(0.4265 0.031 59.2153);
   --muted: oklch(0.8532 0.0631 91.1493);
   --muted-foreground: oklch(0.5761 0.0259 60.9323);
   --accent: oklch(0.8361 0.0713 90.3269);
-  --accent-foreground: oklch(0.4265 0.0310 59.2153);
+  --accent-foreground: oklch(0.4265 0.031 59.2153);
   --destructive: oklch(0.7136 0.0981 29.9827);
-  --destructive-foreground: oklch(0.9790 0.0082 91.4818);
-  --border: oklch(0.6918 0.0440 59.8448);
+  --destructive-foreground: oklch(0.979 0.0082 91.4818);
+  --border: oklch(0.6918 0.044 59.8448);
   --input: oklch(0.8361 0.0713 90.3269);
-  --ring: oklch(0.7350 0.0564 130.8494);
-  --chart-1: oklch(0.7350 0.0564 130.8494);
+  --ring: oklch(0.735 0.0564 130.8494);
+  --chart-1: oklch(0.735 0.0564 130.8494);
   --chart-2: oklch(0.6762 0.0567 132.4479);
   --chart-3: oklch(0.8185 0.0332 136.6539);
   --chart-4: oklch(0.5929 0.0464 137.6224);
-  --chart-5: oklch(0.5183 0.0390 137.1892);
+  --chart-5: oklch(0.5183 0.039 137.1892);
   --sidebar: oklch(0.8631 0.0645 90.5161);
-  --sidebar-foreground: oklch(0.4265 0.0310 59.2153);
-  --sidebar-primary: oklch(0.7350 0.0564 130.8494);
+  --sidebar-foreground: oklch(0.4265 0.031 59.2153);
+  --sidebar-primary: oklch(0.735 0.0564 130.8494);
   --sidebar-primary-foreground: oklch(0.9882 0.0069 88.6415);
   --sidebar-accent: oklch(0.9225 0.0169 88.0027);
-  --sidebar-accent-foreground: oklch(0.4265 0.0310 59.2153);
-  --sidebar-border: oklch(0.9073 0.0170 88.0044);
-  --sidebar-ring: oklch(0.7350 0.0564 130.8494);
+  --sidebar-accent-foreground: oklch(0.4265 0.031 59.2153);
+  --sidebar-border: oklch(0.9073 0.017 88.0044);
+  --sidebar-ring: oklch(0.735 0.0564 130.8494);
+
+  /* Enhanced Surface Colors for Kodama Grove */
+  --surface-card: oklch(
+    0.8937 0.0395 87.5676
+  ); /* Light green card backgrounds */
+  --surface-panel: oklch(0.9225 0.0169 88.0027); /* Very light green panels */
+  --surface-subtle: oklch(
+    0.8532 0.0631 91.1493
+  ); /* Subtle background variation */
+  --surface-elevated: oklch(
+    0.9378 0.0331 89.8515
+  ); /* Elevated surfaces (modals, dropdowns) */
+  --surface-popover: oklch(
+    0.9378 0.0331 89.8515
+  ); /* Popover and dropdown backgrounds */
+  --surface-overlay: oklch(0.9225 0.0169 88.0027); /* Overlay backgrounds */
+  --surface-muted: oklch(0.8631 0.0645 90.5161); /* Muted surface areas */
+
   --font-sans: Merriweather, serif;
   --font-serif: Source Serif 4, serif;
   --font-mono: JetBrains Mono, monospace;
   --radius: 0.425rem;
   --shadow-2xs: 3px 3px 2px 0px hsl(88 22% 35% / 0.07);
   --shadow-xs: 3px 3px 2px 0px hsl(88 22% 35% / 0.07);
-  --shadow-sm: 3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 1px 2px -1px hsl(88 22% 35% / 0.15);
-  --shadow: 3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 1px 2px -1px hsl(88 22% 35% / 0.15);
-  --shadow-md: 3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 2px 4px -1px hsl(88 22% 35% / 0.15);
-  --shadow-lg: 3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 4px 6px -1px hsl(88 22% 35% / 0.15);
-  --shadow-xl: 3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 8px 10px -1px hsl(88 22% 35% / 0.15);
+  --shadow-sm:
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 1px 2px -1px hsl(88 22% 35% / 0.15);
+  --shadow:
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 1px 2px -1px hsl(88 22% 35% / 0.15);
+  --shadow-md:
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 2px 4px -1px hsl(88 22% 35% / 0.15);
+  --shadow-lg:
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 4px 6px -1px hsl(88 22% 35% / 0.15);
+  --shadow-xl:
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 8px 10px -1px hsl(88 22% 35% / 0.15);
   --shadow-2xl: 3px 3px 2px 0px hsl(88 22% 35% / 0.38);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
@@ -151,7 +304,7 @@
   --secondary-foreground: oklch(0.9217 0.0235 82.1191);
   --muted: oklch(0.3892 0.0197 82.7084);
   --muted-foreground: oklch(0.7096 0.0171 73.6179);
-  --accent: oklch(0.6540 0.0723 90.7629);
+  --accent: oklch(0.654 0.0723 90.7629);
   --accent-foreground: oklch(0.2686 0.0105 61.0213);
   --destructive: oklch(0.6287 0.0821 31.2958);
   --destructive-foreground: oklch(0.9357 0.0201 84.5907);
@@ -162,63 +315,99 @@
   --sidebar-foreground: oklch(0.9217 0.0235 82.1191);
   --sidebar-primary: oklch(0.6762 0.0567 132.4479);
   --sidebar-primary-foreground: oklch(0.2686 0.0105 61.0213);
-  --sidebar-accent: oklch(0.6540 0.0723 90.7629);
+  --sidebar-accent: oklch(0.654 0.0723 90.7629);
   --sidebar-accent-foreground: oklch(0.2686 0.0105 61.0213);
   --sidebar-border: oklch(0.4448 0.0239 84.5498);
   --sidebar-ring: oklch(0.6762 0.0567 132.4479);
+
+  /* Enhanced Surface Colors for Kodama Grove Dark */
+  --surface-card: oklch(
+    0.3583 0.0165 82.3257
+  ); /* Dark green card backgrounds */
+  --surface-panel: oklch(0.3303 0.0214 88.0737); /* Very dark green panels */
+  --surface-subtle: oklch(
+    0.3892 0.0197 82.7084
+  ); /* Subtle dark background variation */
+  --surface-elevated: oklch(
+    0.3583 0.0165 82.3257
+  ); /* Elevated surfaces (modals, dropdowns) */
+  --surface-popover: oklch(
+    0.3583 0.0165 82.3257
+  ); /* Popover and dropdown backgrounds */
+  --surface-overlay: oklch(
+    0.3303 0.0214 88.0737
+  ); /* Dark overlay backgrounds */
+  --surface-muted: oklch(0.3303 0.0214 88.0737); /* Muted dark surface areas */
 }
 
 /* === Cyberpunk Theme === */
-[data-theme="cyberpunk"] {
-  --background: oklch(0.9816 0.0017 247.8390);
+[data-theme="cyber-punk"] {
+  --background: oklch(0.9816 0.0017 247.839);
   --foreground: oklch(0.1649 0.0352 281.8285);
-  --card: oklch(1.0000 0 0);
+  --card: oklch(1 0 0);
   --card-foreground: oklch(0.1649 0.0352 281.8285);
-  --popover: oklch(1.0000 0 0);
+  --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.1649 0.0352 281.8285);
   --primary: oklch(0.6726 0.2904 341.4084);
-  --primary-foreground: oklch(1.0000 0 0);
-  --secondary: oklch(0.9595 0.0200 286.0164);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.9595 0.02 286.0164);
   --secondary-foreground: oklch(0.1649 0.0352 281.8285);
-  --muted: oklch(0.9595 0.0200 286.0164);
+  --muted: oklch(0.9595 0.02 286.0164);
   --muted-foreground: oklch(0.1649 0.0352 281.8285);
-  --accent: oklch(0.8903 0.1739 171.2690);
+  --accent: oklch(0.8903 0.1739 171.269);
   --accent-foreground: oklch(0.1649 0.0352 281.8285);
-  --destructive: oklch(0.6535 0.2348 34.0370);
-  --destructive-foreground: oklch(1.0000 0 0);
+  --destructive: oklch(0.6535 0.2348 34.037);
+  --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.9205 0.0086 225.0878);
   --input: oklch(0.9205 0.0086 225.0878);
   --ring: oklch(0.6726 0.2904 341.4084);
   --chart-1: oklch(0.6726 0.2904 341.4084);
   --chart-2: oklch(0.5488 0.2944 299.0954);
   --chart-3: oklch(0.8442 0.1457 209.2851);
-  --chart-4: oklch(0.8903 0.1739 171.2690);
-  --chart-5: oklch(0.9168 0.1915 101.4070);
-  --sidebar: oklch(0.9595 0.0200 286.0164);
+  --chart-4: oklch(0.8903 0.1739 171.269);
+  --chart-5: oklch(0.9168 0.1915 101.407);
+  --sidebar: oklch(0.9595 0.02 286.0164);
   --sidebar-foreground: oklch(0.1649 0.0352 281.8285);
   --sidebar-primary: oklch(0.6726 0.2904 341.4084);
-  --sidebar-primary-foreground: oklch(1.0000 0 0);
-  --sidebar-accent: oklch(0.8903 0.1739 171.2690);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.8903 0.1739 171.269);
   --sidebar-accent-foreground: oklch(0.1649 0.0352 281.8285);
   --sidebar-border: oklch(0.9205 0.0086 225.0878);
   --sidebar-ring: oklch(0.6726 0.2904 341.4084);
+
+  /* Enhanced Surface Colors for Cyberpunk */
+  --surface-card: oklch(1 0 0); /* Pure white card backgrounds */
+  --surface-panel: oklch(0.9816 0.0017 247.839); /* Very light purple panels */
+  --surface-subtle: oklch(
+    0.9595 0.02 286.0164
+  ); /* Subtle background variation */
+  --surface-elevated: oklch(1 0 0); /* Elevated surfaces (modals, dropdowns) */
+  --surface-popover: oklch(1 0 0); /* Popover and dropdown backgrounds */
+  --surface-overlay: oklch(0.9816 0.0017 247.839); /* Overlay backgrounds */
+  --surface-muted: oklch(0.9595 0.02 286.0164); /* Muted surface areas */
+
   --font-sans: Outfit, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: Fira Code, monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 8px -2px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 4px 8px -2px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 1px 2px -3px hsl(0 0% 0% / 0.10);
-  --shadow: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 1px 2px -3px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 2px 4px -3px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 4px 6px -3px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0px 4px 8px -2px hsl(0 0% 0% / 0.10), 0px 8px 10px -3px hsl(0 0% 0% / 0.10);
+  --shadow-sm:
+    0px 4px 8px -2px hsl(0 0% 0% / 0.1), 0px 1px 2px -3px hsl(0 0% 0% / 0.1);
+  --shadow:
+    0px 4px 8px -2px hsl(0 0% 0% / 0.1), 0px 1px 2px -3px hsl(0 0% 0% / 0.1);
+  --shadow-md:
+    0px 4px 8px -2px hsl(0 0% 0% / 0.1), 0px 2px 4px -3px hsl(0 0% 0% / 0.1);
+  --shadow-lg:
+    0px 4px 8px -2px hsl(0 0% 0% / 0.1), 0px 4px 6px -3px hsl(0 0% 0% / 0.1);
+  --shadow-xl:
+    0px 4px 8px -2px hsl(0 0% 0% / 0.1), 0px 8px 10px -3px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0px 4px 8px -2px hsl(0 0% 0% / 0.25);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
 
-[data-theme="cyberpunk"].dark {
+[data-theme="cyber-punk"].dark {
   --background: oklch(0.1649 0.0352 281.8285);
   --foreground: oklch(0.9513 0.0074 260.7315);
   --card: oklch(0.2542 0.0611 281.1423);
@@ -226,26 +415,45 @@
   --popover: oklch(0.2542 0.0611 281.1423);
   --popover-foreground: oklch(0.9513 0.0074 260.7315);
   --primary: oklch(0.6726 0.2904 341.4084);
-  --primary-foreground: oklch(1.0000 0 0);
+  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.2542 0.0611 281.1423);
   --secondary-foreground: oklch(0.9513 0.0074 260.7315);
   --muted: oklch(0.2542 0.0611 281.1423);
-  --muted-foreground: oklch(0.6245 0.0500 278.1046);
-  --accent: oklch(0.8903 0.1739 171.2690);
+  --muted-foreground: oklch(0.6245 0.05 278.1046);
+  --accent: oklch(0.8903 0.1739 171.269);
   --accent-foreground: oklch(0.1649 0.0352 281.8285);
-  --destructive: oklch(0.6535 0.2348 34.0370);
-  --destructive-foreground: oklch(1.0000 0 0);
-  --border: oklch(0.3279 0.0832 280.7890);
-  --input: oklch(0.3279 0.0832 280.7890);
+  --destructive: oklch(0.6535 0.2348 34.037);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.3279 0.0832 280.789);
+  --input: oklch(0.3279 0.0832 280.789);
   --ring: oklch(0.6726 0.2904 341.4084);
   --sidebar: oklch(0.1649 0.0352 281.8285);
   --sidebar-foreground: oklch(0.9513 0.0074 260.7315);
   --sidebar-primary: oklch(0.6726 0.2904 341.4084);
-  --sidebar-primary-foreground: oklch(1.0000 0 0);
-  --sidebar-accent: oklch(0.8903 0.1739 171.2690);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.8903 0.1739 171.269);
   --sidebar-accent-foreground: oklch(0.1649 0.0352 281.8285);
-  --sidebar-border: oklch(0.3279 0.0832 280.7890);
+  --sidebar-border: oklch(0.3279 0.0832 280.789);
   --sidebar-ring: oklch(0.6726 0.2904 341.4084);
+
+  /* Enhanced Surface Colors for Cyberpunk Dark */
+  --surface-card: oklch(
+    0.2542 0.0611 281.1423
+  ); /* Dark purple card backgrounds */
+  --surface-panel: oklch(0.2542 0.0611 281.1423); /* Very dark purple panels */
+  --surface-subtle: oklch(
+    0.2542 0.0611 281.1423
+  ); /* Subtle dark background variation */
+  --surface-elevated: oklch(
+    0.2542 0.0611 281.1423
+  ); /* Elevated surfaces (modals, dropdowns) */
+  --surface-popover: oklch(
+    0.2542 0.0611 281.1423
+  ); /* Popover and dropdown backgrounds */
+  --surface-overlay: oklch(
+    0.2542 0.0611 281.1423
+  ); /* Dark overlay backgrounds */
+  --surface-muted: oklch(0.2542 0.0611 281.1423); /* Muted dark surface areas */
 }
 
 /* === Tailwind Theme Integration === */
@@ -283,6 +491,15 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  /* Surface token mappings */
+  --color-surface-card: var(--surface-card);
+  --color-surface-panel: var(--surface-panel);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-popover: var(--surface-popover);
+  --color-surface-overlay: var(--surface-overlay);
+  --color-surface-muted: var(--surface-muted);
+
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
@@ -313,8 +530,6 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
-
-
 
 /* === View Transition Wave Effect (tweakcn style) === */
 ::view-transition-old(root),
@@ -353,7 +568,9 @@ body {
 
 /* === Smooth Transitions === */
 * {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 0.2s;
 }
@@ -377,7 +594,7 @@ body,
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
   }
-  
+
   .backdrop-saturate-150 {
     backdrop-filter: saturate(150%);
     -webkit-backdrop-filter: saturate(150%);
@@ -422,14 +639,18 @@ body,
 
 /* Sidebar preset item enhancements */
 .preset-item-active {
-  background: linear-gradient(135deg, hsl(var(--sidebar-accent)) 0%, hsl(var(--sidebar-accent))/80 100%);
-  border-color: hsl(var(--sidebar-primary))/30;
-  box-shadow: 0 2px 8px -2px hsl(var(--sidebar-primary))/20;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--sidebar-accent)) 0%,
+    hsl(var(--sidebar-accent)) / 80 100%
+  );
+  border-color: hsl(var(--sidebar-primary)) / 30;
+  box-shadow: 0 2px 8px -2px hsl(var(--sidebar-primary)) / 20;
 }
 
 .preset-item-hover {
-  background: hsl(var(--sidebar-accent))/60;
-  border-color: hsl(var(--sidebar-border))/50;
+  background: hsl(var(--sidebar-accent)) / 60;
+  border-color: hsl(var(--sidebar-border)) / 50;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px -2px hsl(var(--foreground))/10;
+  box-shadow: 0 4px 12px -2px hsl(var(--foreground)) / 10;
 }

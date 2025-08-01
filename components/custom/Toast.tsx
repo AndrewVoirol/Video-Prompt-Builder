@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Atomic global ephemeral notification system component.
- * 
+ *
  * The Toast component provides a standardized way to display temporary notification
  * messages to users. It serves as the foundation for all ephemeral notifications
  * across the application, ensuring consistent styling and behavior for success,
  * error, warning, and informational messages.
- * 
+ *
  * @component
  * @example
  * ```tsx
@@ -20,7 +20,7 @@ import React from 'react';
  */
 
 /** Toast notification types */
-export type ToastType = 'success' | 'error' | 'warning' | 'info';
+export type ToastType = "success" | "error" | "warning" | "info";
 
 /** Props for the Toast component */
 export interface ToastProps {
@@ -34,22 +34,23 @@ export interface ToastProps {
 
 /**
  * Toast notification component for displaying ephemeral messages.
- * 
+ *
  * @param props - The component props
  * @returns The rendered Toast component
  */
 export const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   const getToastStyles = (): string => {
-    const baseStyles = 'fixed top-4 right-4 p-4 rounded-lg shadow-lg max-w-sm z-50 flex items-center justify-between';
-    
+    const baseStyles =
+      "fixed top-4 right-4 p-4 rounded-lg shadow-lg max-w-sm z-50 flex items-center justify-between";
+
     switch (type) {
-      case 'success':
+      case "success":
         return `${baseStyles} bg-green-100 border border-green-400 text-green-700`;
-      case 'error':
+      case "error":
         return `${baseStyles} bg-red-100 border border-red-400 text-red-700`;
-      case 'warning':
+      case "warning":
         return `${baseStyles} bg-yellow-100 border border-yellow-400 text-yellow-700`;
-      case 'info':
+      case "info":
         return `${baseStyles} bg-blue-100 border border-blue-400 text-blue-700`;
       default:
         return `${baseStyles} bg-gray-100 border border-gray-400 text-gray-700`;
@@ -67,9 +68,7 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
       aria-live="polite"
       aria-label={getAriaLabel()}
     >
-      <span className="flex-1 text-sm font-medium">
-        {message}
-      </span>
+      <span className="flex-1 text-sm font-medium">{message}</span>
       <button
         onClick={onClose}
         className="ml-4 text-current hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-current focus:ring-opacity-50 rounded"

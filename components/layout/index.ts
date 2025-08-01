@@ -5,6 +5,6 @@ export {
   DashboardMain,
   DashboardFooter,
   DashboardMenubar,
-} from "./dashboard"
+} from "./dashboard";
 
-export { DashboardExample } from "./dashboard-example"
+export { DashboardExample } from "./dashboard-example";

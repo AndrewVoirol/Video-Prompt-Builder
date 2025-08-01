@@ -7,48 +7,48 @@ export interface ThemeColors {
   // Base colors
   background: string;
   foreground: string;
-  
+
   // Card colors
   card: string;
-  'card-foreground': string;
-  
+  "card-foreground": string;
+
   // Popover colors
   popover: string;
-  'popover-foreground': string;
-  
+  "popover-foreground": string;
+
   // Primary colors
   primary: string;
-  'primary-foreground': string;
-  
+  "primary-foreground": string;
+
   // Secondary colors
   secondary: string;
-  'secondary-foreground': string;
-  
+  "secondary-foreground": string;
+
   // Muted colors
   muted: string;
-  'muted-foreground': string;
-  
+  "muted-foreground": string;
+
   // Accent colors
   accent: string;
-  'accent-foreground': string;
-  
+  "accent-foreground": string;
+
   // Destructive colors
   destructive: string;
-  'destructive-foreground': string;
-  
+  "destructive-foreground": string;
+
   // Border and input
   border: string;
   input: string;
-  
+
   // Ring (focus)
   ring: string;
-  
+
   // Chart colors
-  'chart-1': string;
-  'chart-2': string;
-  'chart-3': string;
-  'chart-4': string;
-  'chart-5': string;
+  "chart-1": string;
+  "chart-2": string;
+  "chart-3": string;
+  "chart-4": string;
+  "chart-5": string;
 }
 
 export interface ThemeFonts {
@@ -76,7 +76,7 @@ export interface ThemeConfig {
 export interface ThemeToken {
   name: string;
   value: string;
-  type: 'color' | 'spacing' | 'typography' | 'shadow' | 'border-radius';
+  type: "color" | "spacing" | "typography" | "shadow" | "border-radius";
   category: string;
 }
 
@@ -90,7 +90,7 @@ export interface ThemeRegistry {
 export type CSSVarName = `--${string}`;
 
 // Theme mode types
-export type ThemeMode = 'light' | 'dark' | 'auto';
+export type ThemeMode = "light" | "dark" | "auto";
 
 // Color palette types for atomic design
 export type ColorScale = {

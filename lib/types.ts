@@ -22,7 +22,7 @@ export interface FieldConfig {
   id: string;
   name: string;
   label: string;
-  type: 'text' | 'number' | 'select' | 'checkbox' | 'email' | 'textarea';
+  type: "text" | "number" | "select" | "checkbox" | "email" | "textarea";
   required?: boolean;
   placeholder?: string;
   options?: Array<{ value: string | number; label: string }>;
@@ -38,13 +38,13 @@ export interface OutputFormat {
   id: string;
   name: string;
   description?: string;
-  type: 'json' | 'text' | 'html' | 'markdown';
+  type: "json" | "text" | "html" | "markdown";
 }
 
 /**
  * Theme and palette configuration types.
  */
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = "light" | "dark" | "system";
 export interface ThemeConfig {
   name: string;
   palette: Record<string, string>;

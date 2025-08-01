@@ -25,8 +25,8 @@ export function ThemeSelect() {
   }
 
   // Extract base theme (remove -dark suffix)
-  const currentTheme = theme?.replace('-dark', '') || 'monogeist';
-  const isDark = theme?.includes('-dark') || theme === 'dark';
+  const currentTheme = theme?.replace("-dark", "") || "monogeist";
+  const isDark = theme?.includes("-dark") || theme === "dark";
 
   const handleThemeChange = (newTheme: string) => {
     const finalTheme = isDark ? `${newTheme}-dark` : newTheme;
@@ -59,4 +59,3 @@ export function ThemeSelect() {
     </Select>
   );
 }
-

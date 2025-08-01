@@ -332,9 +332,43 @@ All scripts are optimized for pnpm:
 
 ### Testing
 
+#### Unit Tests
 - `pnpm test` - Run Jest 30 test suite
 - `pnpm test:watch` - Run tests in watch mode
 - `pnpm test:coverage` - Run tests with coverage report
+
+#### E2E Theme Tests
+- `pnpm test:e2e` - Run automated theme switching tests
+- **View Results**: Open `tests/e2e/screenshots/viewer.html` in your browser
+- **Kill Processes**: Run `./scripts/kill-test-processes.sh` if tests get stuck
+
+The E2E tests automatically:
+- Launch a headless browser via Puppeteer MCP
+- Test all three themes (MonoGeist, Kodama Grove, Cyberpunk)  
+- Verify both light and dark mode for each theme
+- Capture before/after screenshots for visual regression
+- Verify DOM state and proper theme application
+- Generate 12 screenshots total (3 themes × 2 modes × 2 states)
+
+### Warp MCP Tools Configuration and Usage
+
+1. **Install development dependencies**:
+   ```bash
+   pnpm i
+   ```
+
+2. **Add MCP server to Warp**:
+   Add the MCP server using the configuration located at `docs/warp-mcp-config.json`
+   Follow the instructions in [Warp MCP Documentation](https://docs.warp.dev/knowledge-and-collaboration/mcp) to configure your MCP server.
+
+3. **Run automated tests**:
+   ```bash
+   pnpm test:e2e
+   ```
+   - Screenshots are saved under `tests/e2e/screenshots/`
+   - Console logs are streamed to terminal
+
+4. **Cleanup**: Press `Ctrl-C` anytime to tear everything down
 
 ### Utilities
 

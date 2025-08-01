@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useThemeConfig } from "@/components/active-theme"
-import { Label } from "@/components/ui/label"
+import { useThemeConfig } from "@/components/active-theme";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -10,11 +10,11 @@ import {
   SelectValue,
   SelectGroup,
   SelectLabel,
-} from "@/components/ui/select"
-import { themes } from "@/lib/themes"
+} from "@/components/ui/select";
+import { themes } from "@/lib/themes";
 
 export function ThemeSelector() {
-  const { activeTheme, setActiveTheme } = useThemeConfig()
+  const { activeTheme, setActiveTheme } = useThemeConfig();
 
   return (
     <div className="space-y-1.5">
@@ -35,5 +35,5 @@ export function ThemeSelector() {
         </SelectContent>
       </Select>
     </div>
-  )
+  );
 }

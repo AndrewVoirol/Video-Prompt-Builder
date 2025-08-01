@@ -7,7 +7,7 @@ async function seed() {
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(
       `${dir}/${intent.id}.json`,
-      JSON.stringify(intent, null, 2)
+      JSON.stringify(intent, null, 2),
     );
   }
   console.log("Seeded prompts from intent catalog!");

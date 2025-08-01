@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -8,8 +8,8 @@ import {
   CardDescription,
   CardContent,
   CardAction,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface OutputCardProps {
   title: string;
@@ -36,14 +36,14 @@ const OutputCard: React.FC<OutputCardProps> = ({
   metadata,
   actions,
   className,
-  children
+  children,
 }) => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(content);
       actions?.onCopy?.();
     } catch (err) {
-      console.error('Failed to copy content:', err);
+      console.error("Failed to copy content:", err);
     }
   };
 
@@ -51,7 +51,9 @@ const OutputCard: React.FC<OutputCardProps> = ({
     <Card className={className}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        {metadata?.model && <CardDescription>Model: {metadata.model}</CardDescription>}
+        {metadata?.model && (
+          <CardDescription>Model: {metadata.model}</CardDescription>
+        )}
         <CardAction>
           <div className="flex gap-2">
             {actions?.onCopy && (
@@ -140,15 +142,15 @@ const OutputCard: React.FC<OutputCardProps> = ({
             {metadata?.timestamp && (
               <Badge variant="outline">Generated: {metadata.timestamp}</Badge>
             )}
-            {metadata?.duration && <Badge variant="outline">Duration: {metadata.duration}</Badge>}
-            {metadata?.tokens && <Badge variant="outline">Tokens: {metadata.tokens}</Badge>}
+            {metadata?.duration && (
+              <Badge variant="outline">Duration: {metadata.duration}</Badge>
+            )}
+            {metadata?.tokens && (
+              <Badge variant="outline">Tokens: {metadata.tokens}</Badge>
+            )}
           </div>
           {actions?.onRegenerate && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={actions.onRegenerate}
-            >
+            <Button variant="outline" size="sm" onClick={actions.onRegenerate}>
               Regenerate
             </Button>
           )}

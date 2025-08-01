@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import React from 'react';
-import { 
-  SidebarProvider, 
-  Sidebar, 
-  SidebarContent, 
-  SidebarGroup, 
-  SidebarGroupContent, 
-  SidebarMenu, 
-  SidebarMenuItem, 
+import React from "react";
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
   SidebarMenuButton,
   SidebarHeader,
   SidebarInset,
-  SidebarTrigger
-} from '@/components/ui/sidebar';
-import { ThemeSelect } from '@/components/custom/ThemeSelect';
-import { HomeIcon, SettingsIcon, FileTextIcon, ImageIcon } from 'lucide-react';
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { ThemeSelect } from "@/components/custom/ThemeSelect";
+import { HomeIcon, SettingsIcon, FileTextIcon, ImageIcon } from "lucide-react";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ interface AppLayoutProps {
 
 /**
  * AppLayout - Main application layout with responsive sidebar
- * 
+ *
  * Features:
  * - Desktop: Static sidebar (hidden on md breakpoint and below)
  * - Mobile: Drawer/Sheet triggered by hamburger menu
@@ -42,11 +42,13 @@ export function AppLayout({ children }: AppLayoutProps) {
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="font-semibold">Video Prompt Builder</span>
-                <span className="text-xs text-sidebar-foreground/60">AI-powered prompts</span>
+                <span className="text-xs text-sidebar-foreground/60">
+                  AI-powered prompts
+                </span>
               </div>
             </div>
           </SidebarHeader>
-          
+
           <SidebarContent>
             <SidebarGroup>
               <SidebarGroupContent>
@@ -95,19 +97,21 @@ export function AppLayout({ children }: AppLayoutProps) {
             <SidebarTrigger className="md:hidden" />
             <div className="flex flex-1 items-center justify-between">
               <div className="hidden md:block">
-                <h1 className="text-lg font-semibold">🎬 Video Prompt Builder</h1>
+                <h1 className="text-lg font-semibold">
+                  🎬 Video Prompt Builder
+                </h1>
               </div>
               <div className="md:hidden">
-                <h1 className="text-lg font-semibold">🎬 Video Prompt Builder</h1>
+                <h1 className="text-lg font-semibold">
+                  🎬 Video Prompt Builder
+                </h1>
               </div>
               <ThemeSelect />
             </div>
           </header>
 
           {/* Main content area */}
-          <main className="flex-1 overflow-auto p-4">
-            {children}
-          </main>
+          <main className="flex-1 overflow-auto p-4">{children}</main>
         </SidebarInset>
       </div>
     </SidebarProvider>
