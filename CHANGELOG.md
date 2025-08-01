@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+#### Theme System Enhancements
+
+- **MonoGeist Theme Visual Improvements**:
+  - Enhanced backdrop-blur effects with consistent 16px blur and semi-transparent overlays
+  - Added subtle drop shadows to overlay components (Dialog, Popover, Command, Sheet)
+  - Improved visual hierarchy with consistent backdrop styling across all overlays
+  - Applied uniform overlay backdrop pattern: `backdrop-blur-[16px] bg-background/80`
+- **Comprehensive Theme Testing Page**: Added `/theme-test/comprehensive` route showcasing all theme components
+- **View Transition Support**: Dark mode toggle now supports smooth view transitions when available
+
 ## [2.0.0] - 2025-01-26
 
 ### 🚀 Major Upgrade: React 19 & Next.js 15 Modernization
@@ -16,6 +28,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 ### Added
 
 #### New React 19 Features
+
 - **Server Actions**: Added server-side form handling with `'use server'` directive
   - `savePromptAction` - Server-side prompt saving with validation
   - `generatePromptAction` - Server-side prompt generation
@@ -30,6 +43,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
   - `ProvenanceBadge` - Server component for data source information
 
 #### Enhanced Development Experience
+
 - **Turbopack Integration**: Enabled for development builds (`next dev --turbo`)
 - **Comprehensive Test Suite**: Added Jest 30 with React Testing Library
 - **Enhanced TypeScript Configuration**: Strict mode options enabled
@@ -39,6 +53,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 - **Prettier Integration**: Code formatting with TailwindCSS plugin
 
 #### New Scripts and Tooling
+
 - `pnpm build:static` - Static export build
 - `pnpm build:export` - Combined build and export
 - `pnpm format` / `pnpm format:check` - Code formatting
@@ -47,12 +62,14 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 ### Changed
 
 #### Framework Upgrades
+
 - **React**: 18.3.1 → 19.1.0 (Major)
 - **React DOM**: 18.3.1 → 19.1.0 (Major)
 - **Next.js**: 14.2.30 → 15.4.4 (Major)
 - **TailwindCSS**: 3.4.17 → 4.1.11 (Major)
 
 #### Development Dependencies
+
 - **ESLint**: 8.57.1 → 9.32.0 (Major - Flat Config)
 - **TypeScript ESLint Plugin**: 6.21.0 → 8.38.0 (Major)
 - **TypeScript ESLint Parser**: 6.21.0 → 8.38.0 (Major)
@@ -62,14 +79,17 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 - **@types/react-dom**: 18.3.7 → 19.1.6 (Major)
 
 #### Core Dependencies
+
 - **Lucide React**: 0.300.0 → 0.526.0 (Minor)
 - **Prettier Plugin TailwindCSS**: 0.5.14 → 0.6.14 (Minor)
 
 #### System Requirements
+
 - **Node.js**: Minimum version increased from 18+ to 20.11.0+
 - **Package Manager**: Continued pnpm support with enhanced scripts
 
 #### Component Architecture
+
 - **Theme Provider**: Optimized for React 19 concurrent features
 - **Form Components**: Enhanced with `useOptimistic` and `useActionState`
 - **Error Boundaries**: Updated for React 19 compatibility
@@ -78,17 +98,20 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 ### Fixed
 
 #### TailwindCSS v4 Compatibility
+
 - Fixed invalid utility classes (`border-border`, `bg-background`)
 - Updated CSS variables usage in `app/globals.css`
 - Replaced custom utilities with standard TailwindCSS classes
 - Enhanced component styling for v4 compatibility
 
 #### ESLint Configuration
+
 - Migrated from legacy `.eslintrc.*` to flat config format (`eslint.config.js`)
 - Fixed rule conflicts with ESLint 9
 - Updated TypeScript ESLint integration
 
 #### Build and Development
+
 - Fixed build failures with updated dependencies
 - Resolved TypeScript strict mode errors
 - Enhanced development server performance with Turbopack
@@ -97,18 +120,21 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 ### Performance Improvements
 
 #### Bundle Size Reduction
+
 - Server components reduce client-side JavaScript
 - Server actions eliminate API route overhead
 - Enhanced tree-shaking with React 19
 - Optimized theme provider implementation
 
 #### User Experience
+
 - Optimistic updates provide instant feedback
 - Better loading states with enhanced `useTransition`
 - Improved error handling with server actions
 - Faster development builds with Turbopack
 
 #### Developer Experience
+
 - Type-safe server actions
 - Better development tooling
 - Simplified state management patterns
@@ -117,6 +143,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 ### Documentation
 
 #### Added Documentation
+
 - **UPGRADE-2025.md**: Comprehensive migration guide
 - **REACT_19_MODERNIZATION.md**: Detailed modernization documentation
 - **upgrade-matrix.md**: Package upgrade matrix and strategy
@@ -124,6 +151,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 - **API Documentation**: Comprehensive component and hook documentation
 
 #### Updated Documentation
+
 - README badges reflect new versions
 - Installation and setup instructions updated for Node.js 20.11.0+
 - Development workflow documentation enhanced
@@ -132,6 +160,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 ### Migration Notes
 
 #### Breaking Changes
+
 - **Node.js 20.11.0+** required (previously 18+)
 - **React 19** breaking changes addressed:
   - Updated component interfaces
@@ -145,6 +174,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 - **TailwindCSS v4** architectural changes
 
 #### Compatibility
+
 - Maintained backward compatibility where possible
 - Gradual migration approach for testing
 - Fallback patterns for unsupported features
@@ -152,6 +182,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 ### Testing
 
 #### Enhanced Test Coverage
+
 - React 19 server actions testing
 - Optimistic updates verification
 - Concurrent features behavior testing
@@ -159,6 +190,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 - Accessibility testing with updated patterns
 
 #### Test Infrastructure
+
 - Jest 30 with enhanced performance
 - React Testing Library updated for React 19
 - Coverage reporting improvements
@@ -167,6 +199,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 ### Security
 
 #### Updated Dependencies
+
 - All dependencies updated to latest secure versions
 - Removed deprecated packages
 - Enhanced security with server actions
@@ -175,6 +208,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 ## [1.0.0] - 2024-12-XX
 
 ### Added
+
 - Initial release of Video Prompt Builder
 - React 18 and Next.js 14 foundation
 - TailwindCSS styling system
@@ -187,6 +221,7 @@ This release represents a comprehensive modernization of the Video Prompt Builde
 - Plugin-based architecture
 
 ### Features
+
 - Interactive prompt builder interface
 - Real-time preview functionality
 - Export and import capabilities
