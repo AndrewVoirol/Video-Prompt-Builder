@@ -3,13 +3,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* === Smooth Theme Transition Animation === */
-:root {
-  --theme-transition-duration: 400ms;
-  --theme-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* View Transition API for smooth theme changes */
+/* View Transition Wave Effect */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -17,58 +11,31 @@
 }
 
 ::view-transition-old(root) {
-  z-index: 1;
+  /* Ensure the outgoing view (old theme) is beneath */
+  z-index: 0;
 }
 
 ::view-transition-new(root) {
-  z-index: 999;
+  /* Ensure the incoming view (new theme) is always on top */
+  z-index: 1;
 }
 
-/* Dark mode transition with circular reveal from cursor */
-.dark::view-transition-new(root) {
-  animation: theme-transition-reveal var(--theme-transition-duration) var(--theme-transition-ease);
-}
-
-.dark::view-transition-old(root) {
-  animation: theme-transition-fade-out var(--theme-transition-duration) var(--theme-transition-ease);
-}
-
-html:not(.dark)::view-transition-new(root) {
-  animation: theme-transition-reveal var(--theme-transition-duration) var(--theme-transition-ease);
-}
-
-html:not(.dark)::view-transition-old(root) {
-  animation: theme-transition-fade-out var(--theme-transition-duration) var(--theme-transition-ease);
-}
-
-/* Circular reveal animation from cursor position */
-@keyframes theme-transition-reveal {
+@keyframes reveal {
   from {
-    clip-path: circle(0% at var(--x) var(--y));
+    clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
   }
   to {
-    clip-path: circle(150% at var(--x) var(--y));
+    clip-path: circle(150% at var(--x, 50%) var(--y, 50%));
   }
 }
 
-@keyframes theme-transition-fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+::view-transition-new(root) {
+  animation: reveal 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-/* Smooth color transitions for elements that don't use view transitions */
-@media (prefers-reduced-motion: no-preference) {
-  * {
-    transition: background-color var(--theme-transition-duration) var(--theme-transition-ease),
-                border-color var(--theme-transition-duration) var(--theme-transition-ease),
-                color var(--theme-transition-duration) var(--theme-transition-ease),
-                fill var(--theme-transition-duration) var(--theme-transition-ease),
-                stroke var(--theme-transition-duration) var(--theme-transition-ease);
-  }
+::view-transition-old(root) {
+  animation: none;
+  opacity: 0;
 }
 
 /* === MonoGeist Theme === */
@@ -592,6 +559,16 @@ html:not(.dark)::view-transition-old(root) {
   border-color: var(--color-border);
 }
 
+/* Disable ALL transitions by default to prevent flicker */
+*, *::before, *::after {
+  transition: none !important;
+}
+
+/* Only enable specific transitions when not changing themes */
+html:not(.theme-transitioning) * {
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out !important;
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
@@ -599,11 +576,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* === Disable transitions during theme changes to prevent conflicts === */
-.transitioning,
-.transitioning * {
-  transition: none !important;
-}
 
 /* Enhanced backdrop blur support */
 @supports (backdrop-filter: blur(16px)) {

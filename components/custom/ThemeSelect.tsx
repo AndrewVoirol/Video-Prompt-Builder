@@ -87,13 +87,21 @@ document.documentElement.setAttribute('data-theme', value);
       return;
     }
 
+    // Add transitioning class to disable CSS transitions
+    root.classList.add('theme-transitioning');
+    
     // Set coordinates as pixel values for the animation
     root.style.setProperty("--x", `${x}px`);
     root.style.setProperty("--y", `${y}px`);
 
     // Apply the view transition
-    document.startViewTransition(() => {
+    const transition = document.startViewTransition(() => {
       applyThemeChange();
+    });
+    
+    // Remove transitioning class after animation completes
+    transition.finished.then(() => {
+      root.classList.remove('theme-transitioning');
     });
   };
 
@@ -122,7 +130,7 @@ document.documentElement.setAttribute('data-theme', value);
       <button
         onClick={toggleDarkMode}
         className={cn(
-          "relative inline-flex h-8 w-16 cursor-pointer items-center justify-center rounded-full border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "relative inline-flex h-8 w-16 cursor-pointer items-center justify-center rounded-full border-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           isDarkMode
             ? "bg-primary border-primary/20"
             : "bg-muted border-border",
@@ -131,14 +139,14 @@ document.documentElement.setAttribute('data-theme', value);
       >
         <div
           className={cn(
-            "absolute flex h-6 w-6 items-center justify-center rounded-full bg-background shadow-lg transition-all duration-300 ease-out",
+            "absolute flex h-6 w-6 items-center justify-center rounded-full bg-background shadow-lg",
             isDarkMode ? "translate-x-4" : "-translate-x-4",
           )}
         >
           <div className="relative h-3 w-3">
             <Sun
               className={cn(
-                "absolute h-3 w-3 transition-all duration-300",
+                "absolute h-3 w-3",
                 isDarkMode
                   ? "rotate-90 scale-0 opacity-0"
                   : "rotate-0 scale-100 opacity-100",
@@ -146,7 +154,7 @@ document.documentElement.setAttribute('data-theme', value);
             />
             <Moon
               className={cn(
-                "absolute h-3 w-3 transition-all duration-300",
+                "absolute h-3 w-3",
                 isDarkMode
                   ? "rotate-0 scale-100 opacity-100"
                   : "-rotate-90 scale-0 opacity-0",
