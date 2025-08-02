@@ -12,13 +12,13 @@ export interface Theme {
 // Available theme options based on tweakcn and our CSS definitions
 export const themes: Theme[] = [
   {
-    name: "MonoGeist",
-    label: "MonoGeist",
-    value: "monogeist",
+    name: "Mono",
+    label: "Mono",
+    value: "mono",
     preview: {
-      primary: "oklch(0.2050 0 0)",
-      secondary: "oklch(0.9700 0 0)",
-      accent: "oklch(0.9700 0 0)",
+      primary: "oklch(0.56 0 0)",
+      secondary: "oklch(0.97 0 0)",
+      accent: "oklch(0.97 0 0)",
     },
   },
   {

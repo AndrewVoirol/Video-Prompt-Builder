@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="monogeist" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Hierarchy & Baseline Grid Test - Video Prompt Builder</title>
+    <link rel="stylesheet" href="app/globals.css">
+    <style>
+        /* Baseline grid overlay for testing */
+        .baseline-grid {
+            position: relative;
+        }
+        
+        .baseline-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(to bottom, transparent 3px, rgba(255, 0, 0, 0.1) 1px);
+            background-size: 1px 4px;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            background: var(--color-card);
+        }
+        
+        .font-test {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr 1fr;
+            gap: 1rem;
+            align-items: baseline;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .font-test:last-child {
+            border-bottom: none;
+        }
+        
+        .font-weight-showcase {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .weight-example {
+            padding: 0.5rem;
+            background: var(--color-muted);
+            border-radius: var(--radius);
+        }
+        
+        .theme-controls {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--color-card);
+            padding: 1rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-lg);
+            z-index: 1001;
+        }
+        
+        .test-results {
+            background: var(--color-secondary);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+        
+        .success { color: #10b981; }
+        .warning { color: #f59e0b; }
+        .error { color: #ef4444; }
+        
+        .metric {
+            display: inline-block;
+            margin-right: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+        }
+        
+        /* Grid indicators */
+        .grid-4px {
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 3px,
+                rgba(59, 130, 246, 0.3) 3px,
+                rgba(59, 130, 246, 0.3) 4px
+            );
+        }
+    </style>
+</head>
+<body class="baseline-grid">
+    <div class="theme-controls">
+        <h4>Theme Controls</h4>
+        <div>
+            <label for="theme-select">Theme:</label>
+            <select id="theme-select">
+                <option value="monogeist">MonoGeist</option>
+                <option value="kodama-grove">Kodama Grove</option>
+                <option value="cyber-punk">Cyberpunk</option>
+            </select>
+        </div>
+        <div>
+            <label for="mode-select">Mode:</label>
+            <select id="mode-select">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+        </div>
+        <div>
+            <label>
+                <input type="checkbox" id="grid-toggle" checked> Show 4px Grid
+            </label>
+        </div>
+        <button id="run-tests">Run Font Tests</button>
+    </div>
+
+    <div class="container mx-auto p-8 max-w-6xl">
+        <header class="test-section">
+            <h1>Typography Hierarchy & Baseline Grid Test</h1>
+            <p class="text-lg">Comprehensive validation of Geist Mono font loading, 4px baseline grid alignment, and typography hierarchy across all themes.</p>
+            
+            <div class="test-results" id="test-results">
+                <h3>Test Results</h3>
+                <div id="font-loading-status">Loading...</div>
+                <div id="baseline-alignment-status">Checking...</div>
+                <div id="theme-consistency-status">Validating...</div>
+            </div>
+        </header>
+
+        <!-- Typography Scale Test -->
+        <section class="test-section">
+            <h2>Typography Scale & Baseline Alignment</h2>
+            <div class="font-test">
+                <div><strong>Element</strong></div>
+                <div><strong>Sample Text</strong></div>
+                <div><strong>Size</strong></div>
+                <div><strong>Line Height</strong></div>
+            </div>
+            
+            <div class="font-test">
+                <div>h1 / .text-6xl</div>
+                <div><h1 style="margin: 0;">Main Heading</h1></div>
+                <div class="metric" data-element="h1" data-metric="fontSize">-</div>
+                <div class="metric" data-element="h1" data-metric="lineHeight">-</div>
+            </div>
+            
+            <div class="font-test">
+                <div>h2 / .text-5xl</div>
+                <div><h2 style="margin: 0;">Section Heading</h2></div>
+                <div class="metric" data-element="h2" data-metric="fontSize">-</div>
+                <div class="metric" data-element="h2" data-metric="lineHeight">-</div>
+            </div>
+            
+            <div class="font-test">
+                <div>h3 / .text-4xl</div>
+                <div><h3 style="margin: 0;">Subsection Heading</h3></div>
+                <div class="metric" data-element="h3" data-metric="fontSize">-</div>
+                <div class="metric" data-element="h3" data-metric="lineHeight">-</div>
+            </div>
+            
+            <div class="font-test">
+                <div>h4 / .text-3xl</div>
+                <div><h4 style="margin: 0;">Minor Heading</h4></div>
+                <div class="metric" data-element="h4" data-metric="fontSize">-</div>
+                <div class="metric" data-element="h4" data-metric="lineHeight">-</div>
+            </div>
+            
+            <div class="font-test">
+                <div>h5 / .text-2xl</div>
+                <div><h5 style="margin: 0;">Small Heading</h5></div>
+                <div class="metric" data-element="h5" data-metric="fontSize">-</div>
+                <div class="metric" data-element="h5" data-metric="lineHeight">-</div>
+            </div>
+            
+            <div class="font-test">
+                <div>h6 / .text-xl</div>
+                <div><h6 style="margin: 0;">Tiny Heading</h6></div>
+                <div class="metric" data-element="h6" data-metric="fontSize">-</div>
+                <div class="metric" data-element="h6" data-metric="lineHeight">-</div>
+            </div>
+            
+            <div class="font-test">
+                <div>p / .text-base</div>
+                <div><p style="margin: 0;">Body text paragraph content</p></div>
+                <div class="metric" data-element="p" data-metric="fontSize">-</div>
+                <div class="metric" data-element="p" data-metric="lineHeight">-</div>
+            </div>
+            
+            <div class="font-test">
+                <div>.text-sm</div>
+                <div><span class="text-sm">Small text content</span></div>
+                <div class="metric" data-element=".text-sm" data-metric="fontSize">-</div>
+                <div class="metric" data-element=".text-sm" data-metric="lineHeight">-</div>
+            </div>
+            
+            <div class="font-test">
+                <div>.text-xs</div>
+                <div><span class="text-xs">Extra small caption text</span></div>
+                <div class="metric" data-element=".text-xs" data-metric="fontSize">-</div>
+                <div class="metric" data-element=".text-xs" data-metric="lineHeight">-</div>
+            </div>
+        </section>
+
+        <!-- Font Weight Showcase -->
+        <section class="test-section">
+            <h2>Font Weight Variations</h2>
+            <div class="font-weight-showcase">
+                <div class="weight-example">
+                    <div style="font-weight: 300;">Light (300) - Geist Mono Light</div>
+                </div>
+                <div class="weight-example">
+                    <div style="font-weight: 400;">Regular (400) - Geist Mono Regular</div>
+                </div>
+                <div class="weight-example">
+                    <div style="font-weight: 500;">Medium (500) - Geist Mono Medium</div>
+                </div>
+                <div class="weight-example">
+                    <div style="font-weight: 600;">SemiBold (600) - Geist Mono SemiBold</div>
+                </div>
+                <div class="weight-example">
+                    <div style="font-weight: 700;">Bold (700) - Geist Mono Bold</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Block Test -->
+        <section class="test-section">
+            <h2>Code Block Consistency</h2>
+            <p>Inline code: <code>const example = "Hello World";</code> should align with baseline.</p>
+            
+            <pre><code>// Code block example
+function testBaseline() {
+  const lineHeight = "1.25rem"; // 20px - 4px aligned
+  const fontSize = "0.875rem";  // 14px
+  return { fontSize, lineHeight };
+}</code></pre>
+            
+            <div class="metric">
+                Code block metrics: 
+                <span data-element="pre" data-metric="fontSize">-</span> / 
+                <span data-element="pre" data-metric="lineHeight">-</span>
+            </div>
+        </section>
+
+        <!-- List Alignment Test -->
+        <section class="test-section">
+            <h2>List Optical Alignment</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3>Unordered List</h3>
+                    <ul>
+                        <li>First item with baseline alignment</li>
+                        <li>Second item checking optical spacing</li>
+                        <li>Third item with proper indentation
+                            <ul>
+                                <li>Nested item alignment</li>
+                                <li>Second nested item</li>
+                            </ul>
+                        </li>
+                        <li>Fourth item after nesting</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Ordered List</h3>
+                    <ol>
+                        <li>Numbered item with baseline</li>
+                        <li>Second numbered item</li>
+                        <li>Third with nesting
+                            <ol>
+                                <li>Nested numbered item</li>
+                                <li>Second nested number</li>
+                            </ol>
+                        </li>
+                        <li>Final numbered item</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table Alignment Test -->
+        <section class="test-section">
+            <h2>Table Optical Alignment</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>Font Size</th>
+                        <th>Line Height</th>
+                        <th>Baseline Aligned</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Heading 1</td>
+                        <td>3.75rem (60px)</td>
+                        <td>4rem (64px)</td>
+                        <td class="success">✓ Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Body Text</td>
+                        <td>1rem (16px)</td>
+                        <td>1.5rem (24px)</td>
+                        <td class="success">✓ Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Code Block</td>
+                        <td>0.875rem (14px)</td>
+                        <td>1.25rem (20px)</td>
+                        <td class="success">✓ Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Font Loading Test -->
+        <section class="test-section">
+            <h2>Font Loading Validation</h2>
+            <div id="font-face-tests">
+                <div class="font-test">
+                    <div><strong>Weight</strong></div>
+                    <div><strong>Status</strong></div>
+                    <div><strong>Fallback</strong></div>
+                    <div><strong>Sample</strong></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Theme switching functionality
+        const themeSelect = document.getElementById('theme-select');
+        const modeSelect = document.getElementById('mode-select');
+        const gridToggle = document.getElementById('grid-toggle');
+        const runTestsBtn = document.getElementById('run-tests');
+        const html = document.documentElement;
+        
+        themeSelect.addEventListener('change', updateTheme);
+        modeSelect.addEventListener('change', updateTheme);
+        gridToggle.addEventListener('change', toggleGrid);
+        runTestsBtn.addEventListener('click', runFontTests);
+        
+        function updateTheme() {
+            html.setAttribute('data-theme', themeSelect.value);
+            html.className = modeSelect.value;
+            setTimeout(measureTypography, 100); // Allow CSS to apply
+        }
+        
+        function toggleGrid() {
+            document.body.classList.toggle('baseline-grid', gridToggle.checked);
+        }
+        
+        // Font loading tests
+        async function checkFontLoading() {
+            const weights = [300, 400, 500, 600, 700];
+            const results = [];
+            
+            for (const weight of weights) {
+                try {
+                    const font = new FontFace('Geist Mono', `url('https://cdn.jsdelivr.net/npm/@vercel/font-geist-mono@1.0.0/files/GeistMono-${getWeightName(weight)}.woff2')`, {
+                        weight: weight.toString(),
+                        display: 'swap'
+                    });
+                    
+                    const loaded = await font.load();
+                    document.fonts.add(loaded);
+                    
+                    results.push({
+                        weight,
+                        status: 'loaded',
+                        message: `Geist Mono ${getWeightName(weight)} loaded successfully`
+                    });
+                } catch (error) {
+                    results.push({
+                        weight,
+                        status: 'error',
+                        message: `Failed to load Geist Mono ${getWeightName(weight)}: ${error.message}`
+                    });
+                }
+            }
+            
+            return results;
+        }
+        
+        function getWeightName(weight) {
+            const names = {
+                300: 'Light',
+                400: 'Regular', 
+                500: 'Medium',
+                600: 'SemiBold',
+                700: 'Bold'
+            };
+            return names[weight] || 'Regular';
+        }
+        
+        // Typography measurement
+        function measureTypography() {
+            const elements = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', '.text-sm', '.text-xs', 'pre'];
+            
+            elements.forEach(selector => {
+                const element = document.querySelector(selector === '.text-sm' ? '.text-sm' : selector === '.text-xs' ? '.text-xs' : selector);
+                if (element) {
+                    const styles = getComputedStyle(element);
+                    const fontSize = parseFloat(styles.fontSize);
+                    const lineHeight = parseFloat(styles.lineHeight);
+                    
+                    // Update metrics in the table
+                    const fontSizeMetric = document.querySelector(`[data-element="${selector}"][data-metric="fontSize"]`);
+                    const lineHeightMetric = document.querySelector(`[data-element="${selector}"][data-metric="lineHeight"]`);
+                    
+                    if (fontSizeMetric) {
+                        fontSizeMetric.textContent = `${fontSize}px`;
+                        fontSizeMetric.className = 'metric success';
+                    }
+                    
+                    if (lineHeightMetric) {
+                        const isAligned = lineHeight % 4 === 0;
+                        lineHeightMetric.textContent = `${lineHeight}px`;
+                        lineHeightMetric.className = `metric ${isAligned ? 'success' : 'error'}`;
+                    }
+                }
+            });
+        }
+        
+        // Baseline grid validation
+        function validateBaselineGrid() {
+            const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, code, pre, li, td, th');
+            let aligned = 0;
+            let total = 0;
+            
+            elements.forEach(el => {
+                const styles = getComputedStyle(el);
+                const lineHeight = parseFloat(styles.lineHeight);
+                if (!isNaN(lineHeight)) {
+                    total++;
+                    if (lineHeight % 4 === 0) {
+                        aligned++;
+                    }
+                }
+            });
+            
+            return { aligned, total, percentage: (aligned / total * 100).toFixed(1) };
+        }
+        
+        // Main test runner
+        async function runFontTests() {
+            const resultsDiv = document.getElementById('test-results');
+            const fontLoadingStatus = document.getElementById('font-loading-status');
+            const baselineStatus = document.getElementById('baseline-alignment-status');
+            const themeStatus = document.getElementById('theme-consistency-status');
+            
+            // Font loading tests
+            fontLoadingStatus.innerHTML = 'Testing font loading...';
+            const fontResults = await checkFontLoading();
+            const loadedFonts = fontResults.filter(r => r.status === 'loaded').length;
+            
+            fontLoadingStatus.innerHTML = `
+                <span class="${loadedFonts === 5 ? 'success' : 'warning'}">
+                    Font Loading: ${loadedFonts}/5 weights loaded
+                </span>
+            `;
+            
+            // Baseline alignment tests
+            const baselineResults = validateBaselineGrid();
+            baselineStatus.innerHTML = `
+                <span class="${baselineResults.percentage > 90 ? 'success' : baselineResults.percentage > 70 ? 'warning' : 'error'}">
+                    Baseline Alignment: ${baselineResults.aligned}/${baselineResults.total} elements (${baselineResults.percentage}%)
+                </span>
+            `;
+            
+            // Theme consistency
+            const currentTheme = html.getAttribute('data-theme');
+            const currentMode = html.className;
+            themeStatus.innerHTML = `
+                <span class="success">
+                    Theme: ${currentTheme} (${currentMode}) - Active
+                </span>
+            `;
+            
+            // Update font face test section
+            updateFontFaceTests(fontResults);
+            
+            // Measure typography
+            measureTypography();
+        }
+        
+        function updateFontFaceTests(results) {
+            const container = document.getElementById('font-face-tests');
+            const existingTests = container.querySelectorAll('.font-test:not(:first-child)');
+            existingTests.forEach(test => test.remove());
+            
+            results.forEach(result => {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'font-test';
+                
+                testDiv.innerHTML = `
+                    <div>${result.weight} (${getWeightName(result.weight)})</div>
+                    <div class="${result.status === 'loaded' ? 'success' : 'error'}">
+                        ${result.status === 'loaded' ? '✓ Loaded' : '✗ Failed'}
+                    </div>
+                    <div>ui-monospace</div>
+                    <div style="font-weight: ${result.weight};">Sample Text Áḡĺïñg</div>
+                `;
+                
+                container.appendChild(testDiv);
+            });
+        }
+        
+        // Initialize tests on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                runFontTests();
+            }, 500);
+        });
+        
+        // Re-run tests when theme changes
+        themeSelect.addEventListener('change', () => {
+            setTimeout(runFontTests, 200);
+        });
+        
+        modeSelect.addEventListener('change', () => {
+            setTimeout(runFontTests, 200);
+        });
+    </script>
+</body>
+</html>

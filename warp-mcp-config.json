@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "puppeteer-automation": {
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "tsx",
+        "./scripts/puppeteer-mcp-server.ts"
+      ],
+      "working_directory": "/Users/andrewvoirol/Dev/DevProjects/Video-Prompt-Builder",
+      "env": {
+        "NODE_ENV": "production",
+        "PATH": "/Users/andrewvoirol/.volta/bin:/usr/local/bin:/usr/bin:/bin"
+      }
+    }
+  }
+}

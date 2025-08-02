@@ -8,7 +8,7 @@ const Card = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
       <div
         data-slot="card"
         className={cn(
-          "bg-[var(--surface-card)] text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-md",
+          "bg-[var(--surface-card)] text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-md transition-colors hover:bg-[var(--card-hover)]",
           className,
         )}
         ref={ref}

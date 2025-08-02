@@ -3,47 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* === Geist Mono Font Imports === */
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('https://cdn.jsdelivr.net/npm/@vercel/font-geist-mono@1.0.0/files/GeistMono-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('https://cdn.jsdelivr.net/npm/@vercel/font-geist-mono@1.0.0/files/GeistMono-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('https://cdn.jsdelivr.net/npm/@vercel/font-geist-mono@1.0.0/files/GeistMono-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('https://cdn.jsdelivr.net/npm/@vercel/font-geist-mono@1.0.0/files/GeistMono-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('https://cdn.jsdelivr.net/npm/@vercel/font-geist-mono@1.0.0/files/GeistMono-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* View Transition Wave Effect - Enhanced like tweakcn */
 ::view-transition-old(root),
 ::view-transition-new(root) {
@@ -83,8 +42,8 @@
   animation: none;
 }
 
-/* === Mono Theme (Standard tweakcn) with Enhanced Interaction States === */
-[data-theme="mono"] {
+/* === MonoGeist Theme === */
+[data-theme="monogeist"] {
   --background: oklch(1 0 0);
   --foreground: oklch(0.1448 0 0);
   --card: oklch(1 0 0);
@@ -104,25 +63,6 @@
   --border: oklch(0.9219 0 0);
   --input: oklch(0.9219 0 0);
   --ring: oklch(0.709 0 0);
-
-  /* Enhanced Interaction States - Hover/Active/Focus with ±2-4 ΔL */
-  --primary-hover: oklch(0.5755 0 0); /* +2 ΔL */
-  --primary-active: oklch(0.5355 0 0); /* -2 ΔL */
-  --secondary-hover: oklch(0.9502 0 0); /* -2 ΔL */
-  --secondary-active: oklch(0.9302 0 0); /* -4 ΔL */
-  --accent-hover: oklch(0.9502 0 0); /* -2 ΔL */
-  --accent-active: oklch(0.9302 0 0); /* -4 ΔL */
-  --destructive-hover: oklch(0.603 0.2387 28.4765); /* +2 ΔL */
-  --destructive-active: oklch(0.563 0.2387 28.4765); /* -2 ΔL */
-  --card-hover: oklch(0.98 0 0); /* -2 ΔL */
-  --input-hover: oklch(0.9019 0 0); /* -2 ΔL */
-  --input-focus: oklch(0.8819 0 0); /* -4 ΔL */
-  --border-hover: oklch(0.9019 0 0); /* -2 ΔL */
-
-  /* Focus Ring Colors - 2px solid accent at 40% opacity */
-  --focus-ring: oklch(0.709 0 0 / 0.4); /* Accent at 40% opacity */
-  --focus-ring-destructive: oklch(0.583 0.2387 28.4765 / 0.4); /* Destructive at 40% opacity */
-  --focus-ring-primary: oklch(0.5555 0 0 / 0.4); /* Primary at 40% opacity */
   --chart-1: oklch(0.5555 0 0);
   --chart-2: oklch(0.5555 0 0);
   --chart-3: oklch(0.5555 0 0);
@@ -152,57 +92,47 @@
   --text-muted: oklch(0.5555 0 0); /* Muted text color */
   --text-muted-foreground: oklch(0.709 0 0); /* Muted foreground color */
 
-  /* Enhanced Typography and Spacing - Using Geist Mono with proper fallbacks */
-  --font-sans: "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
-  --font-serif: "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  /* Enhanced Typography and Spacing */
+  --font-sans: Geist Mono, monospace;
+  --font-serif: Geist Mono, monospace;
+  --font-mono: Geist Mono, monospace;
 
-  /* MonoGeist-specific Typography Tokens - Same fallback stack for consistency */
+  /* MonoGeist-specific Typography Tokens */
   --font-monoGeist-display:
-    "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
     "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
   --font-monoGeist-heading:
-    "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
     "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
   --font-monoGeist-body:
-    "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
     "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
   --font-monoGeist-code:
-    "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
     "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
   --font-monoGeist-ui:
-    "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Monaco,
+    Geist Mono, ui-monospace, SFMono-Regular, "SF Mono", Monaco,
     "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
 
-  /* Typography Scale with 4px Baseline Grid Alignment */
+  /* Typography Scale with Line Heights */
   --font-size-xs: 0.75rem; /* 12px */
-  --line-height-xs: 1rem; /* 16px - 4px aligned */
   --font-size-sm: 0.875rem; /* 14px */
-  --line-height-sm: 1.25rem; /* 20px - 4px aligned */
   --font-size-base: 1rem; /* 16px */
-  --line-height-base: 1.5rem; /* 24px - 4px aligned */
   --font-size-lg: 1.125rem; /* 18px */
-  --line-height-lg: 1.75rem; /* 28px - 4px aligned */
   --font-size-xl: 1.25rem; /* 20px */
-  --line-height-xl: 2rem; /* 32px - 4px aligned */
   --font-size-2xl: 1.5rem; /* 24px */
-  --line-height-2xl: 2rem; /* 32px - 4px aligned */
   --font-size-3xl: 1.875rem; /* 30px */
-  --line-height-3xl: 2.5rem; /* 40px - 4px aligned */
   --font-size-4xl: 2.25rem; /* 36px */
-  --line-height-4xl: 3rem; /* 48px - 4px aligned */
   --font-size-5xl: 3rem; /* 48px */
-  --line-height-5xl: 3.5rem; /* 56px - 4px aligned */
   --font-size-6xl: 3.75rem; /* 60px */
-  --line-height-6xl: 4rem; /* 64px - 4px aligned */
 
-  /* Line Heights for MonoGeist - 4px Baseline Grid */
+  /* Line Heights for MonoGeist */
   --leading-none: 1;
-  --leading-tight: 1.25; /* 20px for 16px text */
-  --leading-snug: 1.375; /* 22px for 16px text - adjusted to 24px/1.5 */
-  --leading-normal: 1.5; /* 24px for 16px text - 4px aligned */
-  --leading-relaxed: 1.75; /* 28px for 16px text - 4px aligned */
-  --leading-loose: 2; /* 32px for 16px text - 4px aligned */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
 
   /* Font Weights */
   --font-weight-light: 300;
@@ -270,7 +200,7 @@
   --spacing-2xl: 2rem; /* 32px */
 }
 
-[data-theme="mono"].dark {
+[data-theme="monogeist"].dark {
   --background: oklch(0.1448 0 0);
   --foreground: oklch(0.9851 0 0);
   --card: oklch(0.2134 0 0);
@@ -290,25 +220,6 @@
   --border: oklch(0.3407 0 0);
   --input: oklch(0.4386 0 0);
   --ring: oklch(0.5555 0 0);
-
-  /* Enhanced Interaction States - Dark Mode with ±2-4 ΔL */
-  --primary-hover: oklch(0.5755 0 0); /* +2 ΔL */
-  --primary-active: oklch(0.5355 0 0); /* -2 ΔL */
-  --secondary-hover: oklch(0.2886 0 0); /* +2 ΔL */
-  --secondary-active: oklch(0.3086 0 0); /* +4 ΔL */
-  --accent-hover: oklch(0.3915 0 0); /* +2 ΔL */
-  --accent-active: oklch(0.4115 0 0); /* +4 ΔL */
-  --destructive-hover: oklch(0.7222 0.1892 22.2279); /* +2 ΔL */
-  --destructive-active: oklch(0.6822 0.1892 22.2279); /* -2 ΔL */
-  --card-hover: oklch(0.2334 0 0); /* +2 ΔL */
-  --input-hover: oklch(0.4586 0 0); /* +2 ΔL */
-  --input-focus: oklch(0.4786 0 0); /* +4 ΔL */
-  --border-hover: oklch(0.3607 0 0); /* +2 ΔL */
-
-  /* Focus Ring Colors - Dark Mode */
-  --focus-ring: oklch(0.5555 0 0 / 0.4); /* Primary at 40% opacity */
-  --focus-ring-destructive: oklch(0.7022 0.1892 22.2279 / 0.4); /* Destructive at 40% opacity */
-  --focus-ring-primary: oklch(0.5555 0 0 / 0.4); /* Primary at 40% opacity */
   --chart-1: oklch(0.5555 0 0);
   --chart-2: oklch(0.5555 0 0);
   --chart-3: oklch(0.5555 0 0);
@@ -344,12 +255,12 @@
 /* === Kodama Grove Theme === */
 [data-theme="kodama-grove"] {
   --background: oklch(0.8798 0.0534 91.7893);
-  --foreground: oklch(0.3265 0.031 59.2153); /* Darkened for better contrast */
+  --foreground: oklch(0.4265 0.031 59.2153);
   --card: oklch(0.8937 0.0395 87.5676);
   --card-foreground: oklch(0.4265 0.031 59.2153);
   --popover: oklch(0.9378 0.0331 89.8515);
   --popover-foreground: oklch(0.4265 0.031 59.2153);
-  --primary: oklch(0.5857 0.105 118.9078); /* Darkened for better contrast */
+  --primary: oklch(0.6657 0.105 118.9078);
   --primary-foreground: oklch(0.9882 0.0069 88.6415);
   --secondary: oklch(0.8532 0.0631 91.1493);
   --secondary-foreground: oklch(0.4265 0.031 59.2153);
@@ -362,25 +273,6 @@
   --border: oklch(0.6918 0.044 59.8448);
   --input: oklch(0.8361 0.0713 90.3269);
   --ring: oklch(0.735 0.0564 130.8494);
-
-  /* Enhanced Interaction States - Kodama Grove with ±2-4 ΔL */
-  --primary-hover: oklch(0.6057 0.105 118.9078); /* +2 ΔL from adjusted primary */
-  --primary-active: oklch(0.5657 0.105 118.9078); /* -2 ΔL from adjusted primary */
-  --secondary-hover: oklch(0.8332 0.0631 91.1493); /* -2 ΔL */
-  --secondary-active: oklch(0.8132 0.0631 91.1493); /* -4 ΔL */
-  --accent-hover: oklch(0.8161 0.0713 90.3269); /* -2 ΔL */
-  --accent-active: oklch(0.7961 0.0713 90.3269); /* -4 ΔL */
-  --destructive-hover: oklch(0.7336 0.0981 29.9827); /* +2 ΔL */
-  --destructive-active: oklch(0.6936 0.0981 29.9827); /* -2 ΔL */
-  --card-hover: oklch(0.8737 0.0395 87.5676); /* -2 ΔL */
-  --input-hover: oklch(0.8161 0.0713 90.3269); /* -2 ΔL */
-  --input-focus: oklch(0.7961 0.0713 90.3269); /* -4 ΔL */
-  --border-hover: oklch(0.6718 0.044 59.8448); /* -2 ΔL */
-
-  /* Focus Ring Colors - Kodama Grove */
-  --focus-ring: oklch(0.735 0.0564 130.8494 / 0.4); /* Primary at 40% opacity */
-  --focus-ring-destructive: oklch(0.7136 0.0981 29.9827 / 0.4); /* Destructive at 40% opacity */
-  --focus-ring-primary: oklch(0.5857 0.105 118.9078 / 0.4); /* Primary at 40% opacity */
   --chart-1: oklch(0.735 0.0564 130.8494);
   --chart-2: oklch(0.6762 0.0567 132.4479);
   --chart-3: oklch(0.8185 0.0332 136.6539);
@@ -495,7 +387,7 @@
   --card-foreground: oklch(0.1649 0.0352 281.8285);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.1649 0.0352 281.8285);
-  --primary: oklch(0.5026 0.2904 341.4084); /* Further darkened for WCAG AA compliance */
+  --primary: oklch(0.6726 0.2904 341.4084);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.9595 0.02 286.0164);
   --secondary-foreground: oklch(0.1649 0.0352 281.8285);
@@ -508,25 +400,6 @@
   --border: oklch(0.9205 0.0086 225.0878);
   --input: oklch(0.9205 0.0086 225.0878);
   --ring: oklch(0.6726 0.2904 341.4084);
-
-  /* Enhanced Interaction States - Cyberpunk with ±2-4 ΔL */
-  --primary-hover: oklch(0.5226 0.2904 341.4084); /* +2 ΔL from adjusted primary */
-  --primary-active: oklch(0.4826 0.2904 341.4084); /* -2 ΔL from adjusted primary */
-  --secondary-hover: oklch(0.9395 0.02 286.0164); /* -2 ΔL */
-  --secondary-active: oklch(0.9195 0.02 286.0164); /* -4 ΔL */
-  --accent-hover: oklch(0.8703 0.1739 171.269); /* -2 ΔL */
-  --accent-active: oklch(0.8503 0.1739 171.269); /* -4 ΔL */
-  --destructive-hover: oklch(0.6735 0.2348 34.037); /* +2 ΔL */
-  --destructive-active: oklch(0.6335 0.2348 34.037); /* -2 ΔL */
-  --card-hover: oklch(0.98 0 0); /* -2 ΔL */
-  --input-hover: oklch(0.9005 0.0086 225.0878); /* -2 ΔL */
-  --input-focus: oklch(0.8805 0.0086 225.0878); /* -4 ΔL */
-  --border-hover: oklch(0.9005 0.0086 225.0878); /* -2 ΔL */
-
-  /* Focus Ring Colors - Cyberpunk */
-  --focus-ring: oklch(0.6726 0.2904 341.4084 / 0.4); /* Primary at 40% opacity */
-  --focus-ring-destructive: oklch(0.6535 0.2348 34.037 / 0.4); /* Destructive at 40% opacity */
-  --focus-ring-primary: oklch(0.5026 0.2904 341.4084 / 0.4); /* Primary at 40% opacity */
   --chart-1: oklch(0.6726 0.2904 341.4084);
   --chart-2: oklch(0.5488 0.2944 299.0954);
   --chart-3: oklch(0.8442 0.1457 209.2851);
@@ -773,200 +646,4 @@ body {
   border-color: hsl(var(--sidebar-border)) / 50;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px -2px hsl(var(--foreground)) / 10;
-}
-
-/* === Typography Hierarchy with 4px Baseline Grid === */
-
-/* Heading styles with proper baseline alignment */
-h1, .text-6xl {
-  font-size: var(--font-size-6xl);
-  line-height: var(--line-height-6xl);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing-tight);
-  margin-bottom: 1rem; /* 16px - 4px aligned */
-}
-
-h2, .text-5xl {
-  font-size: var(--font-size-5xl);
-  line-height: var(--line-height-5xl);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--letter-spacing-tight);
-  margin-bottom: 0.75rem; /* 12px - 4px aligned */
-}
-
-h3, .text-4xl {
-  font-size: var(--font-size-4xl);
-  line-height: var(--line-height-4xl);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--letter-spacing-normal);
-  margin-bottom: 0.75rem; /* 12px - 4px aligned */
-}
-
-h4, .text-3xl {
-  font-size: var(--font-size-3xl);
-  line-height: var(--line-height-3xl);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: var(--letter-spacing-normal);
-  margin-bottom: 0.5rem; /* 8px - 4px aligned */
-}
-
-h5, .text-2xl {
-  font-size: var(--font-size-2xl);
-  line-height: var(--line-height-2xl);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: var(--letter-spacing-normal);
-  margin-bottom: 0.5rem; /* 8px - 4px aligned */
-}
-
-h6, .text-xl {
-  font-size: var(--font-size-xl);
-  line-height: var(--line-height-xl);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: var(--letter-spacing-normal);
-  margin-bottom: 0.5rem; /* 8px - 4px aligned */
-}
-
-/* Body text with baseline alignment */
-p, .text-base {
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: var(--letter-spacing-normal);
-  margin-bottom: 1rem; /* 16px - 4px aligned */
-}
-
-/* Small text */
-.text-sm {
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-sm);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: var(--letter-spacing-normal);
-}
-
-/* Caption text */
-.text-xs, .caption {
-  font-size: var(--font-size-xs);
-  line-height: var(--line-height-xs);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: var(--letter-spacing-wide);
-}
-
-/* Code blocks with consistent styling */
-code {
-  font-family: var(--font-mono);
-  font-size: 0.875rem; /* 14px */
-  line-height: 1.25rem; /* 20px - 4px aligned */
-  font-weight: var(--font-weight-medium);
-  background-color: var(--color-muted);
-  color: var(--color-muted-foreground);
-  padding: 0.125rem 0.25rem; /* 2px 4px */
-  border-radius: var(--radius);
-  letter-spacing: var(--letter-spacing-normal);
-}
-
-pre {
-  font-family: var(--font-mono);
-  font-size: 0.875rem; /* 14px */
-  line-height: 1.25rem; /* 20px - 4px aligned */
-  background-color: var(--color-muted);
-  color: var(--color-muted-foreground);
-  padding: 1rem; /* 16px - 4px aligned */
-  border-radius: var(--radius);
-  overflow-x: auto;
-  margin-bottom: 1rem; /* 16px - 4px aligned */
-}
-
-pre code {
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-}
-
-/* List alignment with proper optical spacing */
-ul, ol {
-  margin-bottom: 1rem; /* 16px - 4px aligned */
-  padding-left: 1.5rem; /* 24px - proper indentation */
-}
-
-li {
-  line-height: var(--line-height-base); /* 24px - 4px aligned */
-  margin-bottom: 0.25rem; /* 4px - minimal spacing */
-}
-
-/* Nested lists */
-ul ul, ol ol, ul ol, ol ul {
-  margin-top: 0.25rem; /* 4px */
-  margin-bottom: 0.25rem; /* 4px */
-}
-
-/* Table alignment */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 1rem; /* 16px - 4px aligned */
-}
-
-th, td {
-  padding: 0.5rem; /* 8px - 4px aligned */
-  text-align: left;
-  border-bottom: 1px solid var(--color-border);
-  line-height: var(--line-height-base); /* 24px - 4px aligned */
-}
-
-th {
-  font-weight: var(--font-weight-semibold);
-  background-color: var(--color-muted);
-}
-
-/* Blockquote styling */
-blockquote {
-  border-left: 4px solid var(--color-border);
-  padding-left: 1rem; /* 16px */
-  margin-left: 0;
-  margin-bottom: 1rem; /* 16px - 4px aligned */
-  font-style: italic;
-  color: var(--color-muted-foreground);
-}
-
-/* Focus states for accessibility */
-*:focus {
-  outline: 2px solid var(--color-ring);
-  outline-offset: 2px;
-}
-
-/* Button focus improvements */
-button:focus,
-[role="button"]:focus {
-  outline: 2px solid var(--color-ring);
-  outline-offset: 2px;
-}
-
-/* Link styling */
-a {
-  color: var(--color-primary);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-a:hover {
-  color: var(--color-primary);
-  opacity: 0.8;
-}
-
-/* Form element alignment */
-input, textarea, select {
-  line-height: var(--line-height-base); /* 24px - 4px aligned */
-  padding: 0.5rem; /* 8px - 4px aligned */
-}
-
-/* Ensure consistent spacing for form groups */
-.form-group {
-  margin-bottom: 1rem; /* 16px - 4px aligned */
-}
-
-label {
-  display: block;
-  margin-bottom: 0.25rem; /* 4px */
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-sm); /* 20px - 4px aligned */
 }

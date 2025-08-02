@@ -7,6 +7,19 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import puppeteer, { Browser, Page } from 'puppeteer';
 
+// Enhanced component testing configuration
+interface ComponentTestConfig {
+  selector: string;
+  interactions: Array<{
+    type: 'click' | 'hover' | 'input';
+    target: string;
+    value?: string;
+  }>;
+  screenshots: boolean;
+  captureState: boolean;
+  enableDevTools: boolean;
+}
+
 // MCP Server for Puppeteer automation
 class PuppeteerMCPServer {
   private server: Server;
@@ -27,6 +40,133 @@ class PuppeteerMCPServer {
     );
 
     this.setupHandlers();
+  }
+
+  // Enhanced methods for React DevTools integration
+  private async enableReactDevTools(page: Page) {
+    try {
+      await page.addScriptTag({
+        url: 'https://unpkg.com/react-devtools-core@4.28.5/standalone.js'
+      });
+      await page.evaluate(() => {
+        (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__ = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__ || {};
+      });
+      return true;
+    } catch (error) {
+      console.error('Failed to enable React DevTools:', error);
+      return false;
+    }
+  }
+
+  private async verifyComponentState(page: Page, selector: string) {
+    try {
+      const state = await page.evaluate((sel) => {
+        const element = document.querySelector(sel);
+        if (!element) return null;
+        
+        // Try multiple ways to access React state
+        const reactFiber = (element as any)._reactInternalFiber || 
+                          (element as any).__reactInternalInstance ||
+                          (element as any)._reactInternalInstance;
+        
+        if (reactFiber) {
+          return {
+            memoizedState: reactFiber.memoizedState,
+            memoizedProps: reactFiber.memoizedProps,
+            type: reactFiber.type?.name || reactFiber.type
+          };
+        }
+        
+        // Fallback: check for common React patterns
+        return {
+          className: element.className,
+          dataset: Object.fromEntries(Object.entries((element as HTMLElement).dataset)),
+          attributes: Array.from(element.attributes).reduce((acc, attr) => {
+            acc[attr.name] = attr.value;
+            return acc;
+          }, {} as Record<string, string>)
+        };
+      }, selector);
+      return state;
+    } catch (error) {
+      console.error('Failed to verify component state:', error);
+      return null;
+    }
+  }
+
+  private async testComponentWithStateValidation(pageId: string, config: ComponentTestConfig) {
+    const page = this.pages.get(pageId);
+    if (!page) {
+      throw new Error(`Page not found: ${pageId}`);
+    }
+
+    const results: any = {
+      pageId,
+      selector: config.selector,
+      interactions: [],
+      screenshots: [],
+      devToolsEnabled: false
+    };
+
+    // Optionally enable React DevTools
+    if (config.enableDevTools) {
+      results.devToolsEnabled = await this.enableReactDevTools(page);
+    }
+
+    // Capture initial state
+    if (config.captureState) {
+      results.initialState = await this.verifyComponentState(page, config.selector);
+    }
+
+    // Perform interactions
+    for (let i = 0; i < config.interactions.length; i++) {
+      const interaction = config.interactions[i];
+      const interactionResult: any = { ...interaction, success: false };
+
+      try {
+        switch (interaction.type) {
+          case 'click':
+            await page.click(interaction.target);
+            break;
+          case 'hover':
+            await page.hover(interaction.target);
+            break;
+          case 'input':
+            if (interaction.value) {
+              await page.type(interaction.target, interaction.value);
+            }
+            break;
+        }
+        
+        // Wait for state changes
+        await new Promise(resolve => setTimeout(resolve, 500));
+        interactionResult.success = true;
+        
+        // Capture state after each interaction if requested
+        if (config.captureState) {
+          interactionResult.stateAfter = await this.verifyComponentState(page, config.selector);
+        }
+        
+      } catch (error) {
+        interactionResult.error = error instanceof Error ? error.message : String(error);
+      }
+      
+      results.interactions.push(interactionResult);
+    }
+
+    // Capture final state
+    if (config.captureState) {
+      results.finalState = await this.verifyComponentState(page, config.selector);
+    }
+
+    // Take screenshots if requested
+    if (config.screenshots) {
+      const screenshotPath = `${config.selector.replace(/[^\w-]/g, '_')}_${Date.now()}.png` as `${string}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      results.screenshots.push(screenshotPath);
+    }
+
+    return results;
   }
 
   private setupHandlers() {
@@ -205,6 +345,62 @@ class PuppeteerMCPServer {
             required: ['pageId', 'expression'],
           },
         },
+        {
+          name: 'test_component_enhanced',
+          description: 'Test component with React state validation and enhanced interactions',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              pageId: {
+                type: 'string',
+                description: 'Page identifier',
+              },
+              selector: {
+                type: 'string',
+                description: 'CSS selector for the component to test',
+              },
+              interactions: {
+                type: 'array',
+                description: 'Array of interactions to perform',
+                items: {
+                  type: 'object',
+                  properties: {
+                    type: {
+                      type: 'string',
+                      enum: ['click', 'hover', 'input'],
+                      description: 'Type of interaction',
+                    },
+                    target: {
+                      type: 'string',
+                      description: 'CSS selector for the target element',
+                    },
+                    value: {
+                      type: 'string',
+                      description: 'Value to input (for input type)',
+                    },
+                  },
+                  required: ['type', 'target'],
+                },
+              },
+              screenshots: {
+                type: 'boolean',
+                description: 'Whether to take screenshots',
+                default: true,
+              },
+              captureState: {
+                type: 'boolean',
+                description: 'Whether to capture React component state',
+                default: true,
+              },
+              enableDevTools: {
+                type: 'boolean',
+                description: 'Whether to enable React DevTools',
+                default: false,
+              },
+            },
+            required: ['pageId', 'selector', 'interactions'],
+          },
+        },
       ],
     }));
 
@@ -320,6 +516,34 @@ class PuppeteerMCPServer {
             }
             const result = await page.evaluate(args.expression as string);
             return { content: [{ type: 'text', text: JSON.stringify(result) }] };
+          }
+
+          case 'test_component_enhanced': {
+            const config: ComponentTestConfig = {
+              selector: args.selector as string,
+              interactions: args.interactions as Array<{
+                type: 'click' | 'hover' | 'input';
+                target: string;
+                value?: string;
+              }>,
+              screenshots: args.screenshots !== false,
+              captureState: args.captureState !== false,
+              enableDevTools: args.enableDevTools === true,
+            };
+            
+            const results = await this.testComponentWithStateValidation(
+              args.pageId as string,
+              config
+            );
+            
+            return {
+              content: [
+                {
+                  type: 'text',
+                  text: `Enhanced component test completed:\n${JSON.stringify(results, null, 2)}`,
+                },
+              ],
+            };
           }
 
           default:
