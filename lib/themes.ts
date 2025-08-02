@@ -6,6 +6,7 @@ export interface Theme {
     primary: string;
     secondary: string;
     accent: string;
+    surfaceCode: string;
   };
 }
 
@@ -19,6 +20,7 @@ export const themes: Theme[] = [
       primary: "oklch(0.56 0 0)",
       secondary: "oklch(0.97 0 0)",
       accent: "oklch(0.97 0 0)",
+      surfaceCode: "oklch(0.56 0 0)"
     },
   },
   {
@@ -29,6 +31,7 @@ export const themes: Theme[] = [
       primary: "oklch(0.6657 0.1050 118.9078)",
       secondary: "oklch(0.8532 0.0631 91.1493)",
       accent: "oklch(0.8361 0.0713 90.3269)",
+      surfaceCode: "oklch(0.6657 0.1050 118.9078)"
     },
   },
   {
@@ -39,6 +42,7 @@ export const themes: Theme[] = [
       primary: "oklch(0.6726 0.2904 341.4084)",
       secondary: "oklch(0.9595 0.0200 286.0164)",
       accent: "oklch(0.8903 0.1739 171.2690)",
+      surfaceCode: "oklch(0.6726 0.2904 341.4084)"
     },
   },
 ];

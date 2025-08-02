@@ -66,29 +66,40 @@ document.documentElement.classList.toggle('dark', newMode === 'dark');
   const toggleMode = (coords?: { x: number; y: number }) => {
     const newMode = mode === "dark" ? "light" : "dark";
     
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    try {
+      // Check for reduced motion preference
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-    // Use view transitions if supported and motion is allowed
-    if (!prefersReducedMotion && "startViewTransition" in document) {
-      const root = document.documentElement;
-      
-      // Set coordinates for transition origin if provided
-      if (coords) {
-        root.style.setProperty("--x", `${coords.x}px`);
-        root.style.setProperty("--y", `${coords.y}px`);
-      }
+      // Use view transitions if supported and motion is allowed
+      if (!prefersReducedMotion && "startViewTransition" in document) {
+        const root = document.documentElement;
+        
+        // Set coordinates for transition origin if provided
+        if (coords) {
+          root.style.setProperty("--x", `${coords.x}px`);
+          root.style.setProperty("--y", `${coords.y}px`);
+        }
 
-      // Handle experimental startViewTransition API with proper type checking
-      const docWithTransition = document as Document & {
-        startViewTransition?: (callback: () => void) => void;
-      };
-      docWithTransition.startViewTransition?.(() => {
+        // Handle experimental startViewTransition API with proper type checking
+        const docWithTransition = document as Document & {
+          startViewTransition?: (callback: () => void) => void;
+        };
+        
+        try {
+          docWithTransition.startViewTransition?.(() => {
+            setMode(newMode);
+          });
+        } catch (transitionError) {
+          console.warn('View transition failed, falling back to instant mode change:', transitionError);
+          setMode(newMode);
+        }
+      } else {
         setMode(newMode);
-      });
-    } else {
+      }
+    } catch (error) {
+      console.warn('Error in toggleMode, falling back to basic mode change:', error);
       setMode(newMode);
     }
   };

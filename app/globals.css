@@ -145,6 +145,7 @@
   --surface-popover: oklch(1 0 0); /* Popover and dropdown backgrounds */
   --surface-overlay: oklch(0.9851 0 0); /* Overlay backgrounds */
   --surface-muted: oklch(0.9595 0 0); /* Muted surface areas */
+  --surface-code: oklch(0.95 0 0); /* Code block backgrounds */
 
   /* Text Color Variables */
   --text-primary: oklch(0.1448 0 0); /* Primary text color */
@@ -333,6 +334,7 @@
   --surface-popover: oklch(0.2686 0 0); /* Popover and dropdown backgrounds */
   --surface-overlay: oklch(0.2046 0 0); /* Dark overlay backgrounds */
   --surface-muted: oklch(0.2046 0 0); /* Muted dark surface areas */
+  --surface-code: oklch(0.25 0 0); /* Code block dark backgrounds */
 
   /* Text Color Variables Dark */
   --text-primary: oklch(0.9851 0 0); /* Primary text color */
@@ -411,6 +413,7 @@
   ); /* Popover and dropdown backgrounds */
   --surface-overlay: oklch(0.9225 0.0169 88.0027); /* Overlay backgrounds */
   --surface-muted: oklch(0.8631 0.0645 90.5161); /* Muted surface areas */
+  --surface-code: oklch(0.82 0.08 88); /* Code block backgrounds for Kodama */
 
   --font-sans: Merriweather, serif;
   --font-serif: Source Serif 4, serif;
@@ -485,6 +488,7 @@
     0.3303 0.0214 88.0737
   ); /* Dark overlay backgrounds */
   --surface-muted: oklch(0.3303 0.0214 88.0737); /* Muted dark surface areas */
+  --surface-code: oklch(0.36 0.025 88); /* Code block dark backgrounds for Kodama */
 }
 
 /* === Cyberpunk Theme === */
@@ -551,6 +555,7 @@
   --surface-popover: oklch(1 0 0); /* Popover and dropdown backgrounds */
   --surface-overlay: oklch(0.9816 0.0017 247.839); /* Overlay backgrounds */
   --surface-muted: oklch(0.9595 0.02 286.0164); /* Muted surface areas */
+  --surface-code: oklch(0.94 0.03 286); /* Code block backgrounds for Cyberpunk */
 
   --font-sans: Outfit, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -620,6 +625,7 @@
     0.2542 0.0611 281.1423
   ); /* Dark overlay backgrounds */
   --surface-muted: oklch(0.2542 0.0611 281.1423); /* Muted dark surface areas */
+  --surface-code: oklch(0.28 0.07 281); /* Code block dark backgrounds for Cyberpunk */
 }
 
 /* === Tailwind Theme Integration === */
@@ -665,6 +671,7 @@
   --color-surface-popover: var(--surface-popover);
   --color-surface-overlay: var(--surface-overlay);
   --color-surface-muted: var(--surface-muted);
+  --color-surface-code: var(--surface-code);
 
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);

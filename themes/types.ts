@@ -43,6 +43,9 @@ export interface ThemeColors {
   // Ring (focus)
   ring: string;
 
+  // Surface colors
+  "surface-code": string;
+
   // Chart colors
   "chart-1": string;
   "chart-2": string;

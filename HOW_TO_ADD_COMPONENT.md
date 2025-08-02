@@ -318,19 +318,65 @@ export const Secondary: Story = {
 - Always use CSS variables for theming
 - Ensure components work in all available themes
 - Test both light and dark modes
+- Use proper CSS variable references: `var(--color-surface-code)` not `var(--surface-code)`
 
-### 3. Accessibility
+### 3. React Styling Conflict Prevention
+
+**Critical**: Avoid React background/backgroundColor conflicts in styled components:
+
+```typescript
+// ❌ Problem: Mixed shorthand and longhand properties
+const badStyle = {
+  background: 'white',
+  backgroundColor: 'var(--color-surface)', // Conflict!
+};
+
+// ✅ Solution: Clean conflicting properties
+const cleanThemeStyles = React.useMemo(() => {
+  const cleaned = { ...themeStyles };
+  
+  // Remove ALL background-related properties
+  Object.keys(cleaned).forEach(key => {
+    if (typeof cleaned[key] === 'object' && cleaned[key] !== null) {
+      const { 
+        background, 
+        backgroundColor, 
+        backgroundImage, 
+        backgroundAttachment,
+        backgroundClip,
+        backgroundOrigin,
+        backgroundPosition,
+        backgroundRepeat,
+        backgroundSize,
+        ...rest 
+      } = cleaned[key];
+      cleaned[key] = rest;
+    }
+  });
+  
+  return cleaned;
+}, [themeStyles]);
+
+// Only use backgroundColor in final styles
+const safeStyle = {
+  ...cleanThemeStyles,
+  backgroundColor: 'var(--color-surface-code)', // Safe!
+};
+```
+
+### 4. Accessibility
 
 - Include proper ARIA attributes
 - Ensure keyboard navigation works
 - Test with screen readers
 - Follow WCAG 2.1 AA guidelines
 
-### 4. Performance
+### 5. Performance
 
 - Use React.memo for expensive components
 - Implement proper prop types and defaults
 - Avoid unnecessary re-renders
+- Use `React.useMemo` for expensive style calculations
 
 ## Troubleshooting
 

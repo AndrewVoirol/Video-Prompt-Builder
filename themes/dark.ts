@@ -44,6 +44,9 @@ export const darkTheme: ThemeConfig = {
     // Ring (focus)
     ring: "hsl(212.7 26.8% 83.9%)",
 
+    // Surface colors
+    "surface-code": "hsl(217.2 32.6% 12.5%)",
+
     // Chart colors
     "chart-1": "hsl(220 70% 50%)",
     "chart-2": "hsl(160 60% 45%)",

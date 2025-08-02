@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Prompt Builder - Professional Veo 3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <style>
+        :root {
+            --scene-color: #3b82f6;
+            --camera-color: #8b5cf6;
+            --lighting-color: #f59e0b;
+            --style-color: #10b981;
+            --audio-color: #ef4444;
+            --preset-color: #6366f1;
+            --manual-color: #f59e0b;
+            --default-color: #6b7280;
+        }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .provenance-scene { color: var(--scene-color); }
+        .provenance-camera { color: var(--camera-color); }
+        .provenance-lighting { color: var(--lighting-color); }
+        .provenance-style { color: var(--style-color); }
+        .provenance-audio { color: var(--audio-color); }
+        .provenance-preset { color: var(--preset-color); }
+        .provenance-manual { color: var(--manual-color); }
+        .provenance-default { color: var(--default-color); }
+        
+        .tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted currentColor;
+        }
+        
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            white-space: nowrap;
+            z-index: 10;
+            font-size: 0.875rem;
+        }
+        
+        .preset-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .preset-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button.active {
+            background: transparent;
+            border-bottom-color: currentColor;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <header class="mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AI Video Prompt Builder</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Professional-grade prompts for Google Veo 3</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="exportBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center">
+                        <i data-lucide="download" class="w-4 h-4 mr-2"></i>Export
+                    </button>
+                    <button id="resetBtn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition flex items-center">
+                        <i data-lucide="refresh-ccw" class="w-4 h-4 mr-2"></i>Reset
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Presets Grid -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Quick Presets</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="noir">
+                    <h3 class="font-semibold text-sm mb-1">Film Noir</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Dark alleys, shadows, mystery</p>
+                </div>
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="action">
+                    <h3 class="font-semibold text-sm mb-1">Action</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Dynamic movement, intensity</p>
+                </div>
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="romance">
+                    <h3 class="font-semibold text-sm mb-1">Romance</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Intimate, warm lighting</p>
+                </div>
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="horror">
+                    <h3 class="font-semibold text-sm mb-1">Horror</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Suspense, shadows, fear</p>
+                </div>
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="scifi">
+                    <h3 class="font-semibold text-sm mb-1">Sci-Fi</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Futuristic, neon, tech</p>
+                </div>
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="western">
+                    <h3 class="font-semibold text-sm mb-1">Western</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Dusty, golden hour</p>
+                </div>
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="thriller">
+                    <h3 class="font-semibold text-sm mb-1">Thriller</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Paranoia, tension</p>
+                </div>
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="comedy">
+                    <h3 class="font-semibold text-sm mb-1">Comedy</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Bright, lighthearted</p>
+                </div>
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="documentary">
+                    <h3 class="font-semibold text-sm mb-1">Documentary</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Realistic, natural</p>
+                </div>
+                <div class="preset-card p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border-l-4" style="border-color: var(--preset-color)" data-preset="fantasy">
+                    <h3 class="font-semibold text-sm mb-1">Fantasy</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Magic, epic, wonder</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Builder Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <div class="lg:col-span-2">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <div class="flex space-x-1 mb-6 overflow-x-auto">
+                        <button class="tab-button active px-4 py-2 rounded-lg transition text-sm whitespace-nowrap" style="color: var(--scene-color)" data-tab="scene">Scene</button>
+                        <button class="tab-button px-4 py-2 rounded-lg transition text-sm whitespace-nowrap" style="color: var(--camera-color)" data-tab="camera">Camera</button>
+                        <button class="tab-button px-4 py-2 rounded-lg transition text-sm whitespace-nowrap" style="color: var(--lighting-color)" data-tab="lighting">Lighting</button>
+                        <button class="tab-button px-4 py-2 rounded-lg transition text-sm whitespace-nowrap" style="color: var(--style-color)" data-tab="style">Style</button>
+                        <button class="tab-button px-4 py-2 rounded-lg transition text-sm whitespace-nowrap" style="color: var(--audio-color)" data-tab="audio">Audio</button>
+                    </div>
+
+                    <!-- Scene Tab -->
+                    <div id="scene-content" class="tab-content active">
+                        <h3 class="text-xl font-semibold mb-4" style="color: var(--scene-color)">Scene Details</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Scene Type</label>
+                                <select id="sceneType" class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                                    <option value="">Select scene type...</option>
+                                    <option value="establishing">Establishing Shot</option>
+                                    <option value="action">Action Sequence</option>
+                                    <option value="dialogue">Dialogue Scene</option>
+                                    <option value="transition">Transition</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Environment</label>
+                                <input type="text" id="environment" placeholder="e.g., Urban rooftop at sunset" 
+                                       class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Main Subject</label>
+                                <input type="text" id="subject" placeholder="e.g., A lone detective in a trench coat" 
+                                       class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Camera Tab -->
+                    <div id="camera-content" class="tab-content">
+                        <h3 class="text-xl font-semibold mb-4" style="color: var(--camera-color)">Camera Movement</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Movement Type</label>
+                                <select id="cameraMovement" class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                                    <option value="">Select movement...</option>
+                                    <option value="static">Static</option>
+                                    <option value="tracking">Tracking Shot</option>
+                                    <option value="dolly">Dolly In/Out</option>
+                                    <option value="handheld">Handheld</option>
+                                    <option value="aerial">Aerial</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Shot Size</label>
+                                <select id="shotSize" class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                                    <option value="">Select shot size...</option>
+                                    <option value="extreme-closeup">Extreme Close-up</option>
+                                    <option value="closeup">Close-up</option>
+                                    <option value="medium">Medium Shot</option>
+                                    <option value="wide">Wide Shot</option>
+                                    <option value="extreme-wide">Extreme Wide</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lighting Tab -->
+                    <div id="lighting-content" class="tab-content">
+                        <h3 class="text-xl font-semibold mb-4" style="color: var(--lighting-color)">Lighting & Mood</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Lighting Style</label>
+                                <select id="lightingStyle" class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                                    <option value="">Select lighting...</option>
+                                    <option value="natural">Natural/Soft</option>
+                                    <option value="dramatic">Dramatic/High Contrast</option>
+                                    <option value="noir">Film Noir</option>
+                                    <option value="golden">Golden Hour</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Mood</label>
+                                <input type="text" id="mood" placeholder="e.g., Tense and mysterious" 
+                                       class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Style Tab -->
+                    <div id="style-content" class="tab-content">
+                        <h3 class="text-xl font-semibold mb-4" style="color: var(--style-color)">Visual Style</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Color Palette</label>
+                                <select id="colorPalette" class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                                    <option value="">Select palette...</option>
+                                    <option value="warm">Warm Tones</option>
+                                    <option value="cool">Cool Tones</option>
+                                    <option value="monochrome">Monochrome</option>
+                                    <option value="vibrant">Vibrant</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Visual Style</label>
+                                <select id="visualStyle" class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                                    <option value="">Select style...</option>
+                                    <option value="cinematic">Cinematic</option>
+                                    <option value="documentary">Documentary</option>
+                                    <option value="experimental">Experimental</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Audio Tab -->
+                    <div id="audio-content" class="tab-content">
+                        <h3 class="text-xl font-semibold mb-4" style="color: var(--audio-color)">Audio Design</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Ambient Sound</label>
+                                <input type="text" id="ambientSound" placeholder="e.g., City traffic, wind" 
+                                       class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Music Style</label>
+                                <select id="musicStyle" class="w-full p-3 border rounded-lg dark:bg-gray-700">
+                                    <option value="">Select music style...</option>
+                                    <option value="orchestral">Orchestral</option>
+                                    <option value="electronic">Electronic</option>
+                                    <option value="ambient">Ambient</option>
+                                    <option value="none">No Music</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generated Outputs Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-semibold mb-4">Natural Language</h3>
+                <div id="naturalOutput" class="text-sm leading-relaxed"></div>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-semibold mb-4">JSON Format</h3>
+                <pre id="jsonOutput" class="text-xs overflow-x-auto"></pre>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-semibold mb-4">YAML Format</h3>
+                <pre id="yamlOutput" class="text-xs overflow-x-auto"></pre>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-semibold mb-4">Markdown</h3>
+                <div id="markdownOutput" class="text-sm"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tab switching with color coordination
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+                
+                // Update active states
+                document.querySelectorAll('.tab-button').forEach(b => {
+                    b.classList.remove('active', 'bg-blue-600', 'text-white');
+                });
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                button.classList.add('active', 'bg-blue-600', 'text-white');
+                document.getElementById(`${tabId}-content`).classList.add('active');
+            });
+        });
+
+        // Preset configurations
+        const presets = {
+            noir: {
+                sceneType: 'dialogue',
+                environment: 'Dimly lit alleyway with steam rising from street vents, 1940s Chicago',
+                subject: 'A detective in a fedora, cigarette smoke curling, trench coat collar up',
+                cameraMovement: 'static',
+                shotSize: 'closeup',
+                lightingStyle: 'noir',
+                mood: 'Mysterious and brooding, shadows dancing on wet brick walls',
+                colorPalette: 'monochrome',
+                visualStyle: 'cinematic',
+                ambientSound: 'Distant sirens, dripping water echoing',
+                musicStyle: 'jazz'
+            },
+            action: {
+                sceneType: 'action',
+                environment: 'Rooftop during golden hour with sprawling city skyline below',
+                subject: 'Parkour runner in athletic wear leaping between buildings',
+                cameraMovement: 'tracking',
+                shotSize: 'wide',
+                lightingStyle: 'golden',
+                mood: 'Adrenaline-fueled excitement, dust particles in golden light',
+                colorPalette: 'warm',
+                visualStyle: 'cinematic',
+                ambientSound: 'Wind rushing, distant traffic, heartbeat',
+                musicStyle: 'electronic'
+            },
+            romance: {
+                sceneType: 'dialogue',
+                environment: 'Intimate candlelit restaurant with soft jazz trio playing',
+                subject: 'Couple sharing wine, hands almost touching across white tablecloth',
+                cameraMovement: 'dolly',
+                shotSize: 'closeup',
+                lightingStyle: 'natural',
+                mood: 'Intimate and tender, soft candlelight flickering',
+                colorPalette: 'warm',
+                visualStyle: 'cinematic',
+                ambientSound: 'Soft murmurs, clinking glasses, saxophone solo',
+                musicStyle: 'orchestral'
+            },
+            horror: {
+                sceneType: 'transition',
+                environment: 'Abandoned hospital hallway with flickering fluorescent lights',
+                subject: 'Shadowy figure at the end of the corridor, barely visible',
+                cameraMovement: 'handheld',
+                shotSize: 'medium',
+                lightingStyle: 'dramatic',
+                mood: 'Tense and terrifying, shadows stretching unnaturally',
+                colorPalette: 'cool',
+                visualStyle: 'cinematic',
+                ambientSound: 'Dripping water, distant screams echoing, heart pounding',
+                musicStyle: 'ambient'
+            },
+            scifi: {
+                sceneType: 'establishing',
+                environment: 'Futuristic neon cityscape with flying vehicles and holograms',
+                subject: 'Cyberpunk hacker with glowing neural interface',
+                cameraMovement: 'aerial',
+                shotSize: 'extreme-wide',
+                lightingStyle: 'dramatic',
+                mood: 'Wondrous yet dystopian, rain reflecting neon lights',
+                colorPalette: 'vibrant',
+                visualStyle: 'cinematic',
+                ambientSound: 'Hover engines, electronic buzz, rain on metal',
+                musicStyle: 'electronic'
+            },
+            western: {
+                sceneType: 'establishing',
+                environment: 'Dusty main street of old western town at high noon',
+                subject: 'Sheriff with star badge, hand near holster',
+                cameraMovement: 'static',
+                shotSize: 'wide',
+                lightingStyle: 'natural',
+                mood: 'Tense standoff atmosphere, tumbleweed rolling',
+                colorPalette: 'warm',
+                visualStyle: 'cinematic',
+                ambientSound: 'Wind whistling, distant horses, creaking wood',
+                musicStyle: 'orchestral'
+            },
+            thriller: {
+                sceneType: 'action',
+                environment: 'Underground parking garage at night with flickering lights',
+                subject: 'Suspicious figure checking over shoulder, briefcase in hand',
+                cameraMovement: 'tracking',
+                shotSize: 'medium',
+                lightingStyle: 'dramatic',
+                mood: 'Paranoid and anxious, shadows moving independently',
+                colorPalette: 'cool',
+                visualStyle: 'cinematic',
+                ambientSound: 'Echoing footsteps, car engines, dripping pipes',
+                musicStyle: 'electronic'
+            },
+            comedy: {
+                sceneType: 'dialogue',
+                environment: 'Messy apartment with pizza boxes and mismatched furniture',
+                subject: 'Awkward first date with spilled wine and nervous laughter',
+                cameraMovement: 'handheld',
+                shotSize: 'medium',
+                lightingStyle: 'natural',
+                mood: 'Lighthearted and funny, warm apartment lighting',
+                colorPalette: 'vibrant',
+                visualStyle: 'cinematic',
+                ambientSound: 'Laugh track, sitcom sounds, doorbell',
+                musicStyle: 'none'
+            },
+            documentary: {
+                sceneType: 'establishing',
+                environment: 'Wildlife savanna at dawn with acacia trees silhouetted',
+                subject: 'Lion pride resting majestically under ancient tree',
+                cameraMovement: 'static',
+                shotSize: 'wide',
+                lightingStyle: 'natural',
+                mood: 'Serene and educational, golden dawn light',
+                colorPalette: 'warm',
+                visualStyle: 'documentary',
+                ambientSound: 'Birds chirping, grass rustling, distant roar',
+                musicStyle: 'none'
+            },
+            fantasy: {
+                sceneType: 'establishing',
+                environment: 'Medieval castle courtyard with dragons circling towers',
+                subject: 'Wizard with glowing staff casting protective spells',
+                cameraMovement: 'aerial',
+                shotSize: 'wide',
+                lightingStyle: 'dramatic',
+                mood: 'Magical and epic, ethereal light from spells',
+                colorPalette: 'vibrant',
+                visualStyle: 'cinematic',
+                ambientSound: 'Dragon roars, magical chimes, wind through towers',
+                musicStyle: 'orchestral'
+            }
+        };
+
+        // Apply preset
+        document.querySelectorAll('.preset-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const preset = presets[card.dataset.preset];
+                if (preset) {
+                    Object.keys(preset).forEach(key => {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            element.value = preset[key];
+                        }
+                    });
+                    updateOutput();
+                }
+            });
+        });
+
+        // Update output with color-coded provenance
+        function updateOutput() {
+            const data = {
+                scene: {
+                    type: document.getElementById('sceneType').value || '',
+                    environment: document.getElementById('environment').value || '',
+                    subject: document.getElementById('subject').value || ''
+                },
+                camera: {
+                    movement: document.getElementById('cameraMovement').value || '',
+                    shotSize: document.getElementById('shotSize').value || ''
+                },
+                lighting: {
+                    style: document.getElementById('lightingStyle').value || '',
+                    mood: document.getElementById('mood').value || ''
+                },
+                style: {
+                    colorPalette: document.getElementById('colorPalette').value || '',
+                    visualStyle: document.getElementById('visualStyle').value || ''
+                },
+                audio: {
+                    ambientSound: document.getElementById('ambientSound').value || '',
+                    musicStyle: document.getElementById('musicStyle').value || ''
+                }
+            };
+
+            // Generate color-coded outputs with tooltips
+            const natural = generateNaturalLanguage(data);
+            const json = generateJSON(data);
+            const yaml = generateYAML(data);
+            const markdown = generateMarkdown(data);
+
+            // Update displays
+            document.getElementById('naturalOutput').innerHTML = natural;
+            document.getElementById('jsonOutput').innerHTML = json;
+            document.getElementById('yamlOutput').innerHTML = yaml;
+            document.getElementById('markdownOutput').innerHTML = markdown;
+
+            // Re-highlight code blocks
+            Prism.highlightAll();
+        }
+
+        function generateNaturalLanguage(data) {
+            let prompt = `<span class="provenance-scene tooltip" data-tooltip="Scene Configuration">In this ${data.scene.type || 'dramatic'} scene</span>, `;
+            prompt += `<span class="provenance-scene tooltip" data-tooltip="Environment Setting">set in ${data.scene.environment || 'a mysterious location'}</span>, `;
+            prompt += `<span class="provenance-scene tooltip" data-tooltip="Subject Definition">the camera focuses on ${data.scene.subject || 'an ambiguous figure'}</span>. `;
+            prompt += `<span class="provenance-camera tooltip" data-tooltip="Camera Movement">Using ${data.camera.movement || 'static camera work'}</span>, `;
+            prompt += `<span class="provenance-camera tooltip" data-tooltip="Shot Composition">framed as ${data.camera.shotSize || 'a medium shot'}</span>. `;
+            prompt += `<span class="provenance-lighting tooltip" data-tooltip="Lighting Setup">The lighting is ${data.lighting.style || 'naturally lit'}</span>, `;
+            prompt += `<span class="provenance-lighting tooltip" data-tooltip="Mood Setting">creating ${data.lighting.mood || 'a neutral mood'}</span>. `;
+            prompt += `<span class="provenance-style tooltip" data-tooltip="Visual Style">The visual style is ${data.style.visualStyle || 'cinematic'}</span>, `;
+            prompt += `<span class="provenance-style tooltip" data-tooltip="Color Palette">with ${data.style.colorPalette || 'standard colors'}</span>. `;
+            prompt += `<span class="provenance-audio tooltip" data-tooltip="Audio Design">Audio includes ${data.audio.ambientSound || 'ambient sounds'}</span>`;
+            if (data.audio.musicStyle && data.audio.musicStyle !== 'none') {
+                prompt += ` and <span class="provenance-audio tooltip" data-tooltip="Music Style">${data.audio.musicStyle}</span>`;
+            }
+            prompt += '.';
+            return prompt;
+        }
+
+        function generateJSON(data) {
+            return `<span class="provenance-scene">{</span>
+  <span class="provenance-scene">"scene"</span>: {
+    <span class="provenance-scene">"type"</span>: "<span class="provenance-scene tooltip" data-tooltip="Scene Type">${data.scene.type}</span>",
+    <span class="provenance-scene">"environment"</span>: "<span class="provenance-scene tooltip" data-tooltip="Environment">${data.scene.environment}</span>",
+    <span class="provenance-scene">"subject"</span>: "<span class="provenance-scene tooltip" data-tooltip="Main Subject">${data.scene.subject}</span>"
+  },
+  <span class="provenance-camera">"camera"</span>: {
+    <span class="provenance-camera">"movement"</span>: "<span class="provenance-camera tooltip" data-tooltip="Camera Movement">${data.camera.movement}</span>",
+    <span class="provenance-camera">"shotSize"</span>: "<span class="provenance-camera tooltip" data-tooltip="Shot Size">${data.camera.shotSize}</span>"
+  },
+  <span class="provenance-lighting">"lighting"</span>: {
+    <span class="provenance-lighting">"style"</span>: "<span class="provenance-lighting tooltip" data-tooltip="Lighting Style">${data.lighting.style}</span>",
+    <span class="provenance-lighting">"mood"</span>: "<span class="provenance-lighting tooltip" data-tooltip="Mood">${data.lighting.mood}</span>"
+  },
+  <span class="provenance-style">"style"</span>: {
+    <span class="provenance-style">"colorPalette"</span>: "<span class="provenance-style tooltip" data-tooltip="Color Palette">${data.style.colorPalette}</span>",
+    <span class="provenance-style">"visualStyle"</span>: "<span class="provenance-style tooltip" data-tooltip="Visual Style">${data.style.visualStyle}</span>"
+  },
+  <span class="provenance-audio">"audio"</span>: {
+    <span class="provenance-audio">"ambientSound"</span>: "<span class="provenance-audio tooltip" data-tooltip="Ambient Sound">${data.audio.ambientSound}</span>",
+    <span class="provenance-audio">"musicStyle"</span>: "<span class="provenance-audio tooltip" data-tooltip="Music Style">${data.audio.musicStyle}</span>"
+  }
+<span class="provenance-scene">}</span>`;
+        }
+
+        function generateYAML(data) {
+            return `<span class="provenance-scene">scene:</span>
+  <span class="provenance-scene">type</span>: "<span class="provenance-scene tooltip" data-tooltip="Scene Type">${data.scene.type}</span>"
+  <span class="provenance-scene">environment</span>: "<span class="provenance-scene tooltip" data-tooltip="Environment">${data.scene.environment}</span>"
+  <span class="provenance-scene">subject</span>: "<span class="provenance-scene tooltip" data-tooltip="Main Subject">${data.scene.subject}</span>"
+<span class="provenance-camera">camera:</span>
+  <span class="provenance-camera">movement</span>: "<span class="provenance-camera tooltip" data-tooltip="Camera Movement">${data.camera.movement}</span>"
+  <span class="provenance-camera">shotSize</span>: "<span class="provenance-camera tooltip" data-tooltip="Shot Size">${data.camera.shotSize}</span>"
+<span class="provenance-lighting">lighting:</span>
+  <span class="provenance-lighting">style</span>: "<span class="provenance-lighting tooltip" data-tooltip="Lighting Style">${data.lighting.style}</span>"
+  <span class="provenance-lighting">mood</span>: "<span class="provenance-lighting tooltip" data-tooltip="Mood">${data.lighting.mood}</span>"
+<span class="provenance-style">style:</span>
+  <span class="provenance-style">colorPalette</span>: "<span class="provenance-style tooltip" data-tooltip="Color Palette">${data.style.colorPalette}</span>"
+  <span class="provenance-style">visualStyle</span>: "<span class="provenance-style tooltip" data-tooltip="Visual Style">${data.style.visualStyle}</span>"
+<span class="provenance-audio">audio:</span>
+  <span class="provenance-audio">ambientSound</span>: "<span class="provenance-audio tooltip" data-tooltip="Ambient Sound">${data.audio.ambientSound}</span>"
+  <span class="provenance-audio">musicStyle</span>: "<span class="provenance-audio tooltip" data-tooltip="Music Style">${data.audio.musicStyle}</span>"`;
+        }
+
+        function generateMarkdown(data) {
+            return `## <span class="provenance-scene">Scene Configuration</span>
+
+### <span class="provenance-scene">Scene Details</span>
+- **Type**: <span class="provenance-scene tooltip" data-tooltip="Scene Type">${data.scene.type}</span>
+- **Environment**: <span class="provenance-scene tooltip" data-tooltip="Environment">${data.scene.environment}</span>
+- **Subject**: <span class="provenance-scene tooltip" data-tooltip="Main Subject">${data.scene.subject}</span>
+
+### <span class="provenance-camera">Camera Settings</span>
+- **Movement**: <span class="provenance-camera tooltip" data-tooltip="Camera Movement">${data.camera.movement}</span>
+- **Shot Size**: <span class="provenance-camera tooltip" data-tooltip="Shot Size">${data.camera.shotSize}</span>
+
+### <span class="provenance-lighting">Lighting & Mood</span>
+- **Style**: <span class="provenance-lighting tooltip" data-tooltip="Lighting Style">${data.lighting.style}</span>
+- **Mood**: <span class="provenance-lighting tooltip" data-tooltip="Mood">${data.lighting.mood}</span>
+
+### <span class="provenance-style">Visual Style</span>
+- **Color Palette**: <span class="provenance-style tooltip" data-tooltip="Color Palette">${data.style.colorPalette}</span>
+- **Style**: <span class="provenance-style tooltip" data-tooltip="Visual Style">${data.style.visualStyle}</span>
+
+### <span class="provenance-audio">Audio Design</span>
+- **Ambient Sound**: <span class="provenance-audio tooltip" data-tooltip="Ambient Sound">${data.audio.ambientSound}</span>
+- **Music Style**: <span class="provenance-audio tooltip" data-tooltip="Music Style">${data.audio.musicStyle}</span>`;
+        }
+
+        // Event listeners
+        document.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('change', updateOutput);
+            el.addEventListener('input', updateOutput);
+        });
+
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const data = {
+                natural: generateNaturalLanguage(getCurrentData()),
+                json: JSON.stringify(getCurrentData(), null, 2),
+                yaml: generateYAML(getCurrentData()),
+                markdown: generateMarkdown(getCurrentData())
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'veo3-prompt.json';
+            a.click();
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            document.querySelectorAll('input, select').forEach(el => {
+                el.value = '';
+            });
+            updateOutput();
+        });
+
+        function getCurrentData() {
+            return {
+                scene: {
+                    type: document.getElementById('sceneType').value || '',
+                    environment: document.getElementById('environment').value || '',
+                    subject: document.getElementById('subject').value || ''
+                },
+                camera: {
+                    movement: document.getElementById('cameraMovement').value || '',
+                    shotSize: document.getElementById('shotSize').value || ''
+                },
+                lighting: {
+                    style: document.getElementById('lightingStyle').value || '',
+                    mood: document.getElementById('mood').value || ''
+                },
+                style: {
+                    colorPalette: document.getElementById('colorPalette').value || '',
+                    visualStyle: document.getElementById('visualStyle').value || ''
+                },
+                audio: {
+                    ambientSound: document.getElementById('ambientSound').value || '',
+                    musicStyle: document.getElementById('musicStyle').value || ''
+                }
+            };
+        }
+
+        // Initial render
+        updateOutput();
+    </script>
+</body>
+</html>

@@ -65,6 +65,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import CodeViewer from "@/components/CodeViewer";
 
 export default function ComprehensiveThemeTest() {
   const { colorScheme, mode, setColorScheme, toggleMode, mounted } =
@@ -229,10 +230,11 @@ export default function ComprehensiveThemeTest() {
 
           {/* Component Showcase */}
           <Tabs defaultValue="components" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="components">Components</TabsTrigger>
               <TabsTrigger value="forms">Forms</TabsTrigger>
               <TabsTrigger value="overlays">Overlays</TabsTrigger>
+              <TabsTrigger value="code">Code Viewer</TabsTrigger>
             </TabsList>
 
             {/* Components Tab */}
@@ -395,6 +397,109 @@ export default function ComprehensiveThemeTest() {
                   <Button>Save Changes</Button>
                 </CardFooter>
               </Card>
+            </TabsContent>
+
+            {/* Code Viewer Tab */}
+            <TabsContent value="code" className="space-y-6">
+              <div className="grid gap-6">
+                {/* Sample code snippets */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <CodeViewer
+                    title="TypeScript Function"
+                    code={`interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+function createUser(userData: User): User {
+  return {
+    ...userData,
+    id: Date.now(),
+  };
+}`}
+                    language="typescript"
+                  />
+                  <CodeViewer
+                    title="React Component"
+                    code={`import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+
+interface Props {
+  title: string;
+  onSubmit: (value: string) => void;
+}
+
+export function MyComponent({ title, onSubmit }: Props) {
+  const [value, setValue] = useState('');
+
+  return (
+    <div className="space-y-4">
+      <h2>{title}</h2>
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="Enter value..."
+      />
+      <Button onClick={() => onSubmit(value)}>
+        Submit
+      </Button>
+    </div>
+  );
+}`}
+                    language="tsx"
+                  />
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <CodeViewer
+                    title="CSS Styles"
+                    code={`.code-viewer {
+  background: var(--surface-code);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  overflow-x: auto;
+}
+
+.code-viewer:hover {
+  border-color: var(--accent);
+  transition: border-color 0.2s ease;
+}
+
+.line-numbers {
+  color: var(--muted-foreground);
+  user-select: none;
+}`}
+                    language="css"
+                  />
+                  <CodeViewer
+                    title="JSON Configuration"
+                    code={`{
+  "name": "video-prompt-builder",
+  "version": "2.0.0",
+  "description": "AI-powered video prompt generation tool",
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "next": "^15.4.5",
+    "typescript": "^5.9.2",
+    "tailwindcss": "^3.4.1"
+  },
+  "themes": {
+    "default": "monogeist",
+    "available": ["monogeist", "kodama-grove", "cyber-punk"]
+  }
+}`}
+                    language="json"
+                  />
+                </div>
+              </div>
             </TabsContent>
 
             {/* Overlays Tab */}

@@ -44,6 +44,9 @@ export const lightTheme: ThemeConfig = {
     // Ring (focus)
     ring: "hsl(222.2 84% 4.9%)",
 
+    // Surface colors
+    "surface-code": "hsl(210 40% 98%)",
+
     // Chart colors
     "chart-1": "hsl(12 76% 61%)",
     "chart-2": "hsl(173 58% 39%)",
