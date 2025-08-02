@@ -13,17 +13,17 @@ async function runComprehensiveThemeTest() {
       throw new Error('MCP client not initialized');
     }
 
-    // Launch browser and navigate to test page
+    // Launch browser and navigate to MAIN APPLICATION
     await client.callTool({ name: 'launch_browser', arguments: { headless: false } });
-    await client.callTool({ name: 'new_page', arguments: { pageId: 'test' } });
-    await client.callTool({ name: 'navigate', arguments: { pageId: 'test', url: 'http://localhost:3000/theme-test' } });
+    await client.callTool({ name: 'new_page', arguments: { pageId: 'main' } });
+    await client.callTool({ name: 'navigate', arguments: { pageId: 'main', url: 'http://localhost:3000' } });
     
     // Wait for page to load
-    await client.callTool({ name: 'wait_for_selector', arguments: { pageId: 'test', selector: 'h1' } });
+    await client.callTool({ name: 'wait_for_selector', arguments: { pageId: 'main', selector: '[data-theme]' } });
     
-    // Test each theme
+    // Test each theme with corrected names
     const themes = [
-      { name: 'MonoGeist', value: 'monogeist' },
+      { name: 'Mono', value: 'mono' },
       { name: 'Kodama Grove', value: 'kodama-grove' },
       { name: 'Cyberpunk', value: 'cyber-punk' }
     ];

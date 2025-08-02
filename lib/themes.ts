@@ -12,9 +12,9 @@ export interface Theme {
 // Available theme options based on tweakcn and our CSS definitions
 export const themes: Theme[] = [
   {
-    name: "Mono",
-    label: "Mono",
-    value: "mono",
+    name: "Modern Minimal",
+    label: "Modern Minimal",
+    value: "modern-minimal",
     preview: {
       primary: "oklch(0.56 0 0)",
       secondary: "oklch(0.97 0 0)",
@@ -32,9 +32,9 @@ export const themes: Theme[] = [
     },
   },
   {
-    name: "Cyberpunk",
-    label: "Cyberpunk",
-    value: "cyber-punk",
+    name: "Cosmic Night",
+    label: "Cosmic Night",
+    value: "cosmic-night",
     preview: {
       primary: "oklch(0.6726 0.2904 341.4084)",
       secondary: "oklch(0.9595 0.0200 286.0164)",

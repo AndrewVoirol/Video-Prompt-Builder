@@ -515,7 +515,9 @@ class PuppeteerMCPServer {
               throw new Error(`Page not found: ${args.pageId}`);
             }
             const result = await page.evaluate(args.expression as string);
-            return { content: [{ type: 'text', text: JSON.stringify(result) }] };
+            // Ensure we always return a valid string, handle undefined/null cases
+            const resultText = JSON.stringify(result, null, 2) || 'undefined';
+            return { content: [{ type: 'text', text: resultText }] };
           }
 
           case 'test_component_enhanced': {

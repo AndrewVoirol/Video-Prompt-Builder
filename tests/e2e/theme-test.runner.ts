@@ -23,7 +23,7 @@ class ThemeTestRunner {
     this.options = {
       devServerPort: 3000,
       devServerUrl: 'http://localhost:3000',
-      mcpServerPath: path.join(process.cwd(), 'dist', 'scripts', 'puppeteer-mcp-server.js'),
+      mcpServerPath: path.join(process.cwd().includes('tests/e2e') ? path.join(process.cwd(), '..', '..') : process.cwd(), 'dist', 'scripts', 'puppeteer-mcp-server.js'),
       timeout: 30000,
       ...options
     };
@@ -229,9 +229,9 @@ class ThemeTestRunner {
     }
 
     const THEMES = [
-      { uiName: 'MonoGeist', id: 'monogeist' },
+      { uiName: 'Modern Minimal', id: 'modern-minimal' },
       { uiName: 'Kodama Grove', id: 'kodama-grove' },
-      { uiName: 'Cyberpunk', id: 'cyber-punk' }, // Note: The actual value is 'cyber-punk' not 'cyberpunk'
+      { uiName: 'Cosmic Night', id: 'cosmic-night' },
     ];
 
     try {

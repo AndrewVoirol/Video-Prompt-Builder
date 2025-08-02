@@ -14,16 +14,16 @@ import { cn } from "@/lib/utils";
 
 // Available themes for selection
 const availableThemes = [
-  { name: "MonoGeist", value: "monogeist" },
+  { name: "Modern Minimal", value: "modern-minimal" },
   { name: "Kodama Grove", value: "kodama-grove" },
-  { name: "Cyberpunk", value: "cyber-punk" },
+  { name: "Cosmic Night", value: "cosmic-night" },
 ];
 
 export function ThemeSelect() {
   const { setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [currentColorTheme, setCurrentColorTheme] = React.useState("cyber-punk");
+  const [currentColorTheme, setCurrentColorTheme] = React.useState("modern-minimal");
 
   // Monitor for DOM readiness and theme status
   React.useEffect(() => {
@@ -31,7 +31,7 @@ export function ThemeSelect() {
 
     // Extract current theme and dark mode state
     const htmlElement = document.documentElement;
-    const dataTheme = htmlElement.getAttribute("data-theme") || "cyber-punk";
+    const dataTheme = htmlElement.getAttribute("data-theme") || "modern-minimal";
     const isDark = htmlElement.classList.contains("dark");
 
     setCurrentColorTheme(dataTheme);
@@ -45,7 +45,7 @@ export function ThemeSelect() {
           }
           if (mutation.attributeName === "data-theme") {
             const newTheme =
-              htmlElement.getAttribute("data-theme") || "cyber-punk";
+              htmlElement.getAttribute("data-theme") || "modern-minimal";
             setCurrentColorTheme(newTheme);
           }
         }
@@ -62,7 +62,7 @@ export function ThemeSelect() {
 
   const handleThemeChange = (value: string) => {
     setCurrentColorTheme(value);
-document.documentElement.setAttribute('data-theme', value);
+    document.documentElement.setAttribute('data-theme', value);
     setTheme(value);
   };
 
